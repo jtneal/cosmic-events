@@ -7,34 +7,34 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
-import { TourService } from '../../services/tour.service';
-import { Tour } from '../../models/tour.model';
+import { EventService } from '../../services/event.service';
+import { Event } from '../../models/event.model';
 
 @Component({
-  selector: 'app-tour-detail',
+  selector: 'app-event-detail',
   template: `
-    <div class="tour-detail-container">
+    <div class="event-detail-container">
       @if (loading()) {
         <div class="loading-state">
           <div class="cosmic-loader">
             <div class="planet"></div>
             <div class="orbit"></div>
           </div>
-          <p>Loading tour details...</p>
+          <p>Loading event details...</p>
         </div>
-      } @else if (tour()) {
-        <div class="tour-content">
+      } @else if (event()) {
+        <div class="event-content">
           <!-- Hero Section -->
           <section class="hero-section">
             <div class="hero-image">
-              @if (tour()!.featuredImage) {
-                <img [src]="tour()!.featuredImage" [alt]="tour()!.title" />
+              @if (event()!.featuredImage) {
+                <img [src]="event()!.featuredImage" [alt]="event()!.title" />
               } @else {
                 <div class="placeholder-image">
                   <mat-icon>explore</mat-icon>
                 </div>
               }
-              @if (tour()!.isPromoted) {
+              @if (event()!.isPromoted) {
                 <div class="promoted-badge">
                   <mat-icon>star</mat-icon>
                   <span>Promoted</span>
@@ -43,53 +43,53 @@ import { Tour } from '../../models/tour.model';
             </div>
             
             <div class="hero-content">
-              <div class="tour-meta">
+              <div class="event-meta">
                 <mat-chip-set>
-                  <mat-chip class="type-chip">{{ getTourTypeLabel(tour()!.type) }}</mat-chip>
-                  <mat-chip class="date-chip">{{ formatDateRange(tour()!.startDate, tour()!.endDate) }}</mat-chip>
+                  <mat-chip class="type-chip">{{ getEventTypeLabel(event()!.type) }}</mat-chip>
+                  <mat-chip class="date-chip">{{ formatDateRange(event()!.startDate, event()!.endDate) }}</mat-chip>
                 </mat-chip-set>
               </div>
               
-              <h1 class="tour-title">{{ tour()!.title }}</h1>
-              @if (tour()!.subtitle) {
-                <p class="tour-subtitle">{{ tour()!.subtitle }}</p>
+              <h1 class="event-title">{{ event()!.title }}</h1>
+              @if (event()!.subtitle) {
+                <p class="event-subtitle">{{ event()!.subtitle }}</p>
               }
               
               <div class="pricing-info">
-                @if (tour()!.pricing.doubleOccupancy) {
+                @if (event()!.pricing.doubleOccupancy) {
                   <div class="price-item">
-                    <span class="price">{{ tour()!.pricing.currency }}{{ tour()!.pricing.doubleOccupancy }}</span>
+                    <span class="price">{{ event()!.pricing.currency }}{{ event()!.pricing.doubleOccupancy }}</span>
                     <span class="price-label">per person (double occupancy)</span>
                   </div>
                 }
-                @if (tour()!.pricing.singleOccupancy) {
+                @if (event()!.pricing.singleOccupancy) {
                   <div class="price-item">
-                    <span class="price">{{ tour()!.pricing.currency }}{{ tour()!.pricing.singleOccupancy }}</span>
+                    <span class="price">{{ event()!.pricing.currency }}{{ event()!.pricing.singleOccupancy }}</span>
                     <span class="price-label">per person (single occupancy)</span>
                   </div>
                 }
               </div>
               
               <div class="action-buttons">
-                @if (tour()!.contactInfo.website) {
+                @if (event()!.contactInfo.website) {
                   <button mat-raised-button color="primary" class="contact-btn" 
-                    (click)="openLink(tour()!.contactInfo.website!)">
+                    (click)="openLink(event()!.contactInfo.website!)">
                     <mat-icon>launch</mat-icon>
                     Visit Website & Book
                   </button>
                 }
-                @if (tour()!.contactInfo.email) {
+                @if (event()!.contactInfo.email) {
                   <button mat-raised-button color="accent" class="contact-btn"
-                    (click)="sendEmail(tour()!.contactInfo.email!)">
+                    (click)="sendEmail(event()!.contactInfo.email!)">
                     <mat-icon>email</mat-icon>
                     Send Email
                   </button>
                 }
-                @if (tour()!.contactInfo.phone) {
+                @if (event()!.contactInfo.phone) {
                   <button mat-button class="contact-btn"
-                    (click)="callPhone(tour()!.contactInfo.phone!)">
+                    (click)="callPhone(event()!.contactInfo.phone!)">
                     <mat-icon>phone</mat-icon>
-                    {{ tour()!.contactInfo.phone }}
+                    {{ event()!.contactInfo.phone }}
                   </button>
                 }
               </div>
@@ -106,7 +106,7 @@ import { Tour } from '../../models/tour.model';
                 Overview
               </button>
               
-              @if (tour()!.itinerary.length > 0) {
+              @if (event()!.itinerary.length > 0) {
                 <button class="tab-button" 
                   [class.active]="activeTab() === 'itinerary'" 
                   (click)="setActiveTab('itinerary')">
@@ -115,7 +115,7 @@ import { Tour } from '../../models/tour.model';
                 </button>
               }
               
-              @if (tour()!.speakers.length > 0) {
+              @if (event()!.speakers.length > 0) {
                 <button class="tab-button" 
                   [class.active]="activeTab() === 'speakers'" 
                   (click)="setActiveTab('speakers')">
@@ -124,7 +124,7 @@ import { Tour } from '../../models/tour.model';
                 </button>
               }
               
-              @if (tour()!.moreInfo.length > 0) {
+              @if (event()!.moreInfo.length > 0) {
                 <button class="tab-button" 
                   [class.active]="activeTab() === 'info'" 
                   (click)="setActiveTab('info')">
@@ -140,22 +140,22 @@ import { Tour } from '../../models/tour.model';
                 <div class="overview-content">
                   <div class="description-section">
                     <h2>About This Adventure</h2>
-                    <div class="description" [innerHTML]="tour()!.description"></div>
+                    <div class="description" [innerHTML]="event()!.description"></div>
                   </div>
 
-                  @if (tour()!.videoLink) {
+                  @if (event()!.videoLink) {
                     <div class="video-section">
                       <h3>Watch the Trailer</h3>
                       <div class="video-container">
-                        <iframe [src]="getVideoEmbedUrl(tour()!.videoLink!)" 
+                        <iframe [src]="getVideoEmbedUrl(event()!.videoLink!)" 
                           frameborder="0" allowfullscreen></iframe>
                       </div>
                     </div>
                   }
 
-                  @if (tour()!.additionalLegs.length > 0) {
+                  @if (event()!.additionalLegs.length > 0) {
                     <div class="additional-legs">
-                      <h3>Additional Tour Options</h3>
+                      <h3>Additional Event Options</h3>
                       <div class="legs-grid">
                         @for (leg of sortedAdditionalLegs(); track leg.id) {
                           <mat-card class="leg-card">
@@ -163,7 +163,7 @@ import { Tour } from '../../models/tour.model';
                               <mat-card-title>{{ leg.title }}</mat-card-title>
                               @if (leg.additionalCost) {
                                 <mat-card-subtitle>
-                                  Additional: {{ tour()!.pricing.currency }}{{ leg.additionalCost }}
+                                  Additional: {{ event()!.pricing.currency }}{{ leg.additionalCost }}
                                 </mat-card-subtitle>
                               }
                             </mat-card-header>
@@ -213,7 +213,7 @@ import { Tour } from '../../models/tour.model';
                 <div class="speakers-content">
                   <h2>Meet Your Guides & Experts</h2>
                   <div class="speakers-grid">
-                    @for (speaker of tour()!.speakers; track speaker.id) {
+                    @for (speaker of event()!.speakers; track speaker.id) {
                       <mat-card class="speaker-card">
                         @if (speaker.image) {
                           <div class="speaker-image">
@@ -264,7 +264,7 @@ import { Tour } from '../../models/tour.model';
               <mat-card-header>
                 <mat-card-title>
                   <mat-icon>contact_mail</mat-icon>
-                  Contact {{ tour()!.contactInfo.name }}
+                  Contact {{ event()!.contactInfo.name }}
                 </mat-card-title>
               </mat-card-header>
               
@@ -272,22 +272,22 @@ import { Tour } from '../../models/tour.model';
                 <p>Ready to embark on this cosmic adventure? Get in touch to learn more or make a reservation.</p>
                 
                 <div class="contact-methods">
-                  @if (tour()!.contactInfo.email) {
-                    <button mat-raised-button color="primary" (click)="sendEmail(tour()!.contactInfo.email!)">
+                  @if (event()!.contactInfo.email) {
+                    <button mat-raised-button color="primary" (click)="sendEmail(event()!.contactInfo.email!)">
                       <mat-icon>email</mat-icon>
-                      {{ tour()!.contactInfo.email }}
+                      {{ event()!.contactInfo.email }}
                     </button>
                   }
                   
-                  @if (tour()!.contactInfo.phone) {
-                    <button mat-raised-button color="accent" (click)="callPhone(tour()!.contactInfo.phone!)">
+                  @if (event()!.contactInfo.phone) {
+                    <button mat-raised-button color="accent" (click)="callPhone(event()!.contactInfo.phone!)">
                       <mat-icon>phone</mat-icon>
-                      {{ tour()!.contactInfo.phone }}
+                      {{ event()!.contactInfo.phone }}
                     </button>
                   }
                   
-                  @if (tour()!.contactInfo.website) {
-                    <button mat-raised-button (click)="openLink(tour()!.contactInfo.website!)">
+                  @if (event()!.contactInfo.website) {
+                    <button mat-raised-button (click)="openLink(event()!.contactInfo.website!)">
                       <mat-icon>launch</mat-icon>
                       Visit Website
                     </button>
@@ -300,18 +300,18 @@ import { Tour } from '../../models/tour.model';
       } @else {
         <div class="error-state">
           <mat-icon>error_outline</mat-icon>
-          <h2>Tour Not Found</h2>
-          <p>The tour you're looking for doesn't exist or has been removed.</p>
+          <h2>Event Not Found</h2>
+          <p>The event you're looking for doesn't exist or has been removed.</p>
           <button mat-raised-button color="primary" routerLink="/">
             <mat-icon>home</mat-icon>
-            Back to Tours
+            Back to Events
           </button>
         </div>
       }
     </div>
   `,
   styles: [`
-    .tour-detail-container {
+    .event-detail-container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 1rem;
@@ -390,7 +390,7 @@ import { Tour } from '../../models/tour.model';
       padding: 1rem 0;
     }
 
-    .tour-meta {
+    .event-meta {
       margin-bottom: 1rem;
     }
 
@@ -404,7 +404,7 @@ import { Tour } from '../../models/tour.model';
       color: white;
     }
 
-    .tour-title {
+    .event-title {
       font-family: 'Orbitron', monospace;
       font-size: 2.5rem;
       font-weight: 900;
@@ -415,7 +415,7 @@ import { Tour } from '../../models/tour.model';
       -webkit-text-fill-color: transparent;
     }
 
-    .tour-subtitle {
+    .event-subtitle {
       font-size: 1.2rem;
       color: var(--cosmic-text-secondary);
       margin-bottom: 2rem;
@@ -673,7 +673,7 @@ import { Tour } from '../../models/tour.model';
         gap: 2rem;
       }
 
-      .tour-title {
+      .event-title {
         font-size: 2rem;
       }
 
@@ -727,50 +727,50 @@ import { Tour } from '../../models/tour.model';
     MatDividerModule
   ]
 })
-export class TourDetailComponent implements OnInit {
+export class EventDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private tourService = inject(TourService);
+  private eventService = inject(EventService);
 
-  tour = signal<Tour | null>(null);
+  event = signal<Event | null>(null);
   loading = signal(true);
   activeTab = signal<'overview' | 'itinerary' | 'speakers' | 'info'>('overview');
 
   // Computed properties for sorted arrays
   sortedItinerary = computed(() => {
-    const tour = this.tour();
-    return tour ? [...tour.itinerary].sort((a, b) => a.order - b.order) : [];
+    const event = this.event();
+    return event ? [...event.itinerary].sort((a, b) => a.order - b.order) : [];
   });
 
   sortedAdditionalLegs = computed(() => {
-    const tour = this.tour();
-    return tour ? [...tour.additionalLegs].sort((a, b) => a.order - b.order) : [];
+    const event = this.event();
+    return event ? [...event.additionalLegs].sort((a, b) => a.order - b.order) : [];
   });
 
   sortedMoreInfo = computed(() => {
-    const tour = this.tour();
-    return tour ? [...tour.moreInfo].sort((a, b) => a.order - b.order) : [];
+    const event = this.event();
+    return event ? [...event.moreInfo].sort((a, b) => a.order - b.order) : [];
   });
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const tourId = params['id'];
-      if (tourId) {
-        this.loadTour(tourId);
+      const eventId = params['id'];
+      if (eventId) {
+        this.loadEvent(eventId);
       }
     });
   }
 
-  private loadTour(id: string): void {
+  private loadEvent(id: string): void {
     this.loading.set(true);
     
-    this.tourService.getTour(id).subscribe({
-      next: (tour) => {
-        this.tour.set(tour);
+    this.eventService.getEvent(id).subscribe({
+      next: (event) => {
+        this.event.set(event);
         this.loading.set(false);
       },
       error: (error) => {
-        console.error('Error loading tour:', error);
-        this.tour.set(null);
+        console.error('Error loading event:', error);
+        this.event.set(null);
         this.loading.set(false);
       }
     });
@@ -780,13 +780,13 @@ export class TourDetailComponent implements OnInit {
     this.activeTab.set(tab);
   }
 
-  getTourTypeLabel(type: string): string {
+  getEventTypeLabel(type: string): string {
     const typeMap: Record<string, string> = {
-      'tour': 'Guided Tour',
+      'event': 'Guided Event',
       'conference': 'Conference',
       'meeting': 'Meeting',
       'cruise': 'Cruise',
-      'event': 'Event'
+      'tour': 'Tour'
     };
     return typeMap[type] || type;
   }
@@ -828,9 +828,9 @@ export class TourDetailComponent implements OnInit {
   }
 
   sendEmail(email: string): void {
-    const tour = this.tour();
-    const subject = encodeURIComponent(`Inquiry about ${tour?.title}`);
-    const body = encodeURIComponent(`Hi,\n\nI'm interested in learning more about the "${tour?.title}" tour.\n\nPlease send me more information.\n\nThank you!`);
+    const event = this.event();
+    const subject = encodeURIComponent(`Inquiry about ${event?.title}`);
+    const body = encodeURIComponent(`Hi,\n\nI'm interested in learning more about the "${event?.title}" event.\n\nPlease send me more information.\n\nThank you!`);
     window.open(`mailto:${email}?subject=${subject}&body=${body}`);
   }
 

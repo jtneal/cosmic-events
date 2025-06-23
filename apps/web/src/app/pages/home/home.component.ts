@@ -8,9 +8,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
-import { TourService } from '../../services/tour.service';
-import { TourCardComponent } from '../../components/tour-card/tour-card.component';
-import { Tour, TourSearchFilters, TourType } from '../../models/tour.model';
+import { EventService } from '../../services/event.service';
+import { EventCardComponent } from '../../components/event-card/event-card.component';
+import { Event, EventSearchFilters, EventType } from '../../models/event.model';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +19,7 @@ import { Tour, TourSearchFilters, TourType } from '../../models/tour.model';
       <!-- Hero Section -->
       <section class="hero-section">
         <div class="hero-content">
-          <h1 class="cosmic-title">Cosmic Tours</h1>
+          <h1 class="cosmic-title">Cosmic Events</h1>
           <p class="hero-subtitle">
             Discover Ancient Mysteries, UFO Expeditions & Extraordinary Adventures
           </p>
@@ -29,13 +29,13 @@ import { Tour, TourSearchFilters, TourType } from '../../models/tour.model';
             your next cosmic adventure awaits.
           </p>
           <div class="hero-actions">
-            <button mat-raised-button color="primary" class="cosmic-btn cosmic-btn-primary" (click)="scrollToTours()">
+            <button mat-raised-button color="primary" class="cosmic-btn cosmic-btn-primary" (click)="scrollToEvents()">
               <mat-icon>explore</mat-icon>
-              Explore Tours
+              Explore Events
             </button>
             <button mat-raised-button class="cosmic-btn cosmic-btn-secondary" routerLink="/create">
               <mat-icon>add</mat-icon>
-              List Your Tour
+              List Your Event
             </button>
           </div>
         </div>
@@ -47,27 +47,27 @@ import { Tour, TourSearchFilters, TourType } from '../../models/tour.model';
       </section>
 
       <!-- Search & Filters -->
-      <section class="search-section" #toursSection>
+      <section class="search-section" #eventsSection>
         <div class="search-container">
           <h2>Find Your Perfect Adventure</h2>
           <div class="search-form">
             <mat-form-field appearance="outline" class="search-field">
-              <mat-label>Search tours, locations, topics...</mat-label>
+              <mat-label>Search events, locations, topics...</mat-label>
               <input matInput [(ngModel)]="searchTerm" placeholder="Atlantis, UFO sightings, Ancient Egypt...">
               <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
             
             <mat-form-field appearance="outline">
-              <mat-label>Tour Type</mat-label>
+              <mat-label>Event Type</mat-label>
               <mat-select [(ngModel)]="selectedType">
                 <mat-option value="">All Types</mat-option>
-                @for (type of tourTypes; track type.value) {
+                @for (type of eventTypes; track type.value) {
                   <mat-option [value]="type.value">{{ type.label }}</mat-option>
                 }
               </mat-select>
             </mat-form-field>
             
-            <button mat-raised-button color="primary" (click)="searchTours()">
+            <button mat-raised-button color="primary" (click)="searchEvents()">
               <mat-icon>search</mat-icon>
               Search
             </button>
@@ -75,32 +75,32 @@ import { Tour, TourSearchFilters, TourType } from '../../models/tour.model';
         </div>
       </section>
 
-      <!-- Promoted Tours -->
-      @if (promotedTours().length > 0) {
+      <!-- Promoted Events -->
+      @if (promotedEvents().length > 0) {
         <section class="promoted-section">
           <div class="section-header">
             <h2>
               <mat-icon>star</mat-icon>
-              Featured & Promoted Tours
+              Featured & Promoted Events
             </h2>
             <p>Discover highlighted adventures from our community</p>
           </div>
-          <div class="tours-grid promoted-grid">
-            @for (tour of promotedTours(); track tour.id) {
-              <app-tour-card [tour]="tour" />
+          <div class="events-grid promoted-grid">
+            @for (event of promotedEvents(); track event.id) {
+              <app-event-card [event]="event" />
             }
           </div>
         </section>
       }
 
-      <!-- All Tours -->
-      <section class="tours-section">
+      <!-- All Events -->
+      <section class="events-section">
         <div class="section-header">
           <h2>
             <mat-icon>explore</mat-icon>
             All Adventures
           </h2>
-          <p>{{ totalTours() }} cosmic adventures await</p>
+          <p>{{ totalEvents() }} cosmic adventures await</p>
         </div>
 
         @if (loading()) {
@@ -111,28 +111,28 @@ import { Tour, TourSearchFilters, TourType } from '../../models/tour.model';
             </div>
             <p>Loading cosmic adventures...</p>
           </div>
-        } @else if (tours().length === 0) {
+        } @else if (events().length === 0) {
           <div class="empty-state">
             <mat-icon>explore_off</mat-icon>
-            <h3>No tours found</h3>
-            <p>Try adjusting your search criteria or be the first to create a tour!</p>
+            <h3>No events found</h3>
+            <p>Try adjusting your search criteria or be the first to create a event!</p>
             <button mat-raised-button color="primary" routerLink="/create">
               <mat-icon>add</mat-icon>
-              Create First Tour
+              Create First Event
             </button>
           </div>
         } @else {
-          <div class="tours-grid">
-            @for (tour of tours(); track tour.id) {
-              <app-tour-card [tour]="tour" />
+          <div class="events-grid">
+            @for (event of events(); track event.id) {
+              <app-event-card [event]="event" />
             }
           </div>
           
-          @if (hasMoreTours()) {
+          @if (hasMoreEvents()) {
             <div class="load-more">
-              <button mat-raised-button color="primary" (click)="loadMoreTours()" [disabled]="loading()">
+              <button mat-raised-button color="primary" (click)="loadMoreEvents()" [disabled]="loading()">
                 <mat-icon>expand_more</mat-icon>
-                Load More Tours
+                Load More Events
               </button>
             </div>
           }
@@ -159,7 +159,7 @@ import { Tour, TourSearchFilters, TourType } from '../../models/tour.model';
           <div class="category-card" (click)="filterByCategory('paranormal')">
             <mat-icon>psychology</mat-icon>
             <h3>Paranormal</h3>
-            <p>Ghost tours, cryptozoology, and supernatural experiences</p>
+            <p>Ghost events, cryptozoology, and supernatural experiences</p>
           </div>
           <div class="category-card" (click)="filterByCategory('spiritual')">
             <mat-icon>self_improvement</mat-icon>
@@ -343,11 +343,11 @@ import { Tour, TourSearchFilters, TourType } from '../../models/tour.model';
       opacity: 0.1;
     }
 
-    .tours-section {
+    .events-section {
       margin: 4rem 0;
     }
 
-    .tours-grid {
+    .events-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
       gap: 2rem;
@@ -452,7 +452,7 @@ import { Tour, TourSearchFilters, TourType } from '../../models/tour.model';
         flex-direction: column;
       }
 
-      .tours-grid {
+      .events-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
       }
@@ -472,24 +472,24 @@ import { Tour, TourSearchFilters, TourType } from '../../models/tour.model';
     MatInputModule,
     MatSelectModule,
     MatChipsModule,
-    TourCardComponent
+    EventCardComponent
   ]
 })
 export class HomeComponent implements OnInit {
-  private tourService = inject(TourService);
+  private eventService = inject(EventService);
 
   // Signals for reactive state management
-  tours = signal<Tour[]>([]);
-  promotedTours = signal<Tour[]>([]);
+  events = signal<Event[]>([]);
+  promotedEvents = signal<Event[]>([]);
   loading = signal(false);
-  totalTours = signal(0);
+  totalEvents = signal(0);
   currentPage = signal(1);
-  hasMoreTours = computed(() => this.tours().length < this.totalTours());
+  hasMoreEvents = computed(() => this.events().length < this.totalEvents());
 
   // Search and filter state
   searchTerm = '';
-  selectedType: TourType | '' = '';
-  tourTypes = this.tourService.getTourTypes();
+  selectedType: EventType | '' = '';
+  eventTypes = this.eventService.getEventTypes();
 
   constructor() {}
 
@@ -500,31 +500,31 @@ export class HomeComponent implements OnInit {
   private loadInitialData(): void {
     this.loading.set(true);
     
-    // Load promoted tours
-    this.tourService.getPromotedTours().subscribe({
-      next: (promoted) => this.promotedTours.set(promoted),
-      error: (error) => console.error('Error loading promoted tours:', error)
+    // Load promoted events
+    this.eventService.getPromotedEvents().subscribe({
+      next: (promoted) => this.promotedEvents.set(promoted),
+      error: (error) => console.error('Error loading promoted events:', error)
     });
 
-    // Load regular tours
-    this.tourService.getTours({}, 1, 12).subscribe({
+    // Load regular events
+    this.eventService.getEvents({}, 1, 12).subscribe({
       next: (response) => {
-        this.tours.set(response.tours);
-        this.totalTours.set(response.total);
+        this.events.set(response.events);
+        this.totalEvents.set(response.total);
         this.loading.set(false);
       },
       error: (error) => {
-        console.error('Error loading tours:', error);
+        console.error('Error loading events:', error);
         this.loading.set(false);
       }
     });
   }
 
-  searchTours(): void {
+  searchEvents(): void {
     this.loading.set(true);
     this.currentPage.set(1);
 
-    const filters: TourSearchFilters = {};
+    const filters: EventSearchFilters = {};
     if (this.searchTerm.trim()) {
       filters.searchTerm = this.searchTerm.trim();
     }
@@ -532,26 +532,26 @@ export class HomeComponent implements OnInit {
       filters.type = this.selectedType;
     }
 
-    this.tourService.getTours(filters, 1, 12).subscribe({
+    this.eventService.getEvents(filters, 1, 12).subscribe({
       next: (response) => {
-        this.tours.set(response.tours);
-        this.totalTours.set(response.total);
+        this.events.set(response.events);
+        this.totalEvents.set(response.total);
         this.loading.set(false);
       },
       error: (error) => {
-        console.error('Error searching tours:', error);
+        console.error('Error searching events:', error);
         this.loading.set(false);
       }
     });
   }
 
-  loadMoreTours(): void {
-    if (this.loading() || !this.hasMoreTours()) return;
+  loadMoreEvents(): void {
+    if (this.loading() || !this.hasMoreEvents()) return;
 
     this.loading.set(true);
     const nextPage = this.currentPage() + 1;
 
-    const filters: TourSearchFilters = {};
+    const filters: EventSearchFilters = {};
     if (this.searchTerm.trim()) {
       filters.searchTerm = this.searchTerm.trim();
     }
@@ -559,14 +559,14 @@ export class HomeComponent implements OnInit {
       filters.type = this.selectedType;
     }
 
-    this.tourService.getTours(filters, nextPage, 12).subscribe({
+    this.eventService.getEvents(filters, nextPage, 12).subscribe({
       next: (response) => {
-        this.tours.update(current => [...current, ...response.tours]);
+        this.events.update(current => [...current, ...response.events]);
         this.currentPage.set(nextPage);
         this.loading.set(false);
       },
       error: (error) => {
-        console.error('Error loading more tours:', error);
+        console.error('Error loading more events:', error);
         this.loading.set(false);
       }
     });
@@ -574,11 +574,11 @@ export class HomeComponent implements OnInit {
 
   filterByCategory(category: string): void {
     this.searchTerm = category;
-    this.searchTours();
-    this.scrollToTours();
+    this.searchEvents();
+    this.scrollToEvents();
   }
 
-  scrollToTours(): void {
+  scrollToEvents(): void {
     const element = document.querySelector('.search-section');
     element?.scrollIntoView({ behavior: 'smooth' });
   }

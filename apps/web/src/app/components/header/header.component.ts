@@ -14,7 +14,7 @@ import { MatMenuModule } from '@angular/material/menu';
         <div class="nav-brand">
           <a routerLink="/" class="brand-link">
             <mat-icon class="brand-icon">explore</mat-icon>
-            <span class="brand-text">Cosmic Tours</span>
+            <span class="brand-text">Cosmic Events</span>
           </a>
         </div>
         
@@ -25,11 +25,11 @@ import { MatMenuModule } from '@angular/material/menu';
           </a>
           <a mat-button routerLink="/create" routerLinkActive="active">
             <mat-icon>add_circle</mat-icon>
-            Create Tour
+            Create Event
           </a>
-          <a mat-button routerLink="/my-tours" routerLinkActive="active">
+          <a mat-button routerLink="/my-events" routerLinkActive="active">
             <mat-icon>dashboard</mat-icon>
-            My Tours
+            My Events
           </a>
           
           <button mat-button [matMenuTriggerFor]="moreMenu">

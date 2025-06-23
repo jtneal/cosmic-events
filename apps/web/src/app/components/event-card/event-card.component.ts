@@ -6,13 +6,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
-import { Tour } from '../../models/tour.model';
+import { Event } from '../../models/event.model';
 
 @Component({
-  selector: 'app-tour-card',
+  selector: 'app-event-card',
   template: `
-    <mat-card class="tour-card" [class.promoted]="tour().isPromoted">
-      @if (tour().isPromoted) {
+    <mat-card class="event-card" [class.promoted]="event().isPromoted">
+      @if (event().isPromoted) {
         <div class="promoted-badge">
           <mat-icon>star</mat-icon>
           <span>Promoted</span>
@@ -20,8 +20,8 @@ import { Tour } from '../../models/tour.model';
       }
       
       <div class="card-image">
-        @if (tour().featuredImage) {
-          <img [src]="tour().featuredImage" [alt]="tour().title" />
+        @if (event().featuredImage) {
+          <img [src]="event().featuredImage" [alt]="event().title" />
         } @else {
           <div class="placeholder-image">
             <mat-icon>explore</mat-icon>
@@ -32,39 +32,39 @@ import { Tour } from '../../models/tour.model';
       <mat-card-content class="card-content">
         <div class="card-header">
           <mat-chip-set>
-            <mat-chip class="type-chip">{{ getTourTypeLabel(tour().type) }}</mat-chip>
+            <mat-chip class="type-chip">{{ getEventTypeLabel(event().type) }}</mat-chip>
           </mat-chip-set>
           <div class="dates">
-            {{ formatDateRange(tour().startDate, tour().endDate) }}
+            {{ formatDateRange(event().startDate, event().endDate) }}
           </div>
         </div>
         
-        <h3 class="tour-title">{{ tour().title }}</h3>
-        @if (tour().subtitle) {
-          <p class="tour-subtitle">{{ tour().subtitle }}</p>
+        <h3 class="event-title">{{ event().title }}</h3>
+        @if (event().subtitle) {
+          <p class="event-subtitle">{{ event().subtitle }}</p>
         }
         
-        <p class="tour-description">{{ tour().description | slice:0:150 }}...</p>
+        <p class="event-description">{{ event().description | slice:0:150 }}...</p>
         
-        @if (tour().speakers.length > 0) {
+        @if (event().speakers.length > 0) {
           <div class="speakers-preview">
             <mat-icon>person</mat-icon>
-            <span>{{ tour().speakers.length }} speaker{{ tour().speakers.length === 1 ? '' : 's' }}</span>
+            <span>{{ event().speakers.length }} speaker{{ event().speakers.length === 1 ? '' : 's' }}</span>
           </div>
         }
         
         <div class="pricing">
-          @if (tour().pricing.doubleOccupancy) {
-            <span class="price">{{ tour().pricing.currency }}{{ tour().pricing.doubleOccupancy }} per person (double)</span>
+          @if (event().pricing.doubleOccupancy) {
+            <span class="price">{{ event().pricing.currency }}{{ event().pricing.doubleOccupancy }} per person (double)</span>
           }
-          @if (tour().pricing.singleOccupancy) {
-            <span class="price">{{ tour().pricing.currency }}{{ tour().pricing.singleOccupancy }} per person (single)</span>
+          @if (event().pricing.singleOccupancy) {
+            <span class="price">{{ event().pricing.currency }}{{ event().pricing.singleOccupancy }} per person (single)</span>
           }
         </div>
       </mat-card-content>
       
       <mat-card-actions class="card-actions">
-        <button mat-button color="primary" [routerLink]="['/tour', tour().id]">
+        <button mat-button color="primary" [routerLink]="['/event', event().id]">
           <mat-icon>visibility</mat-icon>
           View Details
         </button>
@@ -73,16 +73,16 @@ import { Tour } from '../../models/tour.model';
             <mat-icon>edit</mat-icon>
             Edit
           </button>
-          <button mat-button [color]="tour().status === 'published' ? 'warn' : 'accent'" (click)="onToggleStatus()">
-            <mat-icon>{{ tour().status === 'published' ? 'visibility_off' : 'publish' }}</mat-icon>
-            {{ tour().status === 'published' ? 'Unpublish' : 'Publish' }}
+          <button mat-button [color]="event().status === 'published' ? 'warn' : 'accent'" (click)="onToggleStatus()">
+            <mat-icon>{{ event().status === 'published' ? 'visibility_off' : 'publish' }}</mat-icon>
+            {{ event().status === 'published' ? 'Unpublish' : 'Publish' }}
           </button>
         }
       </mat-card-actions>
     </mat-card>
   `,
   styles: [`
-    .tour-card {
+    .event-card {
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -92,13 +92,13 @@ import { Tour } from '../../models/tour.model';
       border: 1px solid var(--cosmic-border);
     }
 
-    .tour-card:hover {
+    .event-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
       border-color: var(--cosmic-primary);
     }
 
-    .tour-card.promoted {
+    .event-card.promoted {
       border: 2px solid var(--cosmic-accent);
       box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
     }
@@ -139,7 +139,7 @@ import { Tour } from '../../models/tour.model';
       transition: transform 0.3s ease;
     }
 
-    .tour-card:hover .card-image img {
+    .event-card:hover .card-image img {
       transform: scale(1.05);
     }
 
@@ -182,7 +182,7 @@ import { Tour } from '../../models/tour.model';
       color: var(--cosmic-text-secondary);
     }
 
-    .tour-title {
+    .event-title {
       font-family: 'Orbitron', monospace;
       font-size: 1.25rem;
       font-weight: 700;
@@ -190,14 +190,14 @@ import { Tour } from '../../models/tour.model';
       color: var(--cosmic-text);
     }
 
-    .tour-subtitle {
+    .event-subtitle {
       font-size: 0.875rem;
       color: var(--cosmic-text-secondary);
       margin-bottom: 1rem;
       font-style: italic;
     }
 
-    .tour-description {
+    .event-description {
       color: var(--cosmic-text-secondary);
       margin-bottom: 1rem;
       line-height: 1.5;
@@ -260,28 +260,28 @@ import { Tour } from '../../models/tour.model';
     MatBadgeModule
   ]
 })
-export class TourCardComponent {
-  tour = input.required<Tour>();
+export class EventCardComponent {
+  event = input.required<Event>();
   showEditActions = input<boolean>(false);
   
-  edit = output<Tour>();
-  toggleStatus = output<Tour>();
+  edit = output<Event>();
+  toggleStatus = output<Event>();
 
   onEdit(): void {
-    this.edit.emit(this.tour());
+    this.edit.emit(this.event());
   }
 
   onToggleStatus(): void {
-    this.toggleStatus.emit(this.tour());
+    this.toggleStatus.emit(this.event());
   }
 
-  getTourTypeLabel(type: string): string {
+  getEventTypeLabel(type: string): string {
     const typeMap: Record<string, string> = {
-      'tour': 'Guided Tour',
+      'event': 'Guided Event',
       'conference': 'Conference',
       'meeting': 'Meeting',
       'cruise': 'Cruise',
-      'event': 'Event'
+      'tour': 'Tour'
     };
     return typeMap[type] || type;
   }

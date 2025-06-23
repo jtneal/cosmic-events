@@ -14,14 +14,14 @@ export interface ItineraryDay {
   order: number;
 }
 
-export interface TourLeg {
+export interface EventLeg {
   id: string;
   title: string;
   image?: string;
   description: string;
   additionalCost?: number;
   order: number;
-  isBefore: boolean; // true for pre-tour, false for post-tour
+  isBefore: boolean; // true for pre-event, false for post-event
 }
 
 export interface MoreInfoItem {
@@ -44,19 +44,19 @@ export interface Pricing {
   currency: string;
 }
 
-export type TourType = 'tour' | 'conference' | 'meeting' | 'cruise' | 'event';
+export type EventType = 'event' | 'conference' | 'meeting' | 'cruise' | 'event';
 
-export type TourStatus = 'draft' | 'published' | 'archived';
+export type EventStatus = 'draft' | 'published' | 'archived';
 
-export interface Tour {
+export interface Event {
   id: string;
   title: string;
   subtitle?: string;
-  type: TourType;
+  type: EventType;
   description: string;
   speakers: Speaker[];
   itinerary: ItineraryDay[];
-  additionalLegs: TourLeg[];
+  additionalLegs: EventLeg[];
   moreInfo: MoreInfoItem[];
   contactInfo: ContactInfo;
   pricing: Pricing;
@@ -65,14 +65,14 @@ export interface Tour {
   videoLink?: string;
   featuredImage?: string;
   isPromoted: boolean;
-  status: TourStatus;
+  status: EventStatus;
   createdAt: Date;
   updatedAt: Date;
   authorId: string;
 }
 
-export interface TourSearchFilters {
-  type?: TourType;
+export interface EventSearchFilters {
+  type?: EventType;
   dateRange?: {
     start: Date;
     end: Date;
@@ -85,8 +85,8 @@ export interface TourSearchFilters {
   promoted?: boolean;
 }
 
-export interface TourListResponse {
-  tours: Tour[];
+export interface EventListResponse {
+  events: Event[];
   total: number;
   page: number;
   limit: number;

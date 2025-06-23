@@ -15,26 +15,26 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { QuillModule } from 'ngx-quill';
-import { TourService } from '../../services/tour.service';
-import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '../../models/tour.model';
+import { EventService } from '../../services/event.service';
+import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from '../../models/event.model';
 
 @Component({
-  selector: 'app-create-tour',
+  selector: 'app-create-event',
   template: `
-    <div class="create-tour-container">
+    <div class="create-event-container">
       <div class="header-section">
         <h1 class="cosmic-title">Create Your Cosmic Adventure</h1>
         <p class="subtitle">Share your extraordinary journey with fellow explorers</p>
       </div>
 
-      <form [formGroup]="tourForm" (ngSubmit)="onSubmit()" class="tour-form">
+      <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="event-form">
         <mat-stepper #stepper linear>
           <!-- Basic Information Step -->
           <mat-step [stepControl]="basicInfoGroup" label="Basic Information">
             <div formGroupName="basicInfo" class="step-content">
               <div class="form-row">
                 <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Tour Title *</mat-label>
+                  <mat-label>Event Title *</mat-label>
                   <input matInput formControlName="title" placeholder="Ancient Mysteries of Egypt">
                   <mat-error *ngIf="basicInfoGroup.get('title')?.hasError('required')">
                     Title is required
@@ -51,14 +51,14 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
 
               <div class="form-row">
                 <mat-form-field appearance="outline" class="half-width">
-                  <mat-label>Tour Type *</mat-label>
+                  <mat-label>Event Type *</mat-label>
                   <mat-select formControlName="type">
-                    @for (type of tourTypes; track type.value) {
+                    @for (type of eventTypes; track type.value) {
                       <mat-option [value]="type.value">{{ type.label }}</mat-option>
                     }
                   </mat-select>
                   <mat-error *ngIf="basicInfoGroup.get('type')?.hasError('required')">
-                    Tour type is required
+                    Event type is required
                   </mat-error>
                 </mat-form-field>
 
@@ -72,7 +72,7 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Description *</mat-label>
                   <quill-editor formControlName="description" [styles]="{minHeight: '200px'}" 
-                    placeholder="Describe your tour in detail...">
+                    placeholder="Describe your event in detail...">
                   </quill-editor>
                   <mat-error *ngIf="basicInfoGroup.get('description')?.hasError('required')">
                     Description is required
@@ -122,7 +122,7 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
           <mat-step [stepControl]="speakersArray" label="Speakers & Experts">
             <div class="step-content">
               <div class="section-header">
-                <h3>Tour Speakers & Experts</h3>
+                <h3>Event Speakers & Experts</h3>
                 <button mat-raised-button color="accent" type="button" (click)="addSpeaker()">
                   <mat-icon>person_add</mat-icon>
                   Add Speaker
@@ -175,7 +175,7 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
               @if (speakersArray.length === 0) {
                 <div class="empty-state">
                   <mat-icon>person_off</mat-icon>
-                  <p>No speakers added yet. Add speakers to enhance your tour's credibility.</p>
+                  <p>No speakers added yet. Add speakers to enhance your event's credibility.</p>
                 </div>
               }
 
@@ -196,7 +196,7 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
           <mat-step [stepControl]="itineraryArray" label="Itinerary">
             <div class="step-content">
               <div class="section-header">
-                <h3>Tour Itinerary</h3>
+                <h3>Event Itinerary</h3>
                 <button mat-raised-button color="accent" type="button" (click)="addItineraryDay()">
                   <mat-icon>add_circle</mat-icon>
                   Add Day
@@ -247,7 +247,7 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
               @if (itineraryArray.length === 0) {
                 <div class="empty-state">
                   <mat-icon>event_note</mat-icon>
-                  <p>No itinerary days added yet. Create a day-by-day schedule for your tour.</p>
+                  <p>No itinerary days added yet. Create a day-by-day schedule for your event.</p>
                 </div>
               }
 
@@ -292,7 +292,7 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
                   
                   <mat-form-field appearance="outline" class="half-width">
                     <mat-label>Website</mat-label>
-                    <input matInput formControlName="website" placeholder="https://yourtourcompany.com">
+                    <input matInput formControlName="website" placeholder="https://youreventcompany.com">
                   </mat-form-field>
                 </div>
                 
@@ -343,25 +343,25 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
           <!-- Additional Information Step -->
           <mat-step label="Additional Information">
             <div class="step-content">
-              <!-- Tour Legs -->
-              <div class="tour-legs-section">
+              <!-- Event Legs -->
+              <div class="event-legs-section">
                 <div class="section-header">
-                  <h3>Additional Tour Legs</h3>
-                  <button mat-raised-button color="accent" type="button" (click)="addTourLeg()">
+                  <h3>Additional Event Legs</h3>
+                  <button mat-raised-button color="accent" type="button" (click)="addEventLeg()">
                     <mat-icon>add_location</mat-icon>
-                    Add Tour Leg
+                    Add Event Leg
                   </button>
                 </div>
 
-                <div formArrayName="additionalLegs" cdkDropList (cdkDropListDropped)="dropTourLeg($event)">
+                <div formArrayName="additionalLegs" cdkDropList (cdkDropListDropped)="dropEventLeg($event)">
                   @for (leg of additionalLegsArray.controls; track leg; let i = $index) {
-                    <mat-card class="tour-leg-card" cdkDrag>
+                    <mat-card class="event-leg-card" cdkDrag>
                       <mat-card-header>
                         <mat-card-title>
                           <mat-icon cdkDragHandle>drag_handle</mat-icon>
-                          Tour Leg {{ i + 1 }}
+                          Event Leg {{ i + 1 }}
                         </mat-card-title>
-                        <button mat-icon-button color="warn" type="button" (click)="removeTourLeg(i)">
+                        <button mat-icon-button color="warn" type="button" (click)="removeEventLeg(i)">
                           <mat-icon>delete</mat-icon>
                         </button>
                       </mat-card-header>
@@ -370,7 +370,7 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
                         <div class="form-row">
                           <mat-form-field appearance="outline" class="half-width">
                             <mat-label>Title *</mat-label>
-                            <input matInput formControlName="title" placeholder="Pre-tour: Ancient Rome">
+                            <input matInput formControlName="title" placeholder="Pre-event: Ancient Rome">
                           </mat-form-field>
                           
                           <mat-form-field appearance="outline" class="quarter-width">
@@ -381,8 +381,8 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
                           <mat-form-field appearance="outline" class="quarter-width">
                             <mat-label>Position</mat-label>
                             <mat-select formControlName="isBefore">
-                              <mat-option [value]="true">Before Main Tour</mat-option>
-                              <mat-option [value]="false">After Main Tour</mat-option>
+                              <mat-option [value]="true">Before Main Event</mat-option>
+                              <mat-option [value]="false">After Main Event</mat-option>
                             </mat-select>
                           </mat-form-field>
                         </div>
@@ -398,7 +398,7 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Description *</mat-label>
                             <quill-editor formControlName="description" [styles]="{minHeight: '150px'}" 
-                              placeholder="Describe this additional tour leg...">
+                              placeholder="Describe this additional event leg...">
                             </quill-editor>
                           </mat-form-field>
                         </div>
@@ -460,13 +460,13 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
                   <mat-icon>arrow_back</mat-icon>
                   Previous
                 </button>
-                <button mat-raised-button color="primary" type="submit" [disabled]="tourForm.invalid || saving()">
+                <button mat-raised-button color="primary" type="submit" [disabled]="eventForm.invalid || saving()">
                   <mat-icon>{{ saving() ? 'hourglass_empty' : 'save' }}</mat-icon>
                   {{ saving() ? 'Saving...' : 'Save as Draft' }}
                 </button>
-                <button mat-raised-button color="accent" type="button" (click)="publishTour()" [disabled]="tourForm.invalid || saving()">
+                <button mat-raised-button color="accent" type="button" (click)="publishEvent()" [disabled]="eventForm.invalid || saving()">
                   <mat-icon>publish</mat-icon>
-                  Publish Tour
+                  Publish Event
                 </button>
               </div>
             </div>
@@ -476,7 +476,7 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
     </div>
   `,
   styles: [`
-    .create-tour-container {
+    .create-event-container {
       max-width: 1000px;
       margin: 0 auto;
       padding: 2rem 1rem;
@@ -493,7 +493,7 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
       margin-top: 0.5rem;
     }
 
-    .tour-form {
+    .event-form {
       background: rgba(26, 26, 62, 0.6);
       border-radius: 16px;
       padding: 2rem;
@@ -529,7 +529,7 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
     .third-width { flex: 1; max-width: calc(33.333% - 0.67rem); }
     .quarter-width { flex: 1; max-width: calc(25% - 0.75rem); }
 
-    .speaker-card, .tour-leg-card {
+    .speaker-card, .event-leg-card {
       margin-bottom: 1rem;
       background: rgba(45, 45, 95, 0.5);
       border: 1px solid var(--cosmic-border);
@@ -551,7 +551,7 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
       padding: 1rem 0;
     }
 
-    .contact-section, .pricing-section, .tour-legs-section, .more-info-section {
+    .contact-section, .pricing-section, .event-legs-section, .more-info-section {
       margin-bottom: 3rem;
     }
 
@@ -604,7 +604,7 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
     }
 
     @media (max-width: 768px) {
-      .create-tour-container {
+      .create-event-container {
         padding: 1rem 0.5rem;
       }
 
@@ -645,30 +645,30 @@ import { Tour, Speaker, ItineraryDay, TourLeg, MoreInfoItem, TourType } from '..
     QuillModule
   ]
 })
-export class CreateTourComponent implements OnInit {
+export class CreateEventComponent implements OnInit {
   private fb = inject(FormBuilder);
-  private tourService = inject(TourService);
+  private eventService = inject(EventService);
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
 
-  tourForm!: FormGroup;
+  eventForm!: FormGroup;
   saving = signal(false);
-  tourTypes = this.tourService.getTourTypes();
+  eventTypes = this.eventService.getEventTypes();
 
   // Form groups for easier access
-  get basicInfoGroup() { return this.tourForm.get('basicInfo') as FormGroup; }
-  get contactGroup() { return this.tourForm.get('contact') as FormGroup; }
-  get speakersArray() { return this.tourForm.get('speakers') as FormArray; }
-  get itineraryArray() { return this.tourForm.get('itinerary') as FormArray; }
-  get additionalLegsArray() { return this.tourForm.get('additionalLegs') as FormArray; }
-  get moreInfoArray() { return this.tourForm.get('moreInfo') as FormArray; }
+  get basicInfoGroup() { return this.eventForm.get('basicInfo') as FormGroup; }
+  get contactGroup() { return this.eventForm.get('contact') as FormGroup; }
+  get speakersArray() { return this.eventForm.get('speakers') as FormArray; }
+  get itineraryArray() { return this.eventForm.get('itinerary') as FormArray; }
+  get additionalLegsArray() { return this.eventForm.get('additionalLegs') as FormArray; }
+  get moreInfoArray() { return this.eventForm.get('moreInfo') as FormArray; }
 
   ngOnInit(): void {
     this.initializeForm();
   }
 
   private initializeForm(): void {
-    this.tourForm = this.fb.group({
+    this.eventForm = this.fb.group({
       basicInfo: this.fb.group({
         title: ['', Validators.required],
         subtitle: [''],
@@ -700,7 +700,7 @@ export class CreateTourComponent implements OnInit {
   // Speaker methods
   createSpeakerGroup(): FormGroup {
     return this.fb.group({
-      id: [this.tourService.generateId()],
+      id: [this.eventService.generateId()],
       name: ['', Validators.required],
       link: [''],
       image: [''],
@@ -738,7 +738,7 @@ export class CreateTourComponent implements OnInit {
   // Itinerary methods
   createItineraryGroup(): FormGroup {
     return this.fb.group({
-      id: [this.tourService.generateId()],
+      id: [this.eventService.generateId()],
       title: ['', Validators.required],
       image: [''],
       description: ['', Validators.required],
@@ -772,10 +772,10 @@ export class CreateTourComponent implements OnInit {
     });
   }
 
-  // Tour Leg methods
-  createTourLegGroup(): FormGroup {
+  // Event Leg methods
+  createEventLegGroup(): FormGroup {
     return this.fb.group({
-      id: [this.tourService.generateId()],
+      id: [this.eventService.generateId()],
       title: ['', Validators.required],
       image: [''],
       description: ['', Validators.required],
@@ -785,16 +785,16 @@ export class CreateTourComponent implements OnInit {
     });
   }
 
-  addTourLeg(): void {
-    this.additionalLegsArray.push(this.createTourLegGroup());
+  addEventLeg(): void {
+    this.additionalLegsArray.push(this.createEventLegGroup());
   }
 
-  removeTourLeg(index: number): void {
+  removeEventLeg(index: number): void {
     this.additionalLegsArray.removeAt(index);
-    this.updateTourLegOrders();
+    this.updateEventLegOrders();
   }
 
-  dropTourLeg(event: CdkDragDrop<any[]>): void {
+  dropEventLeg(event: CdkDragDrop<any[]>): void {
     const array = this.additionalLegsArray;
     const from = event.previousIndex;
     const to = event.currentIndex;
@@ -802,10 +802,10 @@ export class CreateTourComponent implements OnInit {
     const item = array.at(from);
     array.removeAt(from);
     array.insert(to, item);
-    this.updateTourLegOrders();
+    this.updateEventLegOrders();
   }
 
-  private updateTourLegOrders(): void {
+  private updateEventLegOrders(): void {
     this.additionalLegsArray.controls.forEach((control, index) => {
       control.get('order')?.setValue(index);
     });
@@ -814,7 +814,7 @@ export class CreateTourComponent implements OnInit {
   // More Info methods
   createMoreInfoGroup(): FormGroup {
     return this.fb.group({
-      id: [this.tourService.generateId()],
+      id: [this.eventService.generateId()],
       title: ['', Validators.required],
       description: ['', Validators.required],
       order: [this.moreInfoArray.length]
@@ -849,26 +849,26 @@ export class CreateTourComponent implements OnInit {
 
   // Form submission
   onSubmit(): void {
-    if (this.tourForm.valid) {
-      this.saveTour('draft');
+    if (this.eventForm.valid) {
+      this.saveEvent('draft');
     } else {
       this.showFormErrors();
     }
   }
 
-  publishTour(): void {
-    if (this.tourForm.valid && this.validateContactInfo()) {
-      this.saveTour('published');
+  publishEvent(): void {
+    if (this.eventForm.valid && this.validateContactInfo()) {
+      this.saveEvent('published');
     } else {
       this.showFormErrors();
     }
   }
 
-  private saveTour(status: 'draft' | 'published'): void {
+  private saveEvent(status: 'draft' | 'published'): void {
     this.saving.set(true);
     
-    const formValue = this.tourForm.value;
-    const tour: Partial<Tour> = {
+    const formValue = this.eventForm.value;
+    const event: Partial<Event> = {
       ...formValue.basicInfo,
       speakers: formValue.speakers,
       itinerary: formValue.itinerary,
@@ -882,17 +882,17 @@ export class CreateTourComponent implements OnInit {
       updatedAt: new Date()
     };
 
-    this.tourService.createTour(tour).subscribe({
-      next: (savedTour) => {
+    this.eventService.createEvent(event).subscribe({
+      next: (savedEvent) => {
         this.saving.set(false);
-        const message = status === 'published' ? 'Tour published successfully!' : 'Tour saved as draft!';
+        const message = status === 'published' ? 'Event published successfully!' : 'Event saved as draft!';
         this.snackBar.open(message, 'Close', { duration: 3000 });
-        this.router.navigate(['/my-tours']);
+        this.router.navigate(['/my-events']);
       },
       error: (error) => {
         this.saving.set(false);
-        console.error('Error saving tour:', error);
-        this.snackBar.open('Error saving tour. Please try again.', 'Close', { duration: 5000 });
+        console.error('Error saving event:', error);
+        this.snackBar.open('Error saving event. Please try again.', 'Close', { duration: 5000 });
       }
     });
   }

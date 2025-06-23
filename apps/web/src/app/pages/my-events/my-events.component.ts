@@ -5,24 +5,24 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
-import { TourService } from '../../services/tour.service';
-import { TourCardComponent } from '../../components/tour-card/tour-card.component';
-import { Tour, TourStatus } from '../../models/tour.model';
+import { EventService } from '../../services/event.service';
+import { EventCardComponent } from '../../components/event-card/event-card.component';
+import { Event, EventStatus } from '../../models/event.model';
 
 @Component({
-  selector: 'app-my-tours',
+  selector: 'app-my-events',
   template: `
-    <div class="my-tours-container">
+    <div class="my-events-container">
       <div class="header-section">
-        <h1 class="cosmic-title">My Tours</h1>
+        <h1 class="cosmic-title">My Events</h1>
         <p class="subtitle">Manage your cosmic adventures</p>
         <button mat-raised-button color="primary" routerLink="/create" class="create-button">
           <mat-icon>add</mat-icon>
-          Create New Tour
+          Create New Event
         </button>
       </div>
 
-      <mat-tab-group class="tours-tabs" (selectedTabChange)="onTabChange($event)">
+      <mat-tab-group class="events-tabs" (selectedTabChange)="onTabChange($event)">
         <mat-tab label="Published">
           <div class="tab-content">
             @if (loading()) {
@@ -31,26 +31,26 @@ import { Tour, TourStatus } from '../../models/tour.model';
                   <div class="planet"></div>
                   <div class="orbit"></div>
                 </div>
-                <p>Loading your published tours...</p>
+                <p>Loading your published events...</p>
               </div>
-            } @else if (publishedTours().length === 0) {
+            } @else if (publishedEvents().length === 0) {
               <div class="empty-state">
                 <mat-icon>public_off</mat-icon>
-                <h3>No Published Tours</h3>
-                <p>You haven't published any tours yet. Create your first cosmic adventure!</p>
+                <h3>No Published Events</h3>
+                <p>You haven't published any events yet. Create your first cosmic adventure!</p>
                 <button mat-raised-button color="primary" routerLink="/create">
                   <mat-icon>add</mat-icon>
-                  Create Your First Tour
+                  Create Your First Event
                 </button>
               </div>
             } @else {
-              <div class="tours-grid">
-                @for (tour of publishedTours(); track tour.id) {
-                  <app-tour-card 
-                    [tour]="tour" 
+              <div class="events-grid">
+                @for (event of publishedEvents(); track event.id) {
+                  <app-event-card 
+                    [event]="event" 
                     [showEditActions]="true"
-                    (edit)="editTour($event)"
-                    (toggleStatus)="toggleTourStatus($event)" />
+                    (edit)="editEvent($event)"
+                    (toggleStatus)="toggleEventStatus($event)" />
                 }
               </div>
             }
@@ -65,26 +65,26 @@ import { Tour, TourStatus } from '../../models/tour.model';
                   <div class="planet"></div>
                   <div class="orbit"></div>
                 </div>
-                <p>Loading your draft tours...</p>
+                <p>Loading your draft events...</p>
               </div>
-            } @else if (draftTours().length === 0) {
+            } @else if (draftEvents().length === 0) {
               <div class="empty-state">
                 <mat-icon>drafts</mat-icon>
-                <h3>No Draft Tours</h3>
-                <p>You don't have any draft tours. Start creating your next adventure!</p>
+                <h3>No Draft Events</h3>
+                <p>You don't have any draft events. Start creating your next adventure!</p>
                 <button mat-raised-button color="primary" routerLink="/create">
                   <mat-icon>add</mat-icon>
-                  Create New Tour
+                  Create New Event
                 </button>
               </div>
             } @else {
-              <div class="tours-grid">
-                @for (tour of draftTours(); track tour.id) {
-                  <app-tour-card 
-                    [tour]="tour" 
+              <div class="events-grid">
+                @for (event of draftEvents(); track event.id) {
+                  <app-event-card 
+                    [event]="event" 
                     [showEditActions]="true"
-                    (edit)="editTour($event)"
-                    (toggleStatus)="toggleTourStatus($event)" />
+                    (edit)="editEvent($event)"
+                    (toggleStatus)="toggleEventStatus($event)" />
                 }
               </div>
             }
@@ -99,22 +99,22 @@ import { Tour, TourStatus } from '../../models/tour.model';
                   <div class="planet"></div>
                   <div class="orbit"></div>
                 </div>
-                <p>Loading your archived tours...</p>
+                <p>Loading your archived events...</p>
               </div>
-            } @else if (archivedTours().length === 0) {
+            } @else if (archivedEvents().length === 0) {
               <div class="empty-state">
                 <mat-icon>archive</mat-icon>
-                <h3>No Archived Tours</h3>
-                <p>You don't have any archived tours.</p>
+                <h3>No Archived Events</h3>
+                <p>You don't have any archived events.</p>
               </div>
             } @else {
-              <div class="tours-grid">
-                @for (tour of archivedTours(); track tour.id) {
-                  <app-tour-card 
-                    [tour]="tour" 
+              <div class="events-grid">
+                @for (event of archivedEvents(); track event.id) {
+                  <app-event-card 
+                    [event]="event" 
                     [showEditActions]="true"
-                    (edit)="editTour($event)"
-                    (toggleStatus)="toggleTourStatus($event)" />
+                    (edit)="editEvent($event)"
+                    (toggleStatus)="toggleEventStatus($event)" />
                 }
               </div>
             }
@@ -124,7 +124,7 @@ import { Tour, TourStatus } from '../../models/tour.model';
     </div>
   `,
   styles: [`
-    .my-tours-container {
+    .my-events-container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 1rem;
@@ -157,7 +157,7 @@ import { Tour, TourStatus } from '../../models/tour.model';
       box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
     }
 
-    .tours-tabs {
+    .events-tabs {
       background: rgba(26, 26, 62, 0.6);
       border-radius: 16px;
       padding: 1rem;
@@ -170,7 +170,7 @@ import { Tour, TourStatus } from '../../models/tour.model';
       min-height: 400px;
     }
 
-    .tours-grid {
+    .events-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
       gap: 2rem;
@@ -244,11 +244,11 @@ import { Tour, TourStatus } from '../../models/tour.model';
     }
 
     @media (max-width: 768px) {
-      .my-tours-container {
+      .my-events-container {
         padding: 0 0.5rem;
       }
 
-      .tours-grid {
+      .events-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
       }
@@ -292,104 +292,104 @@ import { Tour, TourStatus } from '../../models/tour.model';
     MatButtonModule,
     MatIconModule,
     MatSnackBarModule,
-    TourCardComponent
+    EventCardComponent
   ]
 })
-export class MyToursComponent implements OnInit {
-  private tourService = inject(TourService);
+export class MyEventsComponent implements OnInit {
+  private eventService = inject(EventService);
   private snackBar = inject(MatSnackBar);
 
   // Signals for reactive state management
-  publishedTours = signal<Tour[]>([]);
-  draftTours = signal<Tour[]>([]);
-  archivedTours = signal<Tour[]>([]);
+  publishedEvents = signal<Event[]>([]);
+  draftEvents = signal<Event[]>([]);
+  archivedEvents = signal<Event[]>([]);
   loading = signal(false);
   currentTab = signal(0);
 
   ngOnInit(): void {
-    this.loadTours('published');
+    this.loadEvents('published');
   }
 
   onTabChange(event: any): void {
     this.currentTab.set(event.index);
-    const statuses: TourStatus[] = ['published', 'draft', 'archived'];
-    this.loadTours(statuses[event.index]);
+    const statuses: EventStatus[] = ['published', 'draft', 'archived'];
+    this.loadEvents(statuses[event.index]);
   }
 
-  private loadTours(status: TourStatus): void {
+  private loadEvents(status: EventStatus): void {
     this.loading.set(true);
     
-    this.tourService.getUserTours(status).subscribe({
-      next: (tours) => {
+    this.eventService.getUserEvents(status).subscribe({
+      next: (events) => {
         switch (status) {
           case 'published':
-            this.publishedTours.set(tours);
+            this.publishedEvents.set(events);
             break;
           case 'draft':
-            this.draftTours.set(tours);
+            this.draftEvents.set(events);
             break;
           case 'archived':
-            this.archivedTours.set(tours);
+            this.archivedEvents.set(events);
             break;
         }
         this.loading.set(false);
       },
       error: (error) => {
-        console.error(`Error loading ${status} tours:`, error);
+        console.error(`Error loading ${status} events:`, error);
         this.loading.set(false);
-        this.snackBar.open(`Error loading ${status} tours`, 'Close', { duration: 3000 });
+        this.snackBar.open(`Error loading ${status} events`, 'Close', { duration: 3000 });
       }
     });
   }
 
-  editTour(tour: Tour): void {
-    this.tourService.setCurrentTour(tour);
+  editEvent(event: Event): void {
+    this.eventService.setCurrentEvent(event);
     // Navigate to edit mode - this would be implemented with route params
     // For now, we'll just show a message
     this.snackBar.open('Edit functionality will be implemented with route parameters', 'Close', { duration: 3000 });
   }
 
-  toggleTourStatus(tour: Tour): void {
-    const newStatus: TourStatus = tour.status === 'published' ? 'draft' : 'published';
+  toggleEventStatus(event: Event): void {
+    const newStatus: EventStatus = event.status === 'published' ? 'draft' : 'published';
     const action = newStatus === 'published' ? 'publish' : 'unpublish';
     
     this.loading.set(true);
     
-    this.tourService.changeTourStatus(tour.id, newStatus).subscribe({
-      next: (updatedTour) => {
-        // Update the tour in the appropriate array
-        this.updateTourInArrays(updatedTour);
+    this.eventService.changeEventStatus(event.id, newStatus).subscribe({
+      next: (updatedEvent) => {
+        // Update the event in the appropriate array
+        this.updateEventInArrays(updatedEvent);
         this.loading.set(false);
         
         const message = newStatus === 'published' ? 
-          'Tour published successfully!' : 
-          'Tour moved to drafts!';
+          'Event published successfully!' : 
+          'Event moved to drafts!';
         this.snackBar.open(message, 'Close', { duration: 3000 });
       },
       error: (error) => {
-        console.error(`Error ${action}ing tour:`, error);
+        console.error(`Error ${action}ing event:`, error);
         this.loading.set(false);
-        this.snackBar.open(`Error ${action}ing tour`, 'Close', { duration: 3000 });
+        this.snackBar.open(`Error ${action}ing event`, 'Close', { duration: 3000 });
       }
     });
   }
 
-  private updateTourInArrays(updatedTour: Tour): void {
+  private updateEventInArrays(updatedEvent: Event): void {
     // Remove from all arrays
-    this.publishedTours.update(tours => tours.filter(t => t.id !== updatedTour.id));
-    this.draftTours.update(tours => tours.filter(t => t.id !== updatedTour.id));
-    this.archivedTours.update(tours => tours.filter(t => t.id !== updatedTour.id));
+    this.publishedEvents.update(events => events.filter(t => t.id !== updatedEvent.id));
+    this.draftEvents.update(events => events.filter(t => t.id !== updatedEvent.id));
+    this.archivedEvents.update(events => events.filter(t => t.id !== updatedEvent.id));
 
     // Add to appropriate array
-    switch (updatedTour.status) {
+    switch (updatedEvent.status) {
       case 'published':
-        this.publishedTours.update(tours => [updatedTour, ...tours]);
+        this.publishedEvents.update(events => [updatedEvent, ...events]);
         break;
       case 'draft':
-        this.draftTours.update(tours => [updatedTour, ...tours]);
+        this.draftEvents.update(events => [updatedEvent, ...events]);
         break;
       case 'archived':
-        this.archivedTours.update(tours => [updatedTour, ...tours]);
+        this.archivedEvents.update(events => [updatedEvent, ...events]);
         break;
     }
   }

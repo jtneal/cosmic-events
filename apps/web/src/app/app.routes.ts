@@ -1,11 +1,11 @@
 import { Route } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { CreateTourComponent } from './pages/create-tour/create-tour.component';
+import { CreateEventComponent } from './pages/create-event/create-event.component';
 
 export const appRoutes: Route[] = [
   { path: '', component: HomeComponent },
-  { path: 'create', component: CreateTourComponent },
-  { path: 'my-tours', loadComponent: () => import('./pages/my-tours/my-tours.component').then(m => m.MyToursComponent) },
-  { path: 'tour/:id', loadComponent: () => import('./pages/tour-detail/tour-detail.component').then(m => m.TourDetailComponent) },
+  { path: 'create', component: CreateEventComponent },
+  { path: 'my-events', loadComponent: () => import('./pages/my-events/my-events.component').then(m => m.MyEventsComponent) },
+  { path: 'event/:id', loadComponent: () => import('./pages/event-detail/event-detail.component').then(m => m.EventDetailComponent) },
   { path: '**', redirectTo: '' }
 ];
