@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HeaderComponent } from './components/header/header.component';
+import { Footer, Header } from '@cosmic-events/common-ui';
 
 @Component({
-  imports: [HeaderComponent, RouterModule],
+  imports: [Footer, Header, RouterModule],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',

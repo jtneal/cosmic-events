@@ -1,22 +1,27 @@
-import { Component, OnInit, signal, computed, inject } from '@angular/core';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { QuillModule } from 'ngx-quill';
+import { Router } from '@angular/router';
+import { Event } from '../../models/event.model';
 import { EventService } from '../../services/event.service';
-import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from '../../models/event.model';
 
 @Component({
   selector: 'app-create-event',
@@ -24,7 +29,9 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
     <div class="create-event-container">
       <div class="header-section">
         <h1 class="cosmic-title">Create Your Cosmic Adventure</h1>
-        <p class="subtitle">Share your extraordinary journey with fellow explorers</p>
+        <p class="subtitle">
+          Share your extraordinary journey with fellow explorers
+        </p>
       </div>
 
       <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="event-form">
@@ -35,8 +42,14 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
               <div class="form-row">
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Event Title *</mat-label>
-                  <input matInput formControlName="title" placeholder="Ancient Mysteries of Egypt">
-                  <mat-error *ngIf="basicInfoGroup.get('title')?.hasError('required')">
+                  <input
+                    matInput
+                    formControlName="title"
+                    placeholder="Ancient Mysteries of Egypt"
+                  />
+                  <mat-error
+                    *ngIf="basicInfoGroup.get('title')?.hasError('required')"
+                  >
                     Title is required
                   </mat-error>
                 </mat-form-field>
@@ -45,7 +58,11 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
               <div class="form-row">
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Subtitle</mat-label>
-                  <input matInput formControlName="subtitle" placeholder="Explore the secrets of the pharaohs">
+                  <input
+                    matInput
+                    formControlName="subtitle"
+                    placeholder="Explore the secrets of the pharaohs"
+                  />
                 </mat-form-field>
               </div>
 
@@ -54,27 +71,41 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
                   <mat-label>Event Type *</mat-label>
                   <mat-select formControlName="type">
                     @for (type of eventTypes; track type.value) {
-                      <mat-option [value]="type.value">{{ type.label }}</mat-option>
+                    <mat-option [value]="type.value">{{
+                      type.label
+                    }}</mat-option>
                     }
                   </mat-select>
-                  <mat-error *ngIf="basicInfoGroup.get('type')?.hasError('required')">
+                  <mat-error
+                    *ngIf="basicInfoGroup.get('type')?.hasError('required')"
+                  >
                     Event type is required
                   </mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="half-width">
                   <mat-label>Featured Image URL</mat-label>
-                  <input matInput formControlName="featuredImage" placeholder="https://example.com/image.jpg">
+                  <input
+                    matInput
+                    formControlName="featuredImage"
+                    placeholder="https://example.com/image.jpg"
+                  />
                 </mat-form-field>
               </div>
 
               <div class="form-row">
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Description *</mat-label>
-                  <quill-editor formControlName="description" [styles]="{minHeight: '200px'}" 
-                    placeholder="Describe your event in detail...">
-                  </quill-editor>
-                  <mat-error *ngIf="basicInfoGroup.get('description')?.hasError('required')">
+                  <textarea matInput
+                    formControlName="description"
+                    placeholder="Describe your event in detail..."
+                  >
+                  </textarea>
+                  <mat-error
+                    *ngIf="
+                      basicInfoGroup.get('description')?.hasError('required')
+                    "
+                  >
                     Description is required
                   </mat-error>
                 </mat-form-field>
@@ -83,20 +114,40 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
               <div class="form-row">
                 <mat-form-field appearance="outline" class="half-width">
                   <mat-label>Start Date *</mat-label>
-                  <input matInput [matDatepicker]="startPicker" formControlName="startDate">
-                  <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                  <input
+                    matInput
+                    [matDatepicker]="startPicker"
+                    formControlName="startDate"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="startPicker"
+                  ></mat-datepicker-toggle>
                   <mat-datepicker #startPicker></mat-datepicker>
-                  <mat-error *ngIf="basicInfoGroup.get('startDate')?.hasError('required')">
+                  <mat-error
+                    *ngIf="
+                      basicInfoGroup.get('startDate')?.hasError('required')
+                    "
+                  >
                     Start date is required
                   </mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="half-width">
                   <mat-label>End Date *</mat-label>
-                  <input matInput [matDatepicker]="endPicker" formControlName="endDate">
-                  <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                  <input
+                    matInput
+                    [matDatepicker]="endPicker"
+                    formControlName="endDate"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="endPicker"
+                  ></mat-datepicker-toggle>
                   <mat-datepicker #endPicker></mat-datepicker>
-                  <mat-error *ngIf="basicInfoGroup.get('endDate')?.hasError('required')">
+                  <mat-error
+                    *ngIf="basicInfoGroup.get('endDate')?.hasError('required')"
+                  >
                     End date is required
                   </mat-error>
                 </mat-form-field>
@@ -105,12 +156,21 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
               <div class="form-row">
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Video Link (YouTube, Vimeo, etc.)</mat-label>
-                  <input matInput formControlName="videoLink" placeholder="https://youtube.com/watch?v=...">
+                  <input
+                    matInput
+                    formControlName="videoLink"
+                    placeholder="https://youtube.com/watch?v=..."
+                  />
                 </mat-form-field>
               </div>
 
               <div class="step-actions">
-                <button mat-raised-button color="primary" matStepperNext type="button">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  matStepperNext
+                  type="button"
+                >
                   Next: Speakers
                   <mat-icon>arrow_forward</mat-icon>
                 </button>
@@ -123,60 +183,92 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
             <div class="step-content">
               <div class="section-header">
                 <h3>Event Speakers & Experts</h3>
-                <button mat-raised-button color="accent" type="button" (click)="addSpeaker()">
+                <button
+                  mat-raised-button
+                  color="accent"
+                  type="button"
+                  (click)="addSpeaker()"
+                >
                   <mat-icon>person_add</mat-icon>
                   Add Speaker
                 </button>
               </div>
 
-              <div formArrayName="speakers" cdkDropList (cdkDropListDropped)="dropSpeaker($event)">
-                @for (speaker of speakersArray.controls; track speaker; let i = $index) {
-                  <mat-card class="speaker-card" cdkDrag>
-                    <mat-card-header>
-                      <mat-card-title>Speaker {{ i + 1 }}</mat-card-title>
-                      <button mat-icon-button color="warn" type="button" (click)="removeSpeaker(i)">
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </mat-card-header>
-                    
-                    <mat-card-content [formGroupName]="i">
-                      <div class="form-row">
-                        <mat-form-field appearance="outline" class="half-width">
-                          <mat-label>Full Name *</mat-label>
-                          <input matInput formControlName="name" placeholder="Dr. Michio Kaku">
-                        </mat-form-field>
-                        
-                        <mat-form-field appearance="outline" class="half-width">
-                          <mat-label>Website/Link</mat-label>
-                          <input matInput formControlName="link" placeholder="https://website.com">
-                        </mat-form-field>
-                      </div>
+              <div
+                formArrayName="speakers"
+                cdkDropList
+                (cdkDropListDropped)="dropSpeaker($event)"
+              >
+                @for (speaker of speakersArray.controls; track speaker; let i =
+                $index) {
+                <mat-card class="speaker-card" cdkDrag>
+                  <mat-card-header>
+                    <mat-card-title>Speaker {{ i + 1 }}</mat-card-title>
+                    <button
+                      mat-icon-button
+                      color="warn"
+                      type="button"
+                      (click)="removeSpeaker(i)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </mat-card-header>
 
-                      <div class="form-row">
-                        <mat-form-field appearance="outline" class="full-width">
-                          <mat-label>Image URL</mat-label>
-                          <input matInput formControlName="image" placeholder="https://example.com/speaker.jpg">
-                        </mat-form-field>
-                      </div>
+                  <mat-card-content [formGroupName]="i">
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="half-width">
+                        <mat-label>Full Name *</mat-label>
+                        <input
+                          matInput
+                          formControlName="name"
+                          placeholder="Dr. Michio Kaku"
+                        />
+                      </mat-form-field>
 
-                      <div class="form-row">
-                        <mat-form-field appearance="outline" class="full-width">
-                          <mat-label>Biography</mat-label>
-                          <quill-editor formControlName="biography" [styles]="{minHeight: '150px'}" 
-                            placeholder="Speaker's background and expertise...">
-                          </quill-editor>
-                        </mat-form-field>
-                      </div>
-                    </mat-card-content>
-                  </mat-card>
+                      <mat-form-field appearance="outline" class="half-width">
+                        <mat-label>Website/Link</mat-label>
+                        <input
+                          matInput
+                          formControlName="link"
+                          placeholder="https://website.com"
+                        />
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Image URL</mat-label>
+                        <input
+                          matInput
+                          formControlName="image"
+                          placeholder="https://example.com/speaker.jpg"
+                        />
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Biography</mat-label>
+                        <textarea matInput
+                          formControlName="biography"
+                          placeholder="Speaker's background and expertise..."
+                        >
+                        </textarea>
+                      </mat-form-field>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
                 }
               </div>
 
               @if (speakersArray.length === 0) {
-                <div class="empty-state">
-                  <mat-icon>person_off</mat-icon>
-                  <p>No speakers added yet. Add speakers to enhance your event's credibility.</p>
-                </div>
+              <div class="empty-state">
+                <mat-icon>person_off</mat-icon>
+                <p>
+                  No speakers added yet. Add speakers to enhance your event's
+                  credibility.
+                </p>
+              </div>
               }
 
               <div class="step-actions">
@@ -184,7 +276,12 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
                   <mat-icon>arrow_back</mat-icon>
                   Previous
                 </button>
-                <button mat-raised-button color="primary" matStepperNext type="button">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  matStepperNext
+                  type="button"
+                >
                   Next: Itinerary
                   <mat-icon>arrow_forward</mat-icon>
                 </button>
@@ -197,58 +294,89 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
             <div class="step-content">
               <div class="section-header">
                 <h3>Event Itinerary</h3>
-                <button mat-raised-button color="accent" type="button" (click)="addItineraryDay()">
+                <button
+                  mat-raised-button
+                  color="accent"
+                  type="button"
+                  (click)="addItineraryDay()"
+                >
                   <mat-icon>add_circle</mat-icon>
                   Add Day
                 </button>
               </div>
 
-              <div formArrayName="itinerary" cdkDropList (cdkDropListDropped)="dropItinerary($event)">
-                @for (day of itineraryArray.controls; track day; let i = $index) {
-                  <mat-expansion-panel class="itinerary-panel" cdkDrag>
-                    <mat-expansion-panel-header>
-                      <mat-panel-title>
-                        <mat-icon cdkDragHandle>drag_handle</mat-icon>
-                        Day {{ i + 1 }}: {{ day.get('title')?.value || 'Untitled' }}
-                      </mat-panel-title>
-                      <mat-panel-description>
-                        <button mat-icon-button color="warn" type="button" (click)="removeItineraryDay(i); $event.stopPropagation()">
-                          <mat-icon>delete</mat-icon>
-                        </button>
-                      </mat-panel-description>
-                    </mat-expansion-panel-header>
+              <div
+                formArrayName="itinerary"
+                cdkDropList
+                (cdkDropListDropped)="dropItinerary($event)"
+              >
+                @for (day of itineraryArray.controls; track day; let i = $index)
+                {
+                <mat-expansion-panel class="itinerary-panel" cdkDrag>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <mat-icon cdkDragHandle>drag_handle</mat-icon>
+                      Day {{ i + 1 }}:
+                      {{ day.get('title')?.value || 'Untitled' }}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      <button
+                        mat-icon-button
+                        color="warn"
+                        type="button"
+                        (click)="
+                          removeItineraryDay(i); $event.stopPropagation()
+                        "
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
 
-                    <div [formGroupName]="i" class="itinerary-content">
-                      <div class="form-row">
-                        <mat-form-field appearance="outline" class="half-width">
-                          <mat-label>Day Title *</mat-label>
-                          <input matInput formControlName="title" placeholder="Arrival in Cairo">
-                        </mat-form-field>
-                        
-                        <mat-form-field appearance="outline" class="half-width">
-                          <mat-label>Image URL</mat-label>
-                          <input matInput formControlName="image" placeholder="https://example.com/day1.jpg">
-                        </mat-form-field>
-                      </div>
+                  <div [formGroupName]="i" class="itinerary-content">
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="half-width">
+                        <mat-label>Day Title *</mat-label>
+                        <input
+                          matInput
+                          formControlName="title"
+                          placeholder="Arrival in Cairo"
+                        />
+                      </mat-form-field>
 
-                      <div class="form-row">
-                        <mat-form-field appearance="outline" class="full-width">
-                          <mat-label>Description *</mat-label>
-                          <quill-editor formControlName="description" [styles]="{minHeight: '150px'}" 
-                            placeholder="Describe the day's activities...">
-                          </quill-editor>
-                        </mat-form-field>
-                      </div>
+                      <mat-form-field appearance="outline" class="half-width">
+                        <mat-label>Image URL</mat-label>
+                        <input
+                          matInput
+                          formControlName="image"
+                          placeholder="https://example.com/day1.jpg"
+                        />
+                      </mat-form-field>
                     </div>
-                  </mat-expansion-panel>
+
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Description *</mat-label>
+                        <textarea matInput
+                          formControlName="description"
+                          placeholder="Describe the day's activities..."
+                        >
+                        </textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
                 }
               </div>
 
               @if (itineraryArray.length === 0) {
-                <div class="empty-state">
-                  <mat-icon>event_note</mat-icon>
-                  <p>No itinerary days added yet. Create a day-by-day schedule for your event.</p>
-                </div>
+              <div class="empty-state">
+                <mat-icon>event_note</mat-icon>
+                <p>
+                  No itinerary days added yet. Create a day-by-day schedule for
+                  your event.
+                </p>
+              </div>
               }
 
               <div class="step-actions">
@@ -256,7 +384,12 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
                   <mat-icon>arrow_back</mat-icon>
                   Previous
                 </button>
-                <button mat-raised-button color="primary" matStepperNext type="button">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  matStepperNext
+                  type="button"
+                >
                   Next: Additional Details
                   <mat-icon>arrow_forward</mat-icon>
                 </button>
@@ -272,33 +405,53 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
                 <div class="form-row">
                   <mat-form-field appearance="outline" class="half-width">
                     <mat-label>Contact Name *</mat-label>
-                    <input matInput formControlName="name" placeholder="John Smith">
-                    <mat-error *ngIf="contactGroup.get('name')?.hasError('required')">
+                    <input
+                      matInput
+                      formControlName="name"
+                      placeholder="John Smith"
+                    />
+                    <mat-error
+                      *ngIf="contactGroup.get('name')?.hasError('required')"
+                    >
                       Contact name is required
                     </mat-error>
                   </mat-form-field>
-                  
+
                   <mat-form-field appearance="outline" class="half-width">
                     <mat-label>Email</mat-label>
-                    <input matInput type="email" formControlName="email" placeholder="contact@example.com">
+                    <input
+                      matInput
+                      type="email"
+                      formControlName="email"
+                      placeholder="contact@example.com"
+                    />
                   </mat-form-field>
                 </div>
 
                 <div class="form-row">
                   <mat-form-field appearance="outline" class="half-width">
                     <mat-label>Phone</mat-label>
-                    <input matInput formControlName="phone" placeholder="+1 (555) 123-4567">
+                    <input
+                      matInput
+                      formControlName="phone"
+                      placeholder="+1 (555) 123-4567"
+                    />
                   </mat-form-field>
-                  
+
                   <mat-form-field appearance="outline" class="half-width">
                     <mat-label>Website</mat-label>
-                    <input matInput formControlName="website" placeholder="https://youreventcompany.com">
+                    <input
+                      matInput
+                      formControlName="website"
+                      placeholder="https://youreventcompany.com"
+                    />
                   </mat-form-field>
                 </div>
-                
+
                 <p class="contact-note">
                   <mat-icon>info</mat-icon>
-                  You must provide at least one way to contact you (email, phone, or website)
+                  You must provide at least one way to contact you (email,
+                  phone, or website)
                 </p>
               </div>
 
@@ -314,15 +467,25 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
                       <mat-option value="¥">JPY (¥)</mat-option>
                     </mat-select>
                   </mat-form-field>
-                  
+
                   <mat-form-field appearance="outline" class="third-width">
                     <mat-label>Double Occupancy Price</mat-label>
-                    <input matInput type="number" formControlName="doubleOccupancy" placeholder="2500">
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="doubleOccupancy"
+                      placeholder="2500"
+                    />
                   </mat-form-field>
-                  
+
                   <mat-form-field appearance="outline" class="third-width">
                     <mat-label>Single Occupancy Price</mat-label>
-                    <input matInput type="number" formControlName="singleOccupancy" placeholder="3500">
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="singleOccupancy"
+                      placeholder="3500"
+                    />
                   </mat-form-field>
                 </div>
               </div>
@@ -332,7 +495,12 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
                   <mat-icon>arrow_back</mat-icon>
                   Previous
                 </button>
-                <button mat-raised-button color="primary" matStepperNext type="button">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  matStepperNext
+                  type="button"
+                >
                   Next: Additional Info
                   <mat-icon>arrow_forward</mat-icon>
                 </button>
@@ -347,63 +515,103 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
               <div class="event-legs-section">
                 <div class="section-header">
                   <h3>Additional Event Legs</h3>
-                  <button mat-raised-button color="accent" type="button" (click)="addEventLeg()">
+                  <button
+                    mat-raised-button
+                    color="accent"
+                    type="button"
+                    (click)="addEventLeg()"
+                  >
                     <mat-icon>add_location</mat-icon>
                     Add Event Leg
                   </button>
                 </div>
 
-                <div formArrayName="additionalLegs" cdkDropList (cdkDropListDropped)="dropEventLeg($event)">
-                  @for (leg of additionalLegsArray.controls; track leg; let i = $index) {
-                    <mat-card class="event-leg-card" cdkDrag>
-                      <mat-card-header>
-                        <mat-card-title>
-                          <mat-icon cdkDragHandle>drag_handle</mat-icon>
-                          Event Leg {{ i + 1 }}
-                        </mat-card-title>
-                        <button mat-icon-button color="warn" type="button" (click)="removeEventLeg(i)">
-                          <mat-icon>delete</mat-icon>
-                        </button>
-                      </mat-card-header>
-                      
-                      <mat-card-content [formGroupName]="i">
-                        <div class="form-row">
-                          <mat-form-field appearance="outline" class="half-width">
-                            <mat-label>Title *</mat-label>
-                            <input matInput formControlName="title" placeholder="Pre-event: Ancient Rome">
-                          </mat-form-field>
-                          
-                          <mat-form-field appearance="outline" class="quarter-width">
-                            <mat-label>Additional Cost</mat-label>
-                            <input matInput type="number" formControlName="additionalCost" placeholder="500">
-                          </mat-form-field>
-                          
-                          <mat-form-field appearance="outline" class="quarter-width">
-                            <mat-label>Position</mat-label>
-                            <mat-select formControlName="isBefore">
-                              <mat-option [value]="true">Before Main Event</mat-option>
-                              <mat-option [value]="false">After Main Event</mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                        </div>
+                <div
+                  formArrayName="additionalLegs"
+                  cdkDropList
+                  (cdkDropListDropped)="dropEventLeg($event)"
+                >
+                  @for (leg of additionalLegsArray.controls; track leg; let i =
+                  $index) {
+                  <mat-card class="event-leg-card" cdkDrag>
+                    <mat-card-header>
+                      <mat-card-title>
+                        <mat-icon cdkDragHandle>drag_handle</mat-icon>
+                        Event Leg {{ i + 1 }}
+                      </mat-card-title>
+                      <button
+                        mat-icon-button
+                        color="warn"
+                        type="button"
+                        (click)="removeEventLeg(i)"
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </mat-card-header>
 
-                        <div class="form-row">
-                          <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Image URL</mat-label>
-                            <input matInput formControlName="image" placeholder="https://example.com/leg.jpg">
-                          </mat-form-field>
-                        </div>
+                    <mat-card-content [formGroupName]="i">
+                      <div class="form-row">
+                        <mat-form-field appearance="outline" class="half-width">
+                          <mat-label>Title *</mat-label>
+                          <input
+                            matInput
+                            formControlName="title"
+                            placeholder="Pre-event: Ancient Rome"
+                          />
+                        </mat-form-field>
 
-                        <div class="form-row">
-                          <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Description *</mat-label>
-                            <quill-editor formControlName="description" [styles]="{minHeight: '150px'}" 
-                              placeholder="Describe this additional event leg...">
-                            </quill-editor>
-                          </mat-form-field>
-                        </div>
-                      </mat-card-content>
-                    </mat-card>
+                        <mat-form-field
+                          appearance="outline"
+                          class="quarter-width"
+                        >
+                          <mat-label>Additional Cost</mat-label>
+                          <input
+                            matInput
+                            type="number"
+                            formControlName="additionalCost"
+                            placeholder="500"
+                          />
+                        </mat-form-field>
+
+                        <mat-form-field
+                          appearance="outline"
+                          class="quarter-width"
+                        >
+                          <mat-label>Position</mat-label>
+                          <mat-select formControlName="isBefore">
+                            <mat-option [value]="true"
+                              >Before Main Event</mat-option
+                            >
+                            <mat-option [value]="false"
+                              >After Main Event</mat-option
+                            >
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="form-row">
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Image URL</mat-label>
+                          <input
+                            matInput
+                            formControlName="image"
+                            placeholder="https://example.com/leg.jpg"
+                          />
+                        </mat-form-field>
+                      </div>
+
+                      <div class="form-row">
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Description *</mat-label>
+                          <textarea matInput
+                            formControlName="description"
+                            placeholder="Describe this additional event leg..."
+                          >
+                          </textarea>
+                        </mat-form-field>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
                   }
                 </div>
               </div>
@@ -412,45 +620,66 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
               <div class="more-info-section">
                 <div class="section-header">
                   <h3>More Information</h3>
-                  <button mat-raised-button color="accent" type="button" (click)="addMoreInfo()">
+                  <button
+                    mat-raised-button
+                    color="accent"
+                    type="button"
+                    (click)="addMoreInfo()"
+                  >
                     <mat-icon>add_box</mat-icon>
                     Add Info Section
                   </button>
                 </div>
 
-                <div formArrayName="moreInfo" cdkDropList (cdkDropListDropped)="dropMoreInfo($event)">
-                  @for (info of moreInfoArray.controls; track info; let i = $index) {
-                    <mat-expansion-panel class="more-info-panel" cdkDrag>
-                      <mat-expansion-panel-header>
-                        <mat-panel-title>
-                          <mat-icon cdkDragHandle>drag_handle</mat-icon>
-                          {{ info.get('title')?.value || 'Untitled Section' }}
-                        </mat-panel-title>
-                        <mat-panel-description>
-                          <button mat-icon-button color="warn" type="button" (click)="removeMoreInfo(i); $event.stopPropagation()">
-                            <mat-icon>delete</mat-icon>
-                          </button>
-                        </mat-panel-description>
-                      </mat-expansion-panel-header>
+                <div
+                  formArrayName="moreInfo"
+                  cdkDropList
+                  (cdkDropListDropped)="dropMoreInfo($event)"
+                >
+                  @for (info of moreInfoArray.controls; track info; let i =
+                  $index) {
+                  <mat-expansion-panel class="more-info-panel" cdkDrag>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <mat-icon cdkDragHandle>drag_handle</mat-icon>
+                        {{ info.get('title')?.value || 'Untitled Section' }}
+                      </mat-panel-title>
+                      <mat-panel-description>
+                        <button
+                          mat-icon-button
+                          color="warn"
+                          type="button"
+                          (click)="removeMoreInfo(i); $event.stopPropagation()"
+                        >
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
 
-                      <div [formGroupName]="i" class="more-info-content">
-                        <div class="form-row">
-                          <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Section Title *</mat-label>
-                            <input matInput formControlName="title" placeholder="What to Bring">
-                          </mat-form-field>
-                        </div>
-
-                        <div class="form-row">
-                          <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Description *</mat-label>
-                            <quill-editor formControlName="description" [styles]="{minHeight: '150px'}" 
-                              placeholder="Detailed information for this section...">
-                            </quill-editor>
-                          </mat-form-field>
-                        </div>
+                    <div [formGroupName]="i" class="more-info-content">
+                      <div class="form-row">
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Section Title *</mat-label>
+                          <input
+                            matInput
+                            formControlName="title"
+                            placeholder="What to Bring"
+                          />
+                        </mat-form-field>
                       </div>
-                    </mat-expansion-panel>
+
+                      <div class="form-row">
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Description *</mat-label>
+                          <textarea matInput
+                            formControlName="description"
+                            placeholder="Detailed information for this section..."
+                          >
+                          </textarea>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
                   }
                 </div>
               </div>
@@ -460,11 +689,24 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
                   <mat-icon>arrow_back</mat-icon>
                   Previous
                 </button>
-                <button mat-raised-button color="primary" type="submit" [disabled]="eventForm.invalid || saving()">
-                  <mat-icon>{{ saving() ? 'hourglass_empty' : 'save' }}</mat-icon>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  type="submit"
+                  [disabled]="eventForm.invalid || saving()"
+                >
+                  <mat-icon>{{
+                    saving() ? 'hourglass_empty' : 'save'
+                  }}</mat-icon>
                   {{ saving() ? 'Saving...' : 'Save as Draft' }}
                 </button>
-                <button mat-raised-button color="accent" type="button" (click)="publishEvent()" [disabled]="eventForm.invalid || saving()">
+                <button
+                  mat-raised-button
+                  color="accent"
+                  type="button"
+                  (click)="publishEvent()"
+                  [disabled]="eventForm.invalid || saving()"
+                >
                   <mat-icon>publish</mat-icon>
                   Publish Event
                 </button>
@@ -475,158 +717,179 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
       </form>
     </div>
   `,
-  styles: [`
-    .create-event-container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
-    }
-
-    .header-section {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .subtitle {
-      font-size: 1.2rem;
-      color: var(--cosmic-text-secondary);
-      margin-top: 0.5rem;
-    }
-
-    .event-form {
-      background: rgba(26, 26, 62, 0.6);
-      border-radius: 16px;
-      padding: 2rem;
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--cosmic-border);
-    }
-
-    .step-content {
-      padding: 2rem 0;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-
-    .section-header h3 {
-      font-family: 'Orbitron', monospace;
-      color: var(--cosmic-text);
-      margin: 0;
-    }
-
-    .form-row {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .full-width { flex: 1; }
-    .half-width { flex: 1; max-width: calc(50% - 0.5rem); }
-    .third-width { flex: 1; max-width: calc(33.333% - 0.67rem); }
-    .quarter-width { flex: 1; max-width: calc(25% - 0.75rem); }
-
-    .speaker-card, .event-leg-card {
-      margin-bottom: 1rem;
-      background: rgba(45, 45, 95, 0.5);
-      border: 1px solid var(--cosmic-border);
-    }
-
-    .speaker-card mat-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .itinerary-panel, .more-info-panel {
-      margin-bottom: 1rem;
-      background: rgba(45, 45, 95, 0.5);
-      border: 1px solid var(--cosmic-border);
-    }
-
-    .itinerary-content, .more-info-content {
-      padding: 1rem 0;
-    }
-
-    .contact-section, .pricing-section, .event-legs-section, .more-info-section {
-      margin-bottom: 3rem;
-    }
-
-    .contact-note {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--cosmic-text-secondary);
-      font-size: 0.875rem;
-      margin-top: 1rem;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 3rem 1rem;
-      color: var(--cosmic-text-secondary);
-    }
-
-    .empty-state mat-icon {
-      font-size: 3rem;
-      width: 3rem;
-      height: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .step-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: flex-end;
-      margin-top: 2rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--cosmic-border);
-    }
-
-    .cdk-drag-preview {
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-      border-radius: 8px;
-      background: rgba(26, 26, 62, 0.9);
-    }
-
-    .cdk-drag-placeholder {
-      opacity: 0.5;
-      background: var(--cosmic-dark-tertiary);
-      border: 2px dashed var(--cosmic-border);
-      border-radius: 8px;
-    }
-
-    .cdk-drag-animating {
-      transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
-    }
-
-    @media (max-width: 768px) {
+  styles: [
+    `
       .create-event-container {
-        padding: 1rem 0.5rem;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
       }
 
-      .form-row {
-        flex-direction: column;
+      .header-section {
+        text-align: center;
+        margin-bottom: 3rem;
       }
 
-      .half-width, .third-width, .quarter-width {
-        max-width: 100%;
+      .subtitle {
+        font-size: 1.2rem;
+        color: var(--cosmic-text-secondary);
+        margin-top: 0.5rem;
+      }
+
+      .event-form {
+        background: rgba(26, 26, 62, 0.6);
+        border-radius: 16px;
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--cosmic-border);
+      }
+
+      .step-content {
+        padding: 2rem 0;
       }
 
       .section-header {
-        flex-direction: column;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .section-header h3 {
+        font-family: 'Orbitron', monospace;
+        color: var(--cosmic-text);
+        margin: 0;
+      }
+
+      .form-row {
+        display: flex;
         gap: 1rem;
-        align-items: stretch;
+        margin-bottom: 1rem;
+      }
+
+      .full-width {
+        flex: 1;
+      }
+      .half-width {
+        flex: 1;
+        max-width: calc(50% - 0.5rem);
+      }
+      .third-width {
+        flex: 1;
+        max-width: calc(33.333% - 0.67rem);
+      }
+      .quarter-width {
+        flex: 1;
+        max-width: calc(25% - 0.75rem);
+      }
+
+      .speaker-card,
+      .event-leg-card {
+        margin-bottom: 1rem;
+        background: rgba(45, 45, 95, 0.5);
+        border: 1px solid var(--cosmic-border);
+      }
+
+      .speaker-card mat-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .itinerary-panel,
+      .more-info-panel {
+        margin-bottom: 1rem;
+        background: rgba(45, 45, 95, 0.5);
+        border: 1px solid var(--cosmic-border);
+      }
+
+      .itinerary-content,
+      .more-info-content {
+        padding: 1rem 0;
+      }
+
+      .contact-section,
+      .pricing-section,
+      .event-legs-section,
+      .more-info-section {
+        margin-bottom: 3rem;
+      }
+
+      .contact-note {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--cosmic-text-secondary);
+        font-size: 0.875rem;
+        margin-top: 1rem;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--cosmic-text-secondary);
+      }
+
+      .empty-state mat-icon {
+        font-size: 3rem;
+        width: 3rem;
+        height: 3rem;
+        margin-bottom: 1rem;
       }
 
       .step-actions {
-        flex-direction: column;
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--cosmic-border);
       }
-    }
-  `],
+
+      .cdk-drag-preview {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        border-radius: 8px;
+        background: rgba(26, 26, 62, 0.9);
+      }
+
+      .cdk-drag-placeholder {
+        opacity: 0.5;
+        background: var(--cosmic-dark-tertiary);
+        border: 2px dashed var(--cosmic-border);
+        border-radius: 8px;
+      }
+
+      .cdk-drag-animating {
+        transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+      }
+
+      @media (max-width: 768px) {
+        .create-event-container {
+          padding: 1rem 0.5rem;
+        }
+
+        .form-row {
+          flex-direction: column;
+        }
+
+        .half-width,
+        .third-width,
+        .quarter-width {
+          max-width: 100%;
+        }
+
+        .section-header {
+          flex-direction: column;
+          gap: 1rem;
+          align-items: stretch;
+        }
+
+        .step-actions {
+          flex-direction: column;
+        }
+      }
+    `,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -642,8 +905,7 @@ import { Event, Speaker, ItineraryDay, EventLeg, MoreInfoItem, EventType } from 
     MatExpansionModule,
     MatSnackBarModule,
     DragDropModule,
-    QuillModule
-  ]
+  ],
 })
 export class CreateEventComponent implements OnInit {
   private fb = inject(FormBuilder);
@@ -656,12 +918,24 @@ export class CreateEventComponent implements OnInit {
   eventTypes = this.eventService.getEventTypes();
 
   // Form groups for easier access
-  get basicInfoGroup() { return this.eventForm.get('basicInfo') as FormGroup; }
-  get contactGroup() { return this.eventForm.get('contact') as FormGroup; }
-  get speakersArray() { return this.eventForm.get('speakers') as FormArray; }
-  get itineraryArray() { return this.eventForm.get('itinerary') as FormArray; }
-  get additionalLegsArray() { return this.eventForm.get('additionalLegs') as FormArray; }
-  get moreInfoArray() { return this.eventForm.get('moreInfo') as FormArray; }
+  get basicInfoGroup() {
+    return this.eventForm.get('basicInfo') as FormGroup;
+  }
+  get contactGroup() {
+    return this.eventForm.get('contact') as FormGroup;
+  }
+  get speakersArray() {
+    return this.eventForm.get('speakers') as FormArray;
+  }
+  get itineraryArray() {
+    return this.eventForm.get('itinerary') as FormArray;
+  }
+  get additionalLegsArray() {
+    return this.eventForm.get('additionalLegs') as FormArray;
+  }
+  get moreInfoArray() {
+    return this.eventForm.get('moreInfo') as FormArray;
+  }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -677,7 +951,7 @@ export class CreateEventComponent implements OnInit {
         startDate: ['', Validators.required],
         endDate: ['', Validators.required],
         videoLink: [''],
-        featuredImage: ['']
+        featuredImage: [''],
       }),
       speakers: this.fb.array([]),
       itinerary: this.fb.array([]),
@@ -687,13 +961,13 @@ export class CreateEventComponent implements OnInit {
         name: ['', Validators.required],
         email: [''],
         phone: [''],
-        website: ['']
+        website: [''],
       }),
       pricing: this.fb.group({
         currency: ['$', Validators.required],
         doubleOccupancy: [''],
-        singleOccupancy: ['']
-      })
+        singleOccupancy: [''],
+      }),
     });
   }
 
@@ -705,7 +979,7 @@ export class CreateEventComponent implements OnInit {
       link: [''],
       image: [''],
       biography: ['', Validators.required],
-      order: [this.speakersArray.length]
+      order: [this.speakersArray.length],
     });
   }
 
@@ -722,7 +996,7 @@ export class CreateEventComponent implements OnInit {
     const array = this.speakersArray;
     const from = event.previousIndex;
     const to = event.currentIndex;
-    
+
     const item = array.at(from);
     array.removeAt(from);
     array.insert(to, item);
@@ -742,7 +1016,7 @@ export class CreateEventComponent implements OnInit {
       title: ['', Validators.required],
       image: [''],
       description: ['', Validators.required],
-      order: [this.itineraryArray.length]
+      order: [this.itineraryArray.length],
     });
   }
 
@@ -759,7 +1033,7 @@ export class CreateEventComponent implements OnInit {
     const array = this.itineraryArray;
     const from = event.previousIndex;
     const to = event.currentIndex;
-    
+
     const item = array.at(from);
     array.removeAt(from);
     array.insert(to, item);
@@ -781,7 +1055,7 @@ export class CreateEventComponent implements OnInit {
       description: ['', Validators.required],
       additionalCost: [''],
       isBefore: [true],
-      order: [this.additionalLegsArray.length]
+      order: [this.additionalLegsArray.length],
     });
   }
 
@@ -798,7 +1072,7 @@ export class CreateEventComponent implements OnInit {
     const array = this.additionalLegsArray;
     const from = event.previousIndex;
     const to = event.currentIndex;
-    
+
     const item = array.at(from);
     array.removeAt(from);
     array.insert(to, item);
@@ -817,7 +1091,7 @@ export class CreateEventComponent implements OnInit {
       id: [this.eventService.generateId()],
       title: ['', Validators.required],
       description: ['', Validators.required],
-      order: [this.moreInfoArray.length]
+      order: [this.moreInfoArray.length],
     });
   }
 
@@ -834,7 +1108,7 @@ export class CreateEventComponent implements OnInit {
     const array = this.moreInfoArray;
     const from = event.previousIndex;
     const to = event.currentIndex;
-    
+
     const item = array.at(from);
     array.removeAt(from);
     array.insert(to, item);
@@ -866,7 +1140,7 @@ export class CreateEventComponent implements OnInit {
 
   private saveEvent(status: 'draft' | 'published'): void {
     this.saving.set(true);
-    
+
     const formValue = this.eventForm.value;
     const event: Partial<Event> = {
       ...formValue.basicInfo,
@@ -879,21 +1153,26 @@ export class CreateEventComponent implements OnInit {
       status,
       isPromoted: false,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     this.eventService.createEvent(event).subscribe({
       next: (savedEvent) => {
         this.saving.set(false);
-        const message = status === 'published' ? 'Event published successfully!' : 'Event saved as draft!';
+        const message =
+          status === 'published'
+            ? 'Event published successfully!'
+            : 'Event saved as draft!';
         this.snackBar.open(message, 'Close', { duration: 3000 });
         this.router.navigate(['/my-events']);
       },
       error: (error) => {
         this.saving.set(false);
         console.error('Error saving event:', error);
-        this.snackBar.open('Error saving event. Please try again.', 'Close', { duration: 5000 });
-      }
+        this.snackBar.open('Error saving event. Please try again.', 'Close', {
+          duration: 5000,
+        });
+      },
     });
   }
 
@@ -903,6 +1182,8 @@ export class CreateEventComponent implements OnInit {
   }
 
   private showFormErrors(): void {
-    this.snackBar.open('Please fill in all required fields', 'Close', { duration: 3000 });
+    this.snackBar.open('Please fill in all required fields', 'Close', {
+      duration: 3000,
+    });
   }
 }

@@ -14,7 +14,14 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@cosmic-events/common-data-access": [
+        "libs/common/data-access/src/index.ts"
+      ],
+      "@cosmic-events/common-feature": ["libs/common/feature/src/index.ts"],
+      "@cosmic-events/common-ui": ["libs/common/ui/src/index.ts"],
+      "@cosmic-events/common-util": ["libs/common/util/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
