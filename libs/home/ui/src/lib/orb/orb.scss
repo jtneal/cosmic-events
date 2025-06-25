@@ -1,0 +1,44 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+img {
+  animation: orbit-pulse 30s linear infinite;
+  height: 300px;
+  position: relative;
+
+  @keyframes orbit-pulse {
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+
+    16.667% {
+      transform: rotate(60deg) scale(0.9);
+    }
+
+    33.333% {
+      transform: rotate(120deg) scale(1);
+    }
+
+    50% {
+      transform: rotate(180deg) scale(0.9);
+    }
+
+    66.667% {
+      transform: rotate(240deg) scale(1);
+    }
+
+    83.333% {
+      transform: rotate(300deg) scale(0.9);
+    }
+
+    100% {
+      transform: rotate(360deg) scale(1);
+    }
+  }
+
+  @media (min-width: 768px) {
+    height: 400px;
+  }
+}

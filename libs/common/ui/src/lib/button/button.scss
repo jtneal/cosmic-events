@@ -1,0 +1,42 @@
+:host {
+  display: inline-block;
+}
+
+button {
+  align-items: center;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--cosmic-text);
+  cursor: pointer;
+  display: flex;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  padding: 12px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &.primary {
+    background: var(--cosmic-gradient);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    color: white;
+
+    &:hover {
+      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+      transform: translateY(-2px);
+    }
+  }
+
+  &.secondary {
+    background: transparent;
+    border: 2px solid var(--cosmic-secondary);
+    color: var(--cosmic-secondary);
+
+    &:hover {
+      background: var(--cosmic-secondary);
+      color: white;
+      transform: translateY(-2px);
+    }
+  }
+}

@@ -1,0 +1,6 @@
+<button [class]="type()" color="primary" mat-raised-button>
+  @if (icon()) {
+    <mat-icon>{{ icon() }}</mat-icon>
+  }
+  <ng-content />
+</button>

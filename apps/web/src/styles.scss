@@ -1,16 +1,25 @@
+@use '@angular/material' as mat;
+
 :root {
-  --cosmic-primary: #8B5CF6;
-  --cosmic-secondary: #06B6D4;
-  --cosmic-accent: #F59E0B;
-  --cosmic-success: #10B981;
-  --cosmic-warning: #F59E0B;
-  --cosmic-error: #EF4444;
-  --cosmic-dark: #0F0F23;
-  --cosmic-dark-secondary: #1A1A3E;
-  --cosmic-dark-tertiary: #2D2D5F;
-  --cosmic-light: #F8FAFC;
-  --cosmic-text: #E2E8F0;
-  --cosmic-text-secondary: #94A3B8;
+  @include mat.menu-overrides(
+    (
+      container-color: #1a1a3e,
+      item-hover-state-layer-color: #2d2d5f,
+    )
+  );
+
+  --cosmic-primary: #8b5cf6;
+  --cosmic-secondary: #06b6d4;
+  --cosmic-accent: #f59e0b;
+  --cosmic-success: #10b981;
+  --cosmic-warning: #f59e0b;
+  --cosmic-error: #ef4444;
+  --cosmic-dark: #0f0f23;
+  --cosmic-dark-secondary: #1a1a3e;
+  --cosmic-dark-tertiary: #2d2d5f;
+  --cosmic-light: #f8fafc;
+  --cosmic-text: #e2e8f0;
+  --cosmic-text-secondary: #94a3b8;
   --cosmic-border: #334155;
   --cosmic-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --cosmic-gradient-alt: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
@@ -48,20 +57,32 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: 
-      radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
-      radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
-      radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
-    background-size: 550px 550px, 350px 350px, 250px 250px;
-    background-position: 0 0, 40px 60px, 130px 270px;
+    background-image:
+      radial-gradient(white, rgba(255, 255, 255, 0.2) 2px, transparent 40px),
+      radial-gradient(white, rgba(255, 255, 255, 0.15) 1px, transparent 30px),
+      radial-gradient(white, rgba(255, 255, 255, 0.1) 2px, transparent 40px);
+    background-size:
+      550px 550px,
+      350px 350px,
+      250px 250px;
+    background-position:
+      0 0,
+      40px 60px,
+      130px 270px;
     animation: twinkle 20s ease-in-out infinite alternate;
     z-index: -1;
   }
 
   @keyframes twinkle {
-    0% { opacity: 0.3; }
-    50% { opacity: 0.8; }
-    100% { opacity: 0.3; }
+    0% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0.3;
+    }
   }
 }
 
@@ -104,12 +125,21 @@ body {
 }
 
 @keyframes orbit {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Orbitron', monospace;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -142,29 +172,6 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-}
-
-.cosmic-btn-primary {
-  background: var(--cosmic-gradient);
-  color: white;
-  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
-}
-
-.cosmic-btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
-}
-
-.cosmic-btn-secondary {
-  background: transparent;
-  color: var(--cosmic-secondary);
-  border: 2px solid var(--cosmic-secondary);
-}
-
-.cosmic-btn-secondary:hover {
-  background: var(--cosmic-secondary);
-  color: white;
-  transform: translateY(-2px);
 }
 
 /* Card Styles */

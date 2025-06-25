@@ -8,6 +8,4 @@ import { Footer, Header } from '@cosmic-events/common-ui';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {
-  protected title = 'web';
-}
+export class App {}

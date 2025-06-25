@@ -13,4 +13,12 @@ import { RouterModule } from '@angular/router';
   styleUrl: './header.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Header {}
+export class Header {
+  links = [
+    { icon: 'home', label: 'Discover', link: '/' },
+    { icon: 'add_circle', label: 'Create Event', link: '/create' },
+    { icon: 'dashboard', label: 'My Events', link: '/my-events' },
+    { icon: 'info', label: 'About', link: '/about' },
+    { icon: 'contact_mail', label: 'Contact', link: '/contact' },
+  ];
+}
