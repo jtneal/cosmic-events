@@ -10,8 +10,8 @@ button {
   color: var(--cosmic-text);
   cursor: pointer;
   display: flex;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 600;
+  font-family: 'Orbitron', monospace;
+  font-weight: 500;
   padding: 12px 24px;
   position: relative;
   overflow: hidden;
@@ -37,6 +37,15 @@ button {
       background: var(--cosmic-secondary);
       color: white;
       transform: translateY(-2px);
+    }
+  }
+
+  &.huge {
+    font-size: 1.2rem;
+    padding: 29px 20px 29px 29px;
+
+    mat-icon {
+      transform: scale(1.2);
     }
   }
 }

@@ -1,2 +1,2 @@
 export * from './lib/hero/hero';
-export * from './lib/orb/orb';
+export * from './lib/search/search';

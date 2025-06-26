@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'lib-orb',
-  templateUrl: './orb.html',
-  styleUrl: './orb.scss',
+  selector: 'lib-hero-media',
+  templateUrl: './hero-media.html',
+  styleUrl: './hero-media.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Orb {}
+export class HeroMedia {}

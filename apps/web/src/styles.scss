@@ -1,13 +1,6 @@
 @use '@angular/material' as mat;
 
 :root {
-  @include mat.menu-overrides(
-    (
-      container-color: #1a1a3e,
-      item-hover-state-layer-color: #2d2d5f,
-    )
-  );
-
   --cosmic-primary: #8b5cf6;
   --cosmic-secondary: #06b6d4;
   --cosmic-accent: #f59e0b;
@@ -24,6 +17,35 @@
   --cosmic-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --cosmic-gradient-alt: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   --cosmic-space-gradient: linear-gradient(180deg, #000428 0%, #004e92 100%);
+
+  @include mat.menu-overrides(
+    (
+      container-color: var(--cosmic-dark-secondary),
+      item-hover-state-layer-color: var(--cosmic-dark-tertiary),
+    )
+  );
+
+  @include mat.form-field-overrides(
+    (
+      outlined-focus-outline-color: var(--cosmic-secondary),
+      outlined-focus-label-text-color: var(--cosmic-secondary),
+      outlined-container-shape: 8px,
+    )
+  );
+
+  @include mat.select-overrides(
+    (
+      panel-background-color: var(--cosmic-dark-secondary),
+      focused-arrow-color: var(--cosmic-secondary),
+    )
+  );
+
+  @include mat.option-overrides(
+    (
+      hover-state-layer-color: var(--cosmic-dark-tertiary),
+      selected-state-layer-color: var(--cosmic-dark),
+    )
+  );
 }
 
 * {
@@ -51,12 +73,7 @@ body {
   }
 
   &::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    animation: twinkle 20s ease-in-out infinite alternate;
     background-image:
       radial-gradient(white, rgba(255, 255, 255, 0.2) 2px, transparent 40px),
       radial-gradient(white, rgba(255, 255, 255, 0.15) 1px, transparent 30px),
@@ -69,7 +86,12 @@ body {
       0 0,
       40px 60px,
       130px 270px;
-    animation: twinkle 20s ease-in-out infinite alternate;
+    content: '';
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
     z-index: -1;
   }
 
@@ -83,21 +105,21 @@ body {
     background-repeat: repeat;
     background-size: 100px 100px;
     height: 100vh;
+    left: 0;
     position: fixed;
+    top: 0;
     width: 100vw;
+    z-index: -1;
   }
 
   @keyframes twinkle {
-    0% {
+    0%,
+    100% {
       opacity: 0.3;
     }
 
     50% {
       opacity: 0.8;
-    }
-
-    100% {
-      opacity: 0.3;
     }
   }
 }

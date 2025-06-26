@@ -11,5 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class Button {
   icon = input<string>();
+  size = input<'normal' | 'huge'>('normal');
   type = input<'primary' | 'secondary'>('primary');
 }

@@ -1,4 +1,4 @@
-<button [class]="type()" color="primary" mat-raised-button>
+<button class="{{ size() }} {{ type() }}" color="primary" mat-raised-button>
   @if (icon()) {
     <mat-icon>{{ icon() }}</mat-icon>
   }

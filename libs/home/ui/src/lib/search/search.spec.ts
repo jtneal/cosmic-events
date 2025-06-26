@@ -1,16 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Orb } from './orb';
+import { provideRouter } from '@angular/router';
+import { Search } from './search';
 
-describe(Orb.name, () => {
-  let component: Orb;
-  let fixture: ComponentFixture<Orb>;
+describe(Search.name, () => {
+  let component: Search;
+  let fixture: ComponentFixture<Search>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Orb],
+      imports: [Search],
+      providers: [provideRouter([])],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Orb);
+    fixture = TestBed.createComponent(Search);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

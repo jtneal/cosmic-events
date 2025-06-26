@@ -1,18 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { Button, CosmicTitle } from '@cosmic-events/common-ui';
-import { Orb } from '../orb/orb';
+import { HeroContent } from '../hero-content/hero-content';
+import { HeroMedia } from '../hero-media/hero-media';
 
 @Component({
   selector: 'lib-hero',
-  imports: [Button, CosmicTitle, Orb, RouterModule],
+  imports: [HeroContent, HeroMedia],
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Hero {
-  scrollToEvents(): void {
-    const element = document.querySelector('.search-section');
-    element?.scrollIntoView({ behavior: 'smooth' });
-  }
-}
+export class Hero {}

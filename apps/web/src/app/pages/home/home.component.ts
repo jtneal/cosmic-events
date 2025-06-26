@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Hero } from '@cosmic-events/home-ui';
+import { Hero, Search } from '@cosmic-events/home-ui';
 import { EventCardComponent } from '../../components/event-card/event-card.component';
 import { Event, EventSearchFilters, EventType } from '../../models/event.model';
 import { EventService } from '../../services/event.service';
@@ -17,53 +17,27 @@ import { EventService } from '../../services/event.service';
   selector: 'app-home',
   template: `
     <div class="home-container">
-      <lib-hero />
-
-      <!-- Search & Filters -->
-      <section class="search-section" #eventsSection>
-        <div class="search-container">
-          <h2>Find Your Perfect Adventure</h2>
-          <div class="search-form">
-            <mat-form-field appearance="outline" class="search-field">
-              <mat-label>Search events, locations, topics...</mat-label>
-              <input matInput [(ngModel)]="searchTerm" placeholder="Atlantis, UFO sightings, Ancient Egypt..." />
-              <mat-icon matSuffix>search</mat-icon>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Event Type</mat-label>
-              <mat-select [(ngModel)]="selectedType">
-                <mat-option value="">All Types</mat-option>
-                @for (type of eventTypes; track type.value) {
-                <mat-option [value]="type.value">{{ type.label }}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-
-            <button mat-raised-button color="primary" (click)="searchEvents()">
-              <mat-icon>search</mat-icon>
-              Search
-            </button>
-          </div>
-        </div>
-      </section>
+      <div style="display: flex; flex-direction: column; justify-content: center; min-height: calc(100vh - 194px); margin-bottom: 97px;">
+        <lib-hero />
+        <lib-search [eventTypes]="eventTypes" />
+      </div>
 
       <!-- Promoted Events -->
       @if (promotedEvents().length > 0) {
-      <section class="promoted-section">
-        <div class="section-header">
-          <h2>
-            <mat-icon>star</mat-icon>
-            Featured & Promoted Events
-          </h2>
-          <p>Discover highlighted adventures from our community</p>
-        </div>
-        <div class="events-grid promoted-grid">
-          @for (event of promotedEvents(); track event.id) {
-          <app-event-card [event]="event" />
-          }
-        </div>
-      </section>
+        <section class="promoted-section">
+          <div class="section-header">
+            <h2>
+              <mat-icon>star</mat-icon>
+              Featured & Promoted Events
+            </h2>
+            <p>Discover highlighted adventures from our community</p>
+          </div>
+          <div class="events-grid promoted-grid">
+            @for (event of promotedEvents(); track $index) {
+              <app-event-card [event]="event" />
+            }
+          </div>
+        </section>
       }
 
       <!-- All Events -->
@@ -77,38 +51,39 @@ import { EventService } from '../../services/event.service';
         </div>
 
         @if (loading()) {
-        <div class="loading-state">
-          <div class="cosmic-loader">
-            <div class="planet"></div>
-            <div class="orbit"></div>
+          <div class="loading-state">
+            <div class="cosmic-loader">
+              <div class="planet"></div>
+              <div class="orbit"></div>
+            </div>
+            <p>Loading cosmic adventures...</p>
           </div>
-          <p>Loading cosmic adventures...</p>
-        </div>
         } @else if (events().length === 0) {
-        <div class="empty-state">
-          <mat-icon>explore_off</mat-icon>
-          <h3>No events found</h3>
-          <p>Try adjusting your search criteria or be the first to create a event!</p>
-          <button mat-raised-button color="primary" routerLink="/create">
-            <mat-icon>add</mat-icon>
-            Create First Event
-          </button>
-        </div>
+          <div class="empty-state">
+            <mat-icon>explore_off</mat-icon>
+            <h3>No events found</h3>
+            <p>Try adjusting your search criteria or be the first to create a event!</p>
+            <button mat-raised-button color="primary" routerLink="/create">
+              <mat-icon>add</mat-icon>
+              Create First Event
+            </button>
+          </div>
         } @else {
-        <div class="events-grid">
-          @for (event of events(); track event.id) {
-          <app-event-card [event]="event" />
-          }
-        </div>
+          <div class="events-grid">
+            @for (event of events(); track $index) {
+              <app-event-card [event]="event" />
+            }
+          </div>
 
-        @if (hasMoreEvents()) {
-        <div class="load-more">
-          <button mat-raised-button color="primary" (click)="loadMoreEvents()" [disabled]="loading()">
-            <mat-icon>expand_more</mat-icon>
-            Load More Events
-          </button>
-        </div>
-        } }
+          @if (hasMoreEvents()) {
+            <div class="load-more">
+              <button mat-raised-button color="primary" (click)="loadMoreEvents()" [disabled]="loading()">
+                <mat-icon>expand_more</mat-icon>
+                Load More Events
+              </button>
+            </div>
+          }
+        }
       </section>
 
       <!-- Categories -->
@@ -148,45 +123,6 @@ import { EventService } from '../../services/event.service';
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 1rem;
-      }
-
-      .search-section {
-        background: rgba(26, 26, 62, 0.5);
-        padding: 3rem 0;
-        margin: 2rem 0;
-        border-radius: 16px;
-        backdrop-filter: blur(10px);
-        border: 1px solid var(--cosmic-border);
-      }
-
-      .search-container {
-        text-align: center;
-      }
-
-      .search-container h2 {
-        font-family: 'Orbitron', monospace;
-        margin-bottom: 2rem;
-        color: var(--cosmic-text);
-      }
-
-      .search-form {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        align-items: end;
-        max-width: 800px;
-        margin: 0 auto;
-        flex-wrap: wrap;
-      }
-
-      .search-field {
-        flex: 2;
-        min-width: 250px;
-      }
-
-      .search-form mat-form-field {
-        flex: 1;
-        min-width: 150px;
       }
 
       .section-header {
@@ -338,6 +274,7 @@ import { EventService } from '../../services/event.service';
     MatSelectModule,
     MatChipsModule,
     EventCardComponent,
+    Search,
   ],
 })
 export class HomeComponent implements OnInit {
