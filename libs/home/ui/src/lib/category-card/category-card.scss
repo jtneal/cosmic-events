@@ -1,0 +1,39 @@
+:host {
+  display: block;
+}
+
+.category-card {
+  background: rgba(26, 26, 62, 0.6);
+  border: 1px solid var(--cosmic-border);
+  border-radius: 16px;
+  cursor: pointer;
+  height: 100%;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(26, 26, 62, 0.8);
+    border-color: var(--cosmic-primary);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+    transform: translateY(-4px);
+  }
+
+  mat-icon {
+    color: var(--cosmic-primary);
+    font-size: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+    width: 3rem;
+  }
+
+  h3 {
+    color: var(--cosmic-text);
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: var(--cosmic-text-secondary);
+    line-height: 1.5;
+  }
+}

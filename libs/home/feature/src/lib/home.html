@@ -1,6 +1,12 @@
 <div class="home-container">
   <div
-    style="display: flex; flex-direction: column; justify-content: center; min-height: calc(100vh - 194px); margin-bottom: 97px;"
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: calc(100vh - 194px);
+      margin-bottom: 97px;
+    "
   >
     <lib-hero />
     <lib-search [eventTypes]="eventTypes" />
@@ -73,30 +79,30 @@
   <!-- Categories -->
   <section class="categories-section">
     <div class="section-header">
-      <h2>Popular Categories</h2>
-      <p>Explore adventures by theme</p>
+      <h2>Choose Your Categories</h2>
+      <p>Select as many as you'd like</p>
     </div>
     <div class="categories-grid">
-      <div class="category-card" (click)="filterByCategory('ancient')" (keypress)="filterByCategory('ancient')" tabindex="6">
-        <mat-icon>account_balance</mat-icon>
-        <h3>Ancient Civilizations</h3>
-        <p>Explore lost cities, mysterious ruins, and forgotten empires</p>
-      </div>
-      <div class="category-card" (click)="filterByCategory('ufo')" (keypress)="filterByCategory('ufo')" tabindex="7">
-        <mat-icon>brightness_2</mat-icon>
-        <h3>UFO & UAP</h3>
-        <p>Investigate sightings, hotspots, and unexplained phenomena</p>
-      </div>
-      <div class="category-card" (click)="filterByCategory('paranormal')" (keypress)="filterByCategory('paranormal')" tabindex="8">
-        <mat-icon>psychology</mat-icon>
-        <h3>Paranormal</h3>
-        <p>Ghost events, cryptozoology, and supernatural experiences</p>
-      </div>
-      <div class="category-card" (click)="filterByCategory('spiritual')" (keypress)="filterByCategory('spiritual')" tabindex="9">
-        <mat-icon>self_improvement</mat-icon>
-        <h3>Spiritual & New Age</h3>
-        <p>Consciousness expansion, healing journeys, and sacred sites</p>
-      </div>
+      <lib-category-card
+        description="Explore lost cities, mysterious ruins, and forgotten empires"
+        icon="account_balance"
+        title="Ancient Civilizations"
+      />
+      <lib-category-card
+        description="Investigate sightings, hotspots, and unexplained phenomena"
+        icon="brightness_2"
+        title="UFO & UAP"
+      />
+      <lib-category-card
+        description="Ghost events, cryptozoology, and supernatural experiences"
+        icon="psychology"
+        title="Paranormal"
+      />
+      <lib-category-card
+        description="Consciousness expansion, healing journeys, and sacred sites"
+        icon="self_improvement"
+        title="Spiritual & New Age"
+      />
     </div>
   </section>
 </div>
