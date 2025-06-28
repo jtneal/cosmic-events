@@ -11,5 +11,7 @@ import { MatIcon } from '@angular/material/icon';
 export class CategoryCard {
   description = input.required<string>();
   icon = input.required<string>();
+  selected = true;
+  subtitle = input.required<string>();
   title = input.required<string>();
 }

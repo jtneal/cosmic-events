@@ -1,5 +1,14 @@
-<div class="category-card">
+<div
+  class="category-card{{ selected ? ' category-selected' : '' }}"
+  (click)="selected = !selected"
+  (keypress.enter)="selected = !selected"
+  tabindex="6"
+>
   <mat-icon>{{ icon() }}</mat-icon>
   <h3>{{ title() }}</h3>
+  <h4>{{ subtitle() }}</h4>
   <p>{{ description() }}</p>
+  @if (selected) {
+    <mat-icon class="selected">check_circle_outline</mat-icon>
+  }
 </div>

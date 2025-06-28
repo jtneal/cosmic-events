@@ -9,14 +9,19 @@
   cursor: pointer;
   height: 100%;
   padding: 2rem;
+  position: relative;
   text-align: center;
   transition: all 0.3s ease;
 
-  &:hover {
-    background: rgba(26, 26, 62, 0.8);
-    border-color: var(--cosmic-primary);
+  &:hover,
+  &.category-selected {
     box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
     transform: translateY(-4px);
+  }
+
+  &.category-selected {
+    background: rgba(26, 26, 62, 0.8);
+    border-color: var(--cosmic-primary);
   }
 
   mat-icon {
@@ -25,11 +30,29 @@
     height: 3rem;
     margin-bottom: 1rem;
     width: 3rem;
+
+    &.selected {
+      color: rgba(139, 92, 247, 0.75);
+      font-size: 1.5rem;
+      height: 1.5rem;
+      left: 1rem;
+      position: absolute;
+      top: 1rem;
+      width: 1.5rem;
+    }
   }
 
   h3 {
     color: var(--cosmic-text);
-    margin-bottom: 1rem;
+    margin-bottom: 0;
+  }
+
+  h4 {
+    color: var(--cosmic-text-secondary);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.875rem;
+    font-style: italic;
+    font-weight: 400;
   }
 
   p {

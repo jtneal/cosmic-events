@@ -12,25 +12,51 @@
     <lib-search [eventTypes]="eventTypes" />
   </div>
 
-  <!-- Promoted Events -->
-  @if (promotedEvents().length > 0) {
-    <section class="promoted-section">
-      <div class="section-header">
-        <h2>
-          <mat-icon>star</mat-icon>
-          Featured & Promoted Events
-        </h2>
-        <p>Discover highlighted adventures from our community</p>
-      </div>
-      <div class="events-grid promoted-grid">
-        @for (event of promotedEvents(); track $index) {
-          <lib-event-card [event]="event" />
-        }
-      </div>
-    </section>
-  }
+  <section class="categories-section">
+    <div class="section-header">
+      <h2>Choose Your Categories</h2>
+      <p>Select as many as you'd like</p>
+    </div>
+    <div class="categories-grid">
+      <lib-category-card
+        description="Explore the mysteries of ancient cultures, lost technologies, and the suppressed stories of humanity’s true past — from Atlantis to Göbekli Tepe."
+        icon="account_balance"
+        subtitle="Lost Civilizations & Hidden History"
+        title="Ancient Origins"
+      />
+      <lib-category-card
+        description="Dive into the realms of UFOs, UAPs, extraterrestrials, interdimensionals, and encounters with intelligence beyond the human experience."
+        icon="visibility"
+        subtitle="Aliens, Contact & Otherworldly Beings"
+        title="Non-Human Intelligence"
+      />
+      <lib-category-card
+        description="Discover practices and teachings on higher consciousness, spiritual awakening, soul contracts, and the energetic nature of reality."
+        icon="self_improvement"
+        subtitle="Awakening, Energy & the Soul's Journey"
+        title="Consciousness & Spirit"
+      />
+      <lib-category-card
+        description="Decode the ancient mystery schools, sacred geometry, Hermeticism, and hidden teachings passed down through secret societies and mystics."
+        icon="auto_fix_high"
+        subtitle="Symbols, Teachings & the Inner Mysteries"
+        title="Esoteric Wisdom"
+      />
+      <lib-category-card
+        description="From ghosts to telepathy, explore the strange and unexplained phenomena that challenge our understanding of life, death, and time."
+        icon="blur_on"
+        subtitle="Psychic & Supernatural Phenomena"
+        title="Paranormal Realms"
+      />
+      <lib-category-card
+        description="Investigate suppressed inventions, free energy, time travel, and revolutionary science that defies mainstream explanation."
+        icon="science"
+        subtitle="Forbidden Tech & Alternative Physics"
+        title="Fringe Science"
+      />
+    </div>
+  </section>
 
-  <!-- All Events -->
   <section class="events-section">
     <div class="section-header">
       <h2>
@@ -74,35 +100,5 @@
         </div>
       }
     }
-  </section>
-
-  <!-- Categories -->
-  <section class="categories-section">
-    <div class="section-header">
-      <h2>Choose Your Categories</h2>
-      <p>Select as many as you'd like</p>
-    </div>
-    <div class="categories-grid">
-      <lib-category-card
-        description="Explore lost cities, mysterious ruins, and forgotten empires"
-        icon="account_balance"
-        title="Ancient Civilizations"
-      />
-      <lib-category-card
-        description="Investigate sightings, hotspots, and unexplained phenomena"
-        icon="brightness_2"
-        title="UFO & UAP"
-      />
-      <lib-category-card
-        description="Ghost events, cryptozoology, and supernatural experiences"
-        icon="psychology"
-        title="Paranormal"
-      />
-      <lib-category-card
-        description="Consciousness expansion, healing journeys, and sacred sites"
-        icon="self_improvement"
-        title="Spiritual & New Age"
-      />
-    </div>
   </section>
 </div>
