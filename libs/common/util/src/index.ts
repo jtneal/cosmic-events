@@ -1,1 +1,1 @@
-export * from './lib/common-util';
+export * from './lib/event.model';

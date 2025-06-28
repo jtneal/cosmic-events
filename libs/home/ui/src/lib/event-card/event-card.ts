@@ -6,7 +6,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { Event, formatDateRange, getEventTypeLabel } from '@cosmic-events/home-util';
+import { Event } from '@cosmic-events/common-util';
+import { formatDateRange, getEventTypeLabel } from '@cosmic-events/home-util';
 
 @Component({
   selector: 'lib-event-card',

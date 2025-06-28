@@ -1,4 +1,4 @@
-import { EventType } from './event.model';
+import { EventType } from '@cosmic-events/common-util';
 
 export const eventTypeMap: Record<EventType, string> = {
   event: 'Guided Event',

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { Event, EventListResponse, EventSearchFilters, EventStatus, EventType } from '@cosmic-events/common-util';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { Event, EventListResponse, EventSearchFilters, EventStatus, EventType } from '../models/event.model';
 
 @Injectable({
   providedIn: 'root',

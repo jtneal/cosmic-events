@@ -8,16 +8,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Hero, Search } from '@cosmic-events/home-ui';
-import { EventCard } from '@cosmic-events/home-ui';
-import { Event, EventSearchFilters, EventType } from '../../models/event.model';
-import { EventService } from '../../services/event.service';
+import { EventService } from '@cosmic-events/common-data-access';
+import { Event, EventSearchFilters, EventType } from '@cosmic-events/common-util';
+import { EventCard, Hero, Search } from '@cosmic-events/home-ui';
 
 @Component({
   selector: 'app-home',
   template: `
     <div class="home-container">
-      <div style="display: flex; flex-direction: column; justify-content: center; min-height: calc(100vh - 194px); margin-bottom: 97px;">
+      <div
+        style="display: flex; flex-direction: column; justify-content: center; min-height: calc(100vh - 194px); margin-bottom: 97px;"
+      >
         <lib-hero />
         <lib-search [eventTypes]="eventTypes" />
       </div>
