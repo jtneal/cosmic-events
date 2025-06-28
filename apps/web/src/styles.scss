@@ -2,6 +2,7 @@
 
 :root {
   --cosmic-primary: #8b5cf6;
+  --cosmic-bright: #a5b4fc;
   --cosmic-secondary: #06b6d4;
   --cosmic-accent: #f59e0b;
   --cosmic-success: #10b981;
@@ -27,8 +28,8 @@
 
   @include mat.form-field-overrides(
     (
-      outlined-focus-outline-color: var(--cosmic-secondary),
-      outlined-focus-label-text-color: var(--cosmic-secondary),
+      outlined-focus-outline-color: var(--cosmic-primary),
+      outlined-focus-label-text-color: var(--cosmic-primary),
       outlined-container-shape: 8px,
     )
   );
@@ -36,7 +37,7 @@
   @include mat.select-overrides(
     (
       panel-background-color: var(--cosmic-dark-secondary),
-      focused-arrow-color: var(--cosmic-secondary),
+      focused-arrow-color: var(--cosmic-primary),
     )
   );
 

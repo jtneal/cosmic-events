@@ -6,7 +6,7 @@ import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { Button } from '@cosmic-events/common-ui';
 
-export type EventType = 'event' | 'conference' | 'meeting' | 'cruise' | 'event';
+export type EventType = 'tour' | 'conference' | 'meeting' | 'cruise' | 'event';
 
 @Component({
   selector: 'lib-search',

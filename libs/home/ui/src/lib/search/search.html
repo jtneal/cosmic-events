@@ -1,11 +1,11 @@
 <h2>Your Perfect Adventure Awaits</h2>
 <form>
-  <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
     <mat-label>Search events, locations, topics...</mat-label>
     <input
       matInput
-      [(ngModel)]="searchTerm"
       name="searchTerm"
+      [(ngModel)]="searchTerm"
       placeholder="Atlantis, UFO sightings, Ancient Egypt..."
     />
     <mat-icon matSuffix>search</mat-icon>

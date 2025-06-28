@@ -1,16 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HomeUtil } from './home-util';
+import { provideRouter } from '@angular/router';
+import { EventCard } from './event-card';
 
-describe('HomeUtil', () => {
-  let component: HomeUtil;
-  let fixture: ComponentFixture<HomeUtil>;
+describe(EventCard.name, () => {
+  let component: EventCard;
+  let fixture: ComponentFixture<EventCard>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomeUtil],
+      imports: [EventCard],
+      providers: [provideRouter([])],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HomeUtil);
+    fixture = TestBed.createComponent(EventCard);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

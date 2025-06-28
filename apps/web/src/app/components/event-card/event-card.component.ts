@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
 import { Event } from '../../models/event.model';
+import { EventType, eventTypeMap, getEventTypeLabel } from '@cosmic-events/home-util';
 
 @Component({
   selector: 'app-event-card',
@@ -275,16 +276,7 @@ export class EventCardComponent {
     this.toggleStatus.emit(this.event());
   }
 
-  getEventTypeLabel(type: string): string {
-    const typeMap: Record<string, string> = {
-      'event': 'Guided Event',
-      'conference': 'Conference',
-      'meeting': 'Meeting',
-      'cruise': 'Cruise',
-      'tour': 'Tour'
-    };
-    return typeMap[type] || type;
-  }
+  getEventTypeLabel = getEventTypeLabel;
 
   formatDateRange(startDate: Date, endDate: Date): string {
     const start = new Date(startDate);

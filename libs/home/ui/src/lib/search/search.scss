@@ -24,11 +24,5 @@ form {
 }
 
 mat-form-field {
-  flex: 1;
   min-width: 250px;
-
-  &.search-field {
-    flex: 2;
-    min-width: 250px;
-  }
 }

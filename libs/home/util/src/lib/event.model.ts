@@ -44,6 +44,14 @@ export interface Pricing {
   currency: string;
 }
 
+export interface Test {
+  event: 'Guided Event';
+  conference: 'Conference';
+  meeting: 'Meeting';
+  cruise: 'Cruise';
+  tour: 'Tour';
+}
+
 export type EventType = 'tour' | 'conference' | 'meeting' | 'cruise' | 'event';
 
 export type EventStatus = 'draft' | 'published' | 'archived';

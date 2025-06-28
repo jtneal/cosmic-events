@@ -1,1 +1,3 @@
-export * from './lib/home-util';
+export * from './lib/date.formatter';
+export * from './lib/event.helper';
+export * from './lib/event.model';

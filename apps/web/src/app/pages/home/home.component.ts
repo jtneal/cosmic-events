@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Hero, Search } from '@cosmic-events/home-ui';
-import { EventCardComponent } from '../../components/event-card/event-card.component';
+import { EventCard } from '@cosmic-events/home-ui';
 import { Event, EventSearchFilters, EventType } from '../../models/event.model';
 import { EventService } from '../../services/event.service';
 
@@ -34,7 +34,7 @@ import { EventService } from '../../services/event.service';
           </div>
           <div class="events-grid promoted-grid">
             @for (event of promotedEvents(); track $index) {
-              <app-event-card [event]="event" />
+              <lib-event-card [event]="event" />
             }
           </div>
         </section>
@@ -71,7 +71,7 @@ import { EventService } from '../../services/event.service';
         } @else {
           <div class="events-grid">
             @for (event of events(); track $index) {
-              <app-event-card [event]="event" />
+              <lib-event-card [event]="event" />
             }
           </div>
 
@@ -273,7 +273,7 @@ import { EventService } from '../../services/event.service';
     MatInputModule,
     MatSelectModule,
     MatChipsModule,
-    EventCardComponent,
+    EventCard,
     Search,
   ],
 })

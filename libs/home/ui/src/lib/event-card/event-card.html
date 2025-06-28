@@ -1,0 +1,41 @@
+<mat-card [class.promoted]="event().isPromoted" [routerLink]="['/create']">
+  @if (event().isPromoted) {
+    <div class="badge">
+      <mat-icon>star</mat-icon>
+      <span>Promoted</span>
+    </div>
+  }
+  <div class="card-image">
+    @if (event().featuredImage) {
+      <img [src]="event().featuredImage" [alt]="event().title" />
+    } @else {
+      <div class="placeholder">
+        <mat-icon>explore</mat-icon>
+      </div>
+    }
+  </div>
+  <mat-card-content>
+    <h3>{{ event().title }}</h3>
+    @if (event().subtitle) {
+      <h4>{{ event().subtitle }}</h4>
+    }
+    <div class="tags">
+      <span>{{ getEventTypeLabel(event().type) }}</span>
+    </div>
+    <p class="description">{{ event().description | slice: 0 : 150 }}...</p>
+    <div class="details">
+      <mat-icon>calendar_month</mat-icon>
+      <span>{{ formatDateRange(event().startDate, event().endDate) }}</span>
+    </div>
+    @for (speaker of event().speakers; track $index) {
+      <div class="details">
+        <mat-icon>mic</mat-icon>
+        <span>{{ speaker.name }}</span>
+      </div>
+    }
+    <div class="details">
+      <mat-icon>payments</mat-icon>
+      <span>From USD 3500</span>
+    </div>
+  </mat-card-content>
+</mat-card>

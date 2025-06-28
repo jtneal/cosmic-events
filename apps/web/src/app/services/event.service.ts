@@ -1,23 +1,21 @@
-import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { Event, EventSearchFilters, EventListResponse, EventType, EventStatus } from '../models/event.model';
+import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Event, EventListResponse, EventSearchFilters, EventStatus, EventType } from '../models/event.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EventService {
   private http = inject(HttpClient);
   private apiUrl = '/api/events'; // This will be configured based on your backend
-  
+
   private currentEventSubject = new BehaviorSubject<Event | null>(null);
   public currentEvent$ = this.currentEventSubject.asObservable();
 
   // Get all events with optional filters
-  getEvents(filters?: EventSearchFilters, page: number = 1, limit: number = 10): Observable<EventListResponse> {
-    let params = new HttpParams()
-      .set('page', page.toString())
-      .set('limit', limit.toString());
+  getEvents(filters?: EventSearchFilters, page = 1, limit = 10): Observable<EventListResponse> {
+    let params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
 
     if (filters) {
       if (filters.type) {
@@ -38,6 +36,200 @@ export class EventService {
         params = params.set('maxPrice', filters.priceRange.max.toString());
       }
     }
+
+    const events: Event[] = [
+      {
+        id: 'id',
+        title: 'Ancient Mysteries of Egypt',
+        subtitle: 'Explore the secrets of the Pharaohs',
+        type: 'tour',
+        description:
+          "Join us on an extraordinary journey through Egypt's most mysterious sites, including the Great Pyramid, Sphinx, and hidden chambers recently discovered.",
+        speakers: [
+          {
+            id: 'id',
+            name: 'Dr. Sarah Martinez',
+            link: 'https://drsarahmartinez.com/',
+            image: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+            biography:
+              'Leading Egyptologist with 20 years of experience in pyramid research and ancient civilization studies.',
+          },
+        ],
+        itinerary: [
+          {
+            id: 'id',
+            title: 'Day 1: Arrival in Cairo',
+            image: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+            description: 'Meet your guide and fellow travelers. Evening orientation and welcome dinner.',
+            order: 1,
+          },
+          {
+            id: 'id',
+            title: 'Day 2: Giza Pyramid Complex',
+            image: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+            description: 'Explore the Great Pyramid, Sphinx, and recently opened chambers with special access.',
+            order: 2,
+          },
+        ],
+        additionalLegs: [],
+        moreInfo: [
+          {
+            id: 'id',
+            title: 'What to Bring',
+            description: 'Comfortable walking shoes, sun hat, sunscreen, camera, and a sense of wonder.',
+            order: 1,
+          },
+        ],
+        contactInfo: {
+          name: 'Dr. Sarah Martinez',
+          email: 'sarah@ancientmysteries.com',
+          phone: '+1 (555) 555-1212',
+          website: 'https://ancientmysteries.com',
+        },
+        pricing: {
+          singleOccupancy: 4200,
+          doubleOccupancy: 3500,
+          currency: 'USD',
+        },
+        startDate: new Date('2026-03-14T00:00:00Z'),
+        endDate: new Date('2026-03-24T00:00:00Z'),
+        videoLink: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+        featuredImage: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+        isPromoted: true,
+        status: 'published',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        authorId: 'authorId',
+      },
+      {
+        id: 'id',
+        title: 'Ancient Mysteries of Egypt',
+        subtitle: 'Explore the secrets of the Pharaohs',
+        type: 'tour',
+        description:
+          "Join us on an extraordinary journey through Egypt's most mysterious sites, including the Great Pyramid, Sphinx, and hidden chambers recently discovered.",
+        speakers: [
+          {
+            id: 'id',
+            name: 'Dr. Sarah Martinez',
+            link: 'https://drsarahmartinez.com/',
+            image: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+            biography:
+              'Leading Egyptologist with 20 years of experience in pyramid research and ancient civilization studies.',
+          },
+        ],
+        itinerary: [
+          {
+            id: 'id',
+            title: 'Day 1: Arrival in Cairo',
+            image: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+            description: 'Meet your guide and fellow travelers. Evening orientation and welcome dinner.',
+            order: 1,
+          },
+          {
+            id: 'id',
+            title: 'Day 2: Giza Pyramid Complex',
+            image: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+            description: 'Explore the Great Pyramid, Sphinx, and recently opened chambers with special access.',
+            order: 2,
+          },
+        ],
+        additionalLegs: [],
+        moreInfo: [
+          {
+            id: 'id',
+            title: 'What to Bring',
+            description: 'Comfortable walking shoes, sun hat, sunscreen, camera, and a sense of wonder.',
+            order: 1,
+          },
+        ],
+        contactInfo: {
+          name: 'Dr. Sarah Martinez',
+          email: 'sarah@ancientmysteries.com',
+          phone: '+1 (555) 555-1212',
+          website: 'https://ancientmysteries.com',
+        },
+        pricing: {
+          singleOccupancy: 4200,
+          doubleOccupancy: 3500,
+          currency: 'USD',
+        },
+        startDate: new Date('2026-03-14T00:00:00Z'),
+        endDate: new Date('2026-03-24T00:00:00Z'),
+        videoLink: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+        featuredImage: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+        isPromoted: false,
+        status: 'published',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        authorId: 'authorId',
+      },
+      {
+        id: 'id',
+        title: 'Ancient Mysteries of Egypt',
+        subtitle: 'Explore the secrets of the Pharaohs',
+        type: 'tour',
+        description:
+          "Join us on an extraordinary journey through Egypt's most mysterious sites, including the Great Pyramid, Sphinx, and hidden chambers recently discovered.",
+        speakers: [
+          {
+            id: 'id',
+            name: 'Dr. Sarah Martinez',
+            link: 'https://drsarahmartinez.com/',
+            image: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+            biography:
+              'Leading Egyptologist with 20 years of experience in pyramid research and ancient civilization studies.',
+          },
+        ],
+        itinerary: [
+          {
+            id: 'id',
+            title: 'Day 1: Arrival in Cairo',
+            image: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+            description: 'Meet your guide and fellow travelers. Evening orientation and welcome dinner.',
+            order: 1,
+          },
+          {
+            id: 'id',
+            title: 'Day 2: Giza Pyramid Complex',
+            image: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+            description: 'Explore the Great Pyramid, Sphinx, and recently opened chambers with special access.',
+            order: 2,
+          },
+        ],
+        additionalLegs: [],
+        moreInfo: [
+          {
+            id: 'id',
+            title: 'What to Bring',
+            description: 'Comfortable walking shoes, sun hat, sunscreen, camera, and a sense of wonder.',
+            order: 1,
+          },
+        ],
+        contactInfo: {
+          name: 'Dr. Sarah Martinez',
+          email: 'sarah@ancientmysteries.com',
+          phone: '+1 (555) 555-1212',
+          website: 'https://ancientmysteries.com',
+        },
+        pricing: {
+          singleOccupancy: 4200,
+          doubleOccupancy: 3500,
+          currency: 'USD',
+        },
+        startDate: new Date('2026-03-14T00:00:00Z'),
+        endDate: new Date('2026-03-24T00:00:00Z'),
+        videoLink: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+        featuredImage: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg',
+        isPromoted: false,
+        status: 'published',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        authorId: 'authorId',
+      },
+    ];
+
+    return of({ events, total: 0, page: 1, limit: 12 });
 
     return this.http.get<EventListResponse>(`${this.apiUrl}`, { params });
   }
@@ -106,11 +298,11 @@ export class EventService {
   // Get event types
   getEventTypes(): { value: EventType; label: string }[] {
     return [
-      { value: 'event', label: 'Guided Events' },
+      { value: 'tour', label: 'Guided Tours' },
       { value: 'conference', label: 'Conferences' },
       { value: 'meeting', label: 'Meetings & Workshops' },
       { value: 'cruise', label: 'Cruise Expeditions' },
-      { value: 'event', label: 'Special Events' }
+      { value: 'event', label: 'Special Events' },
     ];
   }
 

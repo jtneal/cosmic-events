@@ -9,6 +9,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { EventService } from '../../services/event.service';
 import { Event } from '../../models/event.model';
+import { EventType, eventTypeMap, getEventTypeLabel } from '@cosmic-events/home-util';
 
 @Component({
   selector: 'app-event-detail',
@@ -780,16 +781,7 @@ export class EventDetailComponent implements OnInit {
     this.activeTab.set(tab);
   }
 
-  getEventTypeLabel(type: string): string {
-    const typeMap: Record<string, string> = {
-      'event': 'Guided Event',
-      'conference': 'Conference',
-      'meeting': 'Meeting',
-      'cruise': 'Cruise',
-      'tour': 'Tour'
-    };
-    return typeMap[type] || type;
-  }
+  getEventTypeLabel = getEventTypeLabel;
 
   formatDateRange(startDate: Date, endDate: Date): string {
     const start = new Date(startDate);
