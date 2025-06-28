@@ -19,6 +19,7 @@
       "@cosmic-events/common-feature": ["libs/common/feature/src/index.ts"],
       "@cosmic-events/common-ui": ["libs/common/ui/src/index.ts"],
       "@cosmic-events/common-util": ["libs/common/util/src/index.ts"],
+      "@cosmic-events/home-feature": ["libs/home/feature/src/index.ts"],
       "@cosmic-events/home-ui": ["libs/home/ui/src/index.ts"],
       "@cosmic-events/home-util": ["libs/home/util/src/index.ts"]
     }

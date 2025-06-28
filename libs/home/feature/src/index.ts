@@ -1,1 +1,1 @@
-export * from './lib/home-feature';
+export * from './lib/home';

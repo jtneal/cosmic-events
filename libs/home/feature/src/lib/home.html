@@ -1,0 +1,102 @@
+<div class="home-container">
+  <div
+    style="display: flex; flex-direction: column; justify-content: center; min-height: calc(100vh - 194px); margin-bottom: 97px;"
+  >
+    <lib-hero />
+    <lib-search [eventTypes]="eventTypes" />
+  </div>
+
+  <!-- Promoted Events -->
+  @if (promotedEvents().length > 0) {
+    <section class="promoted-section">
+      <div class="section-header">
+        <h2>
+          <mat-icon>star</mat-icon>
+          Featured & Promoted Events
+        </h2>
+        <p>Discover highlighted adventures from our community</p>
+      </div>
+      <div class="events-grid promoted-grid">
+        @for (event of promotedEvents(); track $index) {
+          <lib-event-card [event]="event" />
+        }
+      </div>
+    </section>
+  }
+
+  <!-- All Events -->
+  <section class="events-section">
+    <div class="section-header">
+      <h2>
+        <mat-icon>explore</mat-icon>
+        All Adventures
+      </h2>
+      <p>{{ totalEvents() }} cosmic adventures await</p>
+    </div>
+
+    @if (loading()) {
+      <div class="loading-state">
+        <div class="cosmic-loader">
+          <div class="planet"></div>
+          <div class="orbit"></div>
+        </div>
+        <p>Loading cosmic adventures...</p>
+      </div>
+    } @else if (events().length === 0) {
+      <div class="empty-state">
+        <mat-icon>explore_off</mat-icon>
+        <h3>No events found</h3>
+        <p>Try adjusting your search criteria or be the first to create a event!</p>
+        <button mat-raised-button color="primary" routerLink="/create">
+          <mat-icon>add</mat-icon>
+          Create First Event
+        </button>
+      </div>
+    } @else {
+      <div class="events-grid">
+        @for (event of events(); track $index) {
+          <lib-event-card [event]="event" />
+        }
+      </div>
+
+      @if (hasMoreEvents()) {
+        <div class="load-more">
+          <button mat-raised-button color="primary" (click)="loadMoreEvents()" [disabled]="loading()">
+            <mat-icon>expand_more</mat-icon>
+            Load More Events
+          </button>
+        </div>
+      }
+    }
+  </section>
+
+  <!-- Categories -->
+  <section class="categories-section">
+    <div class="section-header">
+      <h2>Popular Categories</h2>
+      <p>Explore adventures by theme</p>
+    </div>
+    <div class="categories-grid">
+      <div class="category-card" (click)="filterByCategory('ancient')" (keypress)="filterByCategory('ancient')" tabindex="6">
+        <mat-icon>account_balance</mat-icon>
+        <h3>Ancient Civilizations</h3>
+        <p>Explore lost cities, mysterious ruins, and forgotten empires</p>
+      </div>
+      <div class="category-card" (click)="filterByCategory('ufo')" (keypress)="filterByCategory('ufo')" tabindex="7">
+        <mat-icon>brightness_2</mat-icon>
+        <h3>UFO & UAP</h3>
+        <p>Investigate sightings, hotspots, and unexplained phenomena</p>
+      </div>
+      <div class="category-card" (click)="filterByCategory('paranormal')" (keypress)="filterByCategory('paranormal')" tabindex="8">
+        <mat-icon>psychology</mat-icon>
+        <h3>Paranormal</h3>
+        <p>Ghost events, cryptozoology, and supernatural experiences</p>
+      </div>
+      <div class="category-card" (click)="filterByCategory('spiritual')" (keypress)="filterByCategory('spiritual')" tabindex="9">
+        <mat-icon>self_improvement</mat-icon>
+        <h3>Spiritual & New Age</h3>
+        <p>Consciousness expansion, healing journeys, and sacred sites</p>
+      </div>
+    </div>
+  </section>
+</div>
