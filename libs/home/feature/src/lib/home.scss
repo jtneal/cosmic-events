@@ -51,6 +51,19 @@
 
 .events-section {
   margin: 4rem 0;
+  position: relative;
+
+  .locations {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .dates {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
 }
 
 .events-grid {

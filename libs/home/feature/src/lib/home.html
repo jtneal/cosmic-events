@@ -3,7 +3,7 @@
 
   <section class="categories-section" id="categories">
     <div class="section-header">
-      <h2>Categories</h2>
+      <h2>Event Categories</h2>
     </div>
     <div class="categories-grid">
       <lib-category-card
@@ -26,16 +26,8 @@
         subtitle="Symbols, Teachings & the Inner Mysteries"
         title="Esoteric Wisdom"
       />
-      <lib-category-card
-        icon="blur_on"
-        subtitle="Psychic & Supernatural Phenomena"
-        title="Paranormal Realms"
-      />
-      <lib-category-card
-        icon="science"
-        subtitle="Forbidden Tech & Alternative Physics"
-        title="Fringe Science"
-      />
+      <lib-category-card icon="blur_on" subtitle="Psychic & Supernatural Phenomena" title="Paranormal Realms" />
+      <lib-category-card icon="science" subtitle="Forbidden Tech & Alternative Physics" title="Fringe Science" />
     </div>
   </section>
 
@@ -50,34 +42,28 @@
     </div>
   </section>
 
-  <section class="locations-section" id="locations">
-    <div class="section-header">
-      <h2>Locations</h2>
-      <!-- do not need icons for this or types really, just drop downs-->
-    </div>
-    <mat-form-field appearance="outline" subscriptSizing="dynamic">
-      <mat-label>Event Type</mat-label>
-      <mat-select [(ngModel)]="selectedType">
-        <mat-option value="">All Types</mat-option>
-        @for (type of eventTypes; track $index) {
-          <mat-option [value]="type.value">{{ type.label }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline" subscriptSizing="dynamic">
-      <mat-label>Event Location</mat-label>
-      <mat-select [(ngModel)]="selectedLocation">
-        <mat-option value="">All Locations</mat-option>
-        @for (location of eventLocations; track $index) {
-          <mat-option [value]="location.value">{{ location.label }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-  </section>
-
   <section class="events-section">
     <div class="section-header">
       <h2>Adventures</h2>
+      <mat-form-field appearance="outline" class="dates" subscriptSizing="dynamic">
+        <mat-label>Dates</mat-label>
+
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate placeholder="Start date">
+          <input matEndDate placeholder="End date">
+        </mat-date-range-input>
+
+        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="locations" subscriptSizing="dynamic">
+        <mat-label>Event Locations</mat-label>
+        <mat-select multiple [(ngModel)]="selectedLocation">
+          @for (location of eventLocations; track $index) {
+            <mat-option [value]="location.value">{{ location.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
     </div>
 
     @if (loading()) {

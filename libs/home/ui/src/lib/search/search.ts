@@ -4,13 +4,12 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
-import { Button } from '@cosmic-events/common-ui';
 
 export type EventType = 'tour' | 'conference' | 'meeting' | 'cruise' | 'event';
 
 @Component({
   selector: 'lib-search',
-  imports: [Button, FormsModule, MatFormField, MatIcon, MatInput, MatLabel, MatOption, MatSelect],
+  imports: [FormsModule, MatFormField, MatIcon, MatInput, MatLabel, MatOption, MatSelect],
   templateUrl: './search.html',
   styleUrl: './search.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

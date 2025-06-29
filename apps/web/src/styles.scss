@@ -47,6 +47,30 @@
       selected-state-layer-color: var(--cosmic-dark),
     )
   );
+
+  @include mat.datepicker-overrides(
+    (
+      calendar-body-label-text-color: var(--cosmic-text),
+      calendar-container-background-color: var(--cosmic-dark-secondary),
+      calendar-container-text-color: var(--cosmic-text),
+      calendar-date-focus-state-background-color: var(--cosmic-dark-secondary),
+      calendar-date-hover-state-background-color: var(--cosmic-dark-tertiary),
+      calendar-date-in-range-state-background-color: var(--cosmic-dark-tertiary),
+      calendar-date-preview-state-outline-color: var(--cosmic-primary),
+      calendar-date-selected-state-background-color: var(--cosmic-primary),
+      calendar-date-selected-state-text-color: var(--cosmic-text),
+      calendar-date-text-color: var(--cosmic-text),
+      calendar-date-today-outline-color: var(--cosmic-primary),
+      calendar-header-divider-color: var(--cosmic-dark-tertiary),
+      calendar-header-text-color: var(--cosmic-text),
+      calendar-navigation-button-icon-color: var(--cosmic-text),
+      calendar-period-button-icon-color: var(--cosmic-text),
+      calendar-period-button-text-color: var(--cosmic-text),
+      range-input-separator-color: var(--cosmic-text),
+      toggle-active-state-icon-color: var(--cosmic-primary),
+      toggle-icon-color: var(--cosmic-text),
+    )
+  );
 }
 
 * {

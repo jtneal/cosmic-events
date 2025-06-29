@@ -315,7 +315,6 @@ export class EventService {
       { value: 'cairo', label: 'Cairo, Egypt' },
       { value: 'london', label: 'London, UK' },
       { value: 'new_york', label: 'New York, USA' },
-      { value: 'tokyo', label: 'Tokyo, Japan' },
     ];
   }
 
