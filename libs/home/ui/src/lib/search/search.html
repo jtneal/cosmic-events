@@ -1,27 +1,21 @@
 <h2>Your Perfect Adventure Awaits</h2>
-<form>
-  <mat-form-field appearance="outline" subscriptSizing="dynamic">
-    <mat-label>Search events, locations, topics...</mat-label>
-    <input
-      matInput
-      name="searchTerm"
-      [(ngModel)]="searchTerm"
-      placeholder="Atlantis, UFO sightings, Ancient Egypt..."
-    />
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
+<mat-form-field appearance="outline" subscriptSizing="dynamic">
+  <mat-label>Search events, locations, topics...</mat-label>
+  <input
+    matInput
+    name="searchTerm"
+    [(ngModel)]="searchTerm"
+    placeholder="Atlantis, UFO sightings, Ancient Egypt..."
+  />
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>
 
-  <mat-form-field appearance="outline" subscriptSizing="dynamic">
-    <mat-label>Event Type</mat-label>
-    <mat-select [(ngModel)]="selectedType">
-      <mat-option value="">All Types</mat-option>
-      @for (type of eventTypes(); track $index) {
-        <mat-option [value]="type.value">{{ type.label }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-
-  <a (click)="searchEvents()" (keyup)="searchEvents()" tabindex="2">
-    <lib-button icon="search" size="huge">Search</lib-button>
-  </a>
-</form>
+<mat-form-field appearance="outline" subscriptSizing="dynamic">
+  <mat-label>Event Type</mat-label>
+  <mat-select [(ngModel)]="selectedType">
+    <mat-option value="">All Types</mat-option>
+    @for (type of eventTypes(); track $index) {
+      <mat-option [value]="type.value">{{ type.label }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>

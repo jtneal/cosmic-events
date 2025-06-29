@@ -1,55 +1,37 @@
 <div class="home-container">
-  <div
-    style="
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: calc(100vh - 194px);
-      margin-bottom: 97px;
-    "
-  >
-    <lib-hero />
-    <lib-search [eventTypes]="eventTypes" />
-  </div>
+  <lib-hero />
 
-  <section class="categories-section">
+  <section class="categories-section" id="categories">
     <div class="section-header">
-      <h2>Choose Your Categories</h2>
-      <p>Select as many as you'd like</p>
+      <h2>Categories</h2>
     </div>
     <div class="categories-grid">
       <lib-category-card
-        description="Explore the mysteries of ancient cultures, lost technologies, and the suppressed stories of humanity’s true past — from Atlantis to Göbekli Tepe."
         icon="account_balance"
         subtitle="Lost Civilizations & Hidden History"
         title="Ancient Origins"
       />
       <lib-category-card
-        description="Dive into the realms of UFOs, UAPs, extraterrestrials, interdimensionals, and encounters with intelligence beyond the human experience."
         icon="visibility"
         subtitle="Aliens, Contact & Otherworldly Beings"
         title="Non-Human Intelligence"
       />
       <lib-category-card
-        description="Discover practices and teachings on higher consciousness, spiritual awakening, soul contracts, and the energetic nature of reality."
         icon="self_improvement"
         subtitle="Awakening, Energy & the Soul's Journey"
         title="Consciousness & Spirit"
       />
       <lib-category-card
-        description="Decode the ancient mystery schools, sacred geometry, Hermeticism, and hidden teachings passed down through secret societies and mystics."
         icon="auto_fix_high"
         subtitle="Symbols, Teachings & the Inner Mysteries"
         title="Esoteric Wisdom"
       />
       <lib-category-card
-        description="From ghosts to telepathy, explore the strange and unexplained phenomena that challenge our understanding of life, death, and time."
         icon="blur_on"
         subtitle="Psychic & Supernatural Phenomena"
         title="Paranormal Realms"
       />
       <lib-category-card
-        description="Investigate suppressed inventions, free energy, time travel, and revolutionary science that defies mainstream explanation."
         icon="science"
         subtitle="Forbidden Tech & Alternative Physics"
         title="Fringe Science"
@@ -57,13 +39,45 @@
     </div>
   </section>
 
+  <section class="event-types-section" id="event-types">
+    <div class="section-header">
+      <h2>Event Types</h2>
+    </div>
+    <div class="categories-grid">
+      <lib-category-card icon="hiking" title="Guided Tours" />
+      <lib-category-card icon="groups" title="Conferences" />
+      <lib-category-card icon="event" title="Special Events" />
+    </div>
+  </section>
+
+  <section class="locations-section" id="locations">
+    <div class="section-header">
+      <h2>Locations</h2>
+      <!-- do not need icons for this or types really, just drop downs-->
+    </div>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Event Type</mat-label>
+      <mat-select [(ngModel)]="selectedType">
+        <mat-option value="">All Types</mat-option>
+        @for (type of eventTypes; track $index) {
+          <mat-option [value]="type.value">{{ type.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Event Location</mat-label>
+      <mat-select [(ngModel)]="selectedLocation">
+        <mat-option value="">All Locations</mat-option>
+        @for (location of eventLocations; track $index) {
+          <mat-option [value]="location.value">{{ location.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </section>
+
   <section class="events-section">
     <div class="section-header">
-      <h2>
-        <mat-icon>explore</mat-icon>
-        All Adventures
-      </h2>
-      <p>{{ totalEvents() }} cosmic adventures await</p>
+      <h2>Adventures</h2>
     </div>
 
     @if (loading()) {

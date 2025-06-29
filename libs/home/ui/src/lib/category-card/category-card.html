@@ -6,8 +6,12 @@
 >
   <mat-icon>{{ icon() }}</mat-icon>
   <h3>{{ title() }}</h3>
-  <h4>{{ subtitle() }}</h4>
-  <p>{{ description() }}</p>
+  @if (subtitle()) {
+    <h4>{{ subtitle() }}</h4>
+  }
+  @if (description()) {
+    <p>{{ description() }}</p>
+  }
   @if (selected) {
     <mat-icon class="selected">check_circle_outline</mat-icon>
   }

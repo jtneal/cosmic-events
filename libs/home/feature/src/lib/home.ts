@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { EventService } from '@cosmic-events/common-data-access';
 import { Event, EventSearchFilters, EventType } from '@cosmic-events/common-util';
-import { CategoryCard, EventCard, Hero, Search } from '@cosmic-events/home-ui';
+import { CategoryCard, EventCard, Hero } from '@cosmic-events/home-ui';
 
 @Component({
   selector: 'lib-home',
@@ -27,7 +27,6 @@ import { CategoryCard, EventCard, Hero, Search } from '@cosmic-events/home-ui';
     MatSelectModule,
     MatChipsModule,
     EventCard,
-    Search,
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss',
@@ -47,7 +46,9 @@ export class Home implements OnInit {
   // Search and filter state
   searchTerm = '';
   selectedType: EventType | '' = '';
+  selectedLocation: EventType | '' = '';
   eventTypes = this.eventService.getEventTypes();
+  eventLocations = this.eventService.getEventLocations();
 
   ngOnInit(): void {
     this.loadInitialData();

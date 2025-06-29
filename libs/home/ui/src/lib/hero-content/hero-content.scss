@@ -26,3 +26,9 @@ p {
   margin-bottom: 2rem;
   max-width: 500px;
 }
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;;
+}

@@ -71,6 +71,8 @@ export class EventService {
             order: 2,
           },
         ],
+        startLocation: 'Cairo, Egypt',
+        endLocation: 'Cairo, Egypt',
         additionalLegs: [],
         moreInfo: [
           {
@@ -134,6 +136,8 @@ export class EventService {
             order: 2,
           },
         ],
+        startLocation: 'Cairo, Egypt',
+        endLocation: 'Cairo, Egypt',
         additionalLegs: [],
         moreInfo: [
           {
@@ -197,6 +201,8 @@ export class EventService {
             order: 2,
           },
         ],
+        startLocation: 'Cairo, Egypt',
+        endLocation: 'Cairo, Egypt',
         additionalLegs: [],
         moreInfo: [
           {
@@ -300,9 +306,16 @@ export class EventService {
     return [
       { value: 'tour', label: 'Guided Tours' },
       { value: 'conference', label: 'Conferences' },
-      { value: 'meeting', label: 'Meetings & Workshops' },
-      { value: 'cruise', label: 'Cruise Expeditions' },
       { value: 'event', label: 'Special Events' },
+    ];
+  }
+
+  getEventLocations(): { value: string; label: string }[] {
+    return [
+      { value: 'cairo', label: 'Cairo, Egypt' },
+      { value: 'london', label: 'London, UK' },
+      { value: 'new_york', label: 'New York, USA' },
+      { value: 'tokyo', label: 'Tokyo, Japan' },
     ];
   }
 

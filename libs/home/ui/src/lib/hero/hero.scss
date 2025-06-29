@@ -3,6 +3,7 @@
   display: grid;
   gap: 2rem;
   grid-template-columns: 1fr;
+  min-height: calc(100vh - 194px);
   padding: 2rem 0;
   text-align: center;
 

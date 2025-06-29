@@ -64,6 +64,8 @@ export interface Event {
   description: string;
   speakers: Speaker[];
   itinerary: ItineraryDay[];
+  startLocation: string;
+  endLocation: string;
   additionalLegs: EventLeg[];
   moreInfo: MoreInfoItem[];
   contactInfo: ContactInfo;

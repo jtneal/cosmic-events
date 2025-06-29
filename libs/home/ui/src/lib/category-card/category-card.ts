@@ -9,9 +9,9 @@ import { MatIcon } from '@angular/material/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryCard {
-  description = input.required<string>();
+  description = input<string>('');
   icon = input.required<string>();
   selected = true;
-  subtitle = input.required<string>();
+  subtitle = input<string>('');
   title = input.required<string>();
 }

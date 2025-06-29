@@ -1,11 +1,22 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CosmicTitle } from '@cosmic-events/common-ui';
+import { ChangeDetectionStrategy, Component, DOCUMENT, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { Button, CosmicTitle } from '@cosmic-events/common-ui';
 
 @Component({
   selector: 'lib-hero-content',
-  imports: [CosmicTitle],
+  imports: [Button, CosmicTitle, RouterModule],
   templateUrl: './hero-content.html',
   styleUrl: './hero-content.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeroContent {}
+export class HeroContent {
+  private document = inject(DOCUMENT);
+
+  scrollToSection(sectionId: string): void {
+    const element = this.document.getElementById(sectionId);
+
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+}

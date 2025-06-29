@@ -5,3 +5,11 @@
   conferences that challenge conventional wisdom. From Atlantis expeditions to UFO hotspots, your next cosmic adventure
   awaits.
 </p>
+<p class="buttons">
+  <a (click)="scrollToSection('categories')" (keyup.enter)="scrollToSection('categories')" tabindex="4">
+    <lib-button icon="search">Explore Events</lib-button>
+  </a>
+  <a routerLink="/create">
+    <lib-button icon="add" type="secondary">List Your Event</lib-button>
+  </a>
+</p>
