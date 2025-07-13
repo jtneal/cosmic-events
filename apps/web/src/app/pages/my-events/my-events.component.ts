@@ -5,9 +5,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
-import { EventService } from '@cosmic-events/common-data-access';
-import { Event, EventStatus } from '@cosmic-events/common-util';
-import { EventCard } from '@cosmic-events/home-ui';
+import { EventService } from '@cosmic-events/data-access-common';
+import { Event, EventStatus } from '@cosmic-events/util-common';
+import { EventCard } from '@cosmic-events/ui-home';
 
 @Component({
   selector: 'app-my-events',

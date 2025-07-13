@@ -15,13 +15,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@cosmic-events/common-data-access": ["libs/common/data-access/src/index.ts"],
-      "@cosmic-events/common-feature": ["libs/common/feature/src/index.ts"],
-      "@cosmic-events/common-ui": ["libs/common/ui/src/index.ts"],
-      "@cosmic-events/common-util": ["libs/common/util/src/index.ts"],
-      "@cosmic-events/home-feature": ["libs/home/feature/src/index.ts"],
-      "@cosmic-events/home-ui": ["libs/home/ui/src/index.ts"],
-      "@cosmic-events/home-util": ["libs/home/util/src/index.ts"]
+      "@cosmic-events/data-access-common": ["libs/data-access-common/src/index.ts"],
+      "@cosmic-events/feature-home": ["libs/feature-home/src/index.ts"],
+      "@cosmic-events/ui-common": ["libs/ui-common/src/index.ts"],
+      "@cosmic-events/ui-home": ["libs/ui-home/src/index.ts"],
+      "@cosmic-events/util-common": ["libs/util-common/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

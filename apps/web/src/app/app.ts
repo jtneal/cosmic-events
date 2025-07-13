@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Footer, Header } from '@cosmic-events/common-ui';
+import { Footer, Header } from '@cosmic-events/ui-common';
 
 @Component({
   imports: [Footer, Header, RouterModule],

@@ -14,8 +14,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { Router } from '@angular/router';
-import { Event } from '@cosmic-events/common-util';
-import { EventService } from '@cosmic-events/common-data-access';
+import { Event } from '@cosmic-events/util-common';
+import { EventService } from '@cosmic-events/data-access-common';
 
 @Component({
   selector: 'app-create-event',

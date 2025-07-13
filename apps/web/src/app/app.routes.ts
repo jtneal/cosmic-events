@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { Home } from '@cosmic-events/home-feature';
+import { Home } from '@cosmic-events/feature-home';
 import { CreateEventComponent } from './pages/create-event/create-event.component';
 
 export const appRoutes: Route[] = [

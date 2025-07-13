@@ -7,9 +7,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { EventService } from '@cosmic-events/common-data-access';
-import { Event } from '@cosmic-events/common-util';
-import { getEventTypeLabel } from '@cosmic-events/home-util';
+import { EventService } from '@cosmic-events/data-access-common';
+import { Event } from '@cosmic-events/util-common';
+import { getEventTypeLabel } from '@cosmic-events/util-common';
 
 @Component({
   selector: 'app-event-detail',
