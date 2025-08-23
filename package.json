@@ -1,7 +1,7 @@
 {
   "name": "@cosmic-events/source",
-  "version": "0.0.0",
-  "license": "MIT",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
   "scripts": {},
   "private": true,
   "dependencies": {
