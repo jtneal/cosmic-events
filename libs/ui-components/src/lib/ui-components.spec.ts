@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UiComponents } from './ui-components';
 
-describe('UiComponents', () => {
+describe(UiComponents.name, () => {
   let component: UiComponents;
   let fixture: ComponentFixture<UiComponents>;
 
