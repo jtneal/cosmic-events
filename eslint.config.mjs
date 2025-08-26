@@ -1,4 +1,5 @@
 import nx from '@nx/eslint-plugin';
+import importPlugin from 'eslint-plugin-import';
 
 export default [
   ...nx.configs['flat/base'],
@@ -39,7 +40,21 @@ export default [
   },
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.cts', '**/*.mts', '**/*.js', '**/*.jsx', '**/*.cjs', '**/*.mjs'],
+    plugins: { import: importPlugin },
     // Override or add rules here
-    rules: {},
+    rules: {
+      '@typescript-eslint/explicit-function-return-type': 'error',
+      '@typescript-eslint/explicit-member-accessibility': 'error',
+      '@typescript-eslint/member-ordering': 'error',
+      'import/order': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+          'newlines-between': 'never',
+          alphabetize: { caseInsensitive: true, order: 'asc' }
+        }
+      ],
+      'sort-imports': ['error', { ignoreDeclarationSort: true }],
+    },
   },
 ];

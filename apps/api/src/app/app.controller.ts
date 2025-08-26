@@ -1,12 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Event } from './entities/event.entity';
+import { EventService } from './event.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  public constructor(private readonly events: EventService) {}
 
   @Get()
-  getData() {
-    return this.appService.getData();
+  public getData(): Promise<Event[]> {
+    return this.events.getAll();
   }
 }

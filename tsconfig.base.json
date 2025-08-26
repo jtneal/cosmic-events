@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@cosmic-events/ui-components": ["libs/ui-components/src/index.ts"]
+      "@cosmic-events/ui-components": ["libs/ui-components/src/index.ts"],
+      "@cosmic-events/util-dtos": ["libs/util-dtos/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
