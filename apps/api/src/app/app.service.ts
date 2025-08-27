@@ -7,7 +7,7 @@ import { Event } from './entities/event.entity';
 export class AppService {
   public constructor(@InjectRepository(Event) private readonly event: Repository<Event>) {}
 
-  public async getAll(): Promise<Event[]> {
+  public getAll(): Promise<Event[]> {
     return this.event.find();
   }
 }
