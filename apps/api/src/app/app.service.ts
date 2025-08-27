@@ -4,10 +4,10 @@ import { Repository } from 'typeorm';
 import { Event } from './entities/event.entity';
 
 @Injectable()
-export class EventService {
+export class AppService {
   public constructor(@InjectRepository(Event) private readonly event: Repository<Event>) {}
 
-  public getAll(): Promise<Event[]> {
+  public async getAll(): Promise<Event[]> {
     return this.event.find();
   }
 }

@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, JoinTable, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { EventType } from './event-type.enum';
+import { EventType } from '../enums/event-type.enum';
 import { Organizer } from './organizer.entity';
 import { Panel } from './panel.entity';
 import { Speaker } from './speaker.entity';
@@ -57,7 +57,7 @@ export class Event {
   @Column()
   public title: string;
 
-  @Column({ default: EventType.GUIDED_TOURS, enum: EventType, type: 'enum' })
+  @Column({ enum: EventType, type: 'enum' })
   public type: EventType;
 
   @Column()
