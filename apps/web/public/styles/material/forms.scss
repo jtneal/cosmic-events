@@ -1,0 +1,67 @@
+@use '@angular/material' as mat;
+
+:root {
+  @include mat.form-field-overrides((
+    container-text-size: 0.9375rem,
+    filled-caret-color: var(--cosmic-text-color),
+    filled-container-color: #1e293b,
+    filled-input-text-placeholder-color: var(--cosmic-violet-300),
+  ));
+
+  @include mat.chips-overrides((
+    container-height: 2.25rem,
+    container-shape-radius: 1.125rem,
+    elevated-container-color: #1e293b,
+    elevated-selected-container-color: var(--cosmic-purple-600),
+    label-text-color: var(--cosmic-violet-300),
+    outline-width: 0,
+    selected-label-text-color: var(--cosmic-white),
+  ));
+
+  @include mat.select-overrides((
+    enabled-arrow-color: var(--cosmic-purple-400),
+    focused-arrow-color: var(--cosmic-purple-400),
+    panel-background-color: #1e293b,
+    placeholder-text-color: var(--cosmic-violet-300),
+    trigger-text-size: 0.9375rem,
+  ));
+
+  @include mat.datepicker-overrides((
+    calendar-container-background-color: #1e293b,
+    calendar-date-in-range-state-background-color: var(--cosmic-purple-900),
+    toggle-icon-color: var(--cosmic-purple-400),
+    toggle-active-state-icon-color: var(--cosmic-purple-400),
+  ));
+}
+
+.mat-form-field-appearance-fill {
+  width: 100%;
+
+  .mdc-text-field--filled {
+    border: 1px solid var(--cosmic-purple-500);
+    border-radius: 0.5rem !important;
+    margin: 1px;
+
+    &.mdc-text-field--focused {
+      border: 2px solid var(--cosmic-violet-400);
+      border-radius: 0.625rem !important;
+      margin: 0;
+    }
+
+    .mat-icon {
+      color: var(--cosmic-purple-400);
+    }
+
+    .mdc-line-ripple {
+      display: none;
+    }
+  }
+
+  .mat-mdc-select-arrow {
+    width: 1.5rem;
+  }
+}
+
+.mdc-slider .mdc-slider__value-indicator {
+  transform: scale(1);
+}

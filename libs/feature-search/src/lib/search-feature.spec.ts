@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UiComponents } from './ui-components';
+import { SearchFeature } from './search-feature';
 
-describe(UiComponents.name, () => {
-  let component: UiComponents;
-  let fixture: ComponentFixture<UiComponents>;
+describe(SearchFeature.name, () => {
+  let component: SearchFeature;
+  let fixture: ComponentFixture<SearchFeature>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UiComponents],
+      imports: [SearchFeature],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(UiComponents);
+    fixture = TestBed.createComponent(SearchFeature);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

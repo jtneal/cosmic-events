@@ -18,7 +18,6 @@ export class Event {
 
 export class GuidedTour extends Event {
   public deposit = 0;
-  public difficulty = EventDifficultyEnum.Beginner;
   public singleOccupancySupplement = 0;
 }
 
@@ -35,12 +34,6 @@ export class Speaker {
 
 export class EventOrganizer {
   public name = '';
-}
-
-export enum EventDifficultyEnum {
-  Advanced = 'Advanced',
-  Beginner = 'Beginner',
-  Intermediate = 'Intermediate',
 }
 
 export enum EventTypeEnum {

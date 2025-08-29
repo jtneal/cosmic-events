@@ -1,9 +1,48 @@
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
+@use '../public/styles/reset';
+@use '../public/styles/material';
+
+:root {
+  // Color ideas
+  // Deep Space Blue / Navy (#0D1B2A) → grounding background, gives depth.
+  // Cosmic Purple / Violet (#5A189A) → mystical and spiritual undertones.
+  // Midnight Black (#000814) → for contrast and elegance.
+  // Nebula Pink / Magenta (#FF4D6D) → adds vibrancy and otherworldly touch.
+  // Aurora Teal / Cyan (#00B4D8) → futuristic, balances the warmth of pinks/purples.
+  // Supernova Gold (#FFD60A) → sparing use for CTAs, draws attention like a starburst.
+
+  --cosmic-purple-050: #faf5ff;
+  --cosmic-purple-100: #f3e8ff;
+  --cosmic-purple-200: #e9d5ff;
+  --cosmic-purple-300: #d8b4fe;
+  --cosmic-purple-400: #c084fc;
+  --cosmic-purple-500: #a855f7;
+  --cosmic-purple-600: #9333ea;
+  --cosmic-purple-700: #7e22ce;
+  --cosmic-purple-800: #6b21a8;
+  --cosmic-purple-900: #581c87;
+  --cosmic-purple-950: #3b0764;
+  --cosmic-text-color: #e0e1dd;
+  --cosmic-violet-050: #f5f3ff;
+  --cosmic-violet-100: #ede9fe;
+  --cosmic-violet-200: #ddd6fe;
+  --cosmic-violet-300: #c4b5fd;
+  --cosmic-violet-400: #a78bfa;
+  --cosmic-violet-500: #8b5cf6;
+  --cosmic-violet-600: #7c3aed;
+  --cosmic-violet-700: #6d28d9;
+  --cosmic-violet-800: #5b21b6;
+  --cosmic-violet-900: #4c1d95;
+  --cosmic-violet-950: #2e1065;
+  --cosmic-white: #ffffff;
+
+  --mat-sys-on-primary: var(--cosmic-white);
+  --mat-sys-on-surface: var(--cosmic-text-color);
+  --mat-sys-primary: var(--cosmic-purple-600);
+  --mat-sys-surface: #0d1b2a;
+  --mat-sys-on-surface-variant: var(--cosmic-violet-300);
+  --mat-form-field-filled-focus-label-text-color: var(--cosmic-violet-300);
+}
 
 html {
   @include mat.theme(
@@ -12,98 +51,66 @@ html {
         primary: mat.$magenta-palette,
         tertiary: mat.$violet-palette,
       ),
-      typography: Roboto,
       density: 0,
+      typography: Roboto,
     )
   );
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: dark;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
+  background: radial-gradient(
+    circle at bottom right,
+    #131355 0%,
+    #02020b 100%,
+  );
   color: var(--mat-sys-on-surface);
+  color-scheme: dark;
   font: var(--mat-sys-body-medium);
-}
+  min-height: 100vh;
+  padding: 1.5rem;
 
-/* 1. Use a more-intuitive box-sizing model */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+  &::before,
+  &::after {
+    content: "";
+    height: 100%;
+    left: 0;
+    opacity: 0.75;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+  }
+  
+  &::before {
+    animation: slide1 75s linear infinite;
+    background: transparent url("/images/stars1.png") repeat;
+  }
 
-/* 2. Remove default margin */
-* {
-  margin: 0;
-}
+  &::after {
+    animation: slide2 90s linear infinite;
+    background: transparent url("/images/stars2.png") repeat;
+  }
 
-/* 3. Enable keyword animations */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    interpolate-size: allow-keywords;
+  * {
+    z-index: 1;
   }
 }
 
-body {
-  /* 4. Add accessible line-height */
-  line-height: 1.5;
-  /* 5. Improve text rendering */
-  -webkit-font-smoothing: antialiased;
+@keyframes slide1 {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 466px 0;
+  }
 }
 
-/* 6. Improve media defaults */
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
-}
-
-/* 7. Inherit fonts for form controls */
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
-
-/* 8. Avoid text overflows */
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  overflow-wrap: break-word;
-}
-
-/* 9. Improve line wrapping */
-p {
-  text-wrap: pretty;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  text-wrap: balance;
-}
-
-/*
-  10. Create a root stacking context
-*/
-#root,
-#__next {
-  isolation: isolate;
+@keyframes slide2 {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 798px 0;
+  }
 }
