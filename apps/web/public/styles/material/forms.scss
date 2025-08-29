@@ -1,39 +1,47 @@
 @use '@angular/material' as mat;
 
 :root {
-  @include mat.form-field-overrides((
-    container-text-size: 0.9375rem,
-    filled-caret-color: var(--cosmic-text-color),
-    filled-container-color: var(--cosmic-navy),
-    filled-input-text-placeholder-color: var(--cosmic-violet-300),
-  ));
+  @include mat.form-field-overrides(
+    (
+      container-text-size: 0.9375rem,
+      filled-caret-color: var(--cosmic-text-color),
+      filled-container-color: var(--cosmic-navy),
+      filled-input-text-placeholder-color: var(--cosmic-violet-300),
+    )
+  );
 
-  @include mat.chips-overrides((
-    container-height: 2.25rem,
-    container-shape-radius: 1.125rem,
-    elevated-container-color: var(--cosmic-navy),
-    elevated-selected-container-color: var(--cosmic-purple-600),
-    focus-outline-color: var(--cosmic-purple-500),
-    label-text-color: var(--cosmic-violet-300),
-    outline-color: var(--cosmic-purple-500),
-    outline-width: 1px,
-    selected-label-text-color: var(--cosmic-white),
-  ));
+  @include mat.chips-overrides(
+    (
+      container-height: 2.25rem,
+      container-shape-radius: 1.125rem,
+      elevated-container-color: var(--cosmic-navy),
+      elevated-selected-container-color: var(--cosmic-purple-600),
+      focus-outline-color: var(--cosmic-purple-500),
+      label-text-color: var(--cosmic-violet-300),
+      outline-color: var(--cosmic-purple-500),
+      outline-width: 1px,
+      selected-label-text-color: var(--cosmic-white),
+    )
+  );
 
-  @include mat.select-overrides((
-    enabled-arrow-color: var(--cosmic-purple-400),
-    focused-arrow-color: var(--cosmic-purple-400),
-    panel-background-color: var(--cosmic-navy),
-    placeholder-text-color: var(--cosmic-violet-300),
-    trigger-text-size: 0.9375rem,
-  ));
+  @include mat.select-overrides(
+    (
+      enabled-arrow-color: var(--cosmic-purple-400),
+      focused-arrow-color: var(--cosmic-purple-400),
+      panel-background-color: var(--cosmic-navy),
+      placeholder-text-color: var(--cosmic-violet-300),
+      trigger-text-size: 0.9375rem,
+    )
+  );
 
-  @include mat.datepicker-overrides((
-    calendar-container-background-color: var(--cosmic-navy),
-    calendar-date-in-range-state-background-color: var(--cosmic-purple-950),
-    toggle-icon-color: var(--cosmic-purple-400),
-    toggle-active-state-icon-color: var(--cosmic-purple-400),
-  ));
+  @include mat.datepicker-overrides(
+    (
+      calendar-container-background-color: var(--cosmic-navy),
+      calendar-date-in-range-state-background-color: var(--cosmic-purple-950),
+      toggle-icon-color: var(--cosmic-purple-400),
+      toggle-active-state-icon-color: var(--cosmic-purple-400),
+    )
+  );
 }
 
 .mat-form-field-appearance-fill {

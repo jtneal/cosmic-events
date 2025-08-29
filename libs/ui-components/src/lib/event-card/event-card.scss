@@ -1,0 +1,13 @@
+.description {
+  display: -webkit-box;
+  line-clamp: 2;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.price {
+  color: #4ade80;
+  font-size: 1rem;
+  font-weight: 700;
+}
