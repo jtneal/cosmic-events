@@ -1,6 +1,7 @@
 .search-form,
 .search-section,
-.search-filters {
+.search-filters,
+.search-options {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -22,6 +23,15 @@
 
     > * {
       width: 50%;
+    }
+  }
+
+  .search-options {
+    flex-direction: row;
+    justify-content: space-between;
+
+    > *:last-child {
+      width: 16rem;
     }
   }
 }
