@@ -11,6 +11,7 @@
   // Aurora Teal / Cyan (#00B4D8) → futuristic, balances the warmth of pinks/purples.
   // Supernova Gold (#FFD60A) → sparing use for CTAs, draws attention like a starburst.
 
+  --cosmic-navy: #071225;
   --cosmic-purple-050: #faf5ff;
   --cosmic-purple-100: #f3e8ff;
   --cosmic-purple-200: #e9d5ff;
@@ -58,11 +59,7 @@ html {
 }
 
 body {
-  background: radial-gradient(
-    circle at bottom right,
-    #131355 0%,
-    #02020b 100%,
-  );
+  background: radial-gradient(circle at bottom right, #131355 0%, #02020b 100%);
   color: var(--mat-sys-on-surface);
   color-scheme: dark;
   font: var(--mat-sys-body-medium);
@@ -71,7 +68,7 @@ body {
 
   &::before,
   &::after {
-    content: "";
+    content: '';
     height: 100%;
     left: 0;
     opacity: 0.75;
@@ -81,15 +78,15 @@ body {
     width: 100%;
     z-index: 0;
   }
-  
+
   &::before {
-    animation: slide1 75s linear infinite;
-    background: transparent url("/images/stars1.png") repeat;
+    animation: slide1 150s linear infinite;
+    background: transparent url('/images/stars1.png') repeat;
   }
 
   &::after {
-    animation: slide2 90s linear infinite;
-    background: transparent url("/images/stars2.png") repeat;
+    animation: slide2 150s linear infinite;
+    background: transparent url('/images/stars2.png') repeat;
   }
 
   * {

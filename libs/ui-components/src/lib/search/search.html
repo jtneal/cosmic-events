@@ -1,37 +1,33 @@
-<div class="form">
-  <mat-form-field subscriptSizing="dynamic">
-    <mat-label>Search</mat-label>
-    <mat-icon matPrefix>search</mat-icon>
-    <input matInput type="search" />
-  </mat-form-field>
-
+<form class="search-form">
+  <section class="search-section">
+    <article class="search-filters">
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Location</mat-label>
+        <mat-select multiple>
+          <mat-option value="Egypt">Egypt</mat-option>
+          <mat-option value="Peru">Peru</mat-option>
+          <mat-option value="England">England</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Dates</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input (focus)="picker.open()" matStartDate placeholder="Start date" readonly />
+          <input (focus)="picker.open()" matEndDate placeholder="End date" readonly />
+        </mat-date-range-input>
+        <mat-datepicker-toggle [for]="picker" matIconSuffix />
+        <mat-date-range-picker #picker />
+      </mat-form-field>
+    </article>
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Search</mat-label>
+      <input matInput type="search" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </section>
   <mat-chip-listbox multiple>
     <mat-chip-option value="Conventions">Conventions</mat-chip-option>
     <mat-chip-option value="Cruise Experiences">Cruise Experiences</mat-chip-option>
     <mat-chip-option value="Guided Tours">Guided Tours</mat-chip-option>
   </mat-chip-listbox>
-
-  <mat-form-field subscriptSizing="dynamic">
-    <mat-label>Location</mat-label>
-    <mat-select placeholder="All Destinations" multiple>
-      <mat-option value="Egypt">Egypt</mat-option>
-      <mat-option value="Peru">Peru</mat-option>
-      <mat-option value="England">England</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-slider discrete [displayWith]="formatSliderLabel" max="20000" min="0" showTickMarks step="1000">
-    <input matSliderStartThumb value="0" />
-    <input matSliderEndThumb value="20000" />
-  </mat-slider>
-
-  <mat-form-field>
-    <mat-label>Enter a date range</mat-label>
-    <mat-date-range-input [rangePicker]="picker">
-      <input (focus)="picker.open()" matStartDate placeholder="Start date" />
-      <input (focus)="picker.open()" matEndDate placeholder="End date" />
-    </mat-date-range-input>
-    <mat-datepicker-toggle [for]="picker" matIconSuffix />
-    <mat-date-range-picker #picker />
-  </mat-form-field>
-</div>
+</form>
