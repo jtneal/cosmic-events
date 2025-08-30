@@ -1,4 +1,12 @@
 <header>
-  <img alt="Cosmic Events Logo with a cosmicly themed uppercase C" src="/images/cosmic-events-logo.png" />
-  <h1>Cosmic Events</h1>
+  <div class="logo">
+    <img alt="Cosmic Events Logo with a cosmicly themed uppercase C" src="/images/cosmic-events-logo.png" />
+    <h1>Cosmic Events</h1>
+  </div>
+  <nav>
+    <a matButton="filled" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a matButton="filled" routerLink="/about" routerLinkActive="active">About</a>
+    <a matButton="filled" routerLink="/contact" routerLinkActive="active">Contact</a>
+    <a matButton="filled" routerLink="/sign-in" routerLinkActive="active">Sign In</a>
+  </nav>
 </header>

@@ -42,6 +42,11 @@
       toggle-active-state-icon-color: var(--cosmic-purple-400),
     )
   );
+
+  @include mat.button-overrides((
+    filled-container-color: rgb(147 51 234 / 0.5),
+    filled-container-shape: 0.5rem,
+  ));
 }
 
 .mat-form-field-appearance-fill {
@@ -75,6 +80,20 @@
   }
 }
 
+.mat-mdc-chip-set .mdc-evolution-chip {
+  margin-left: 0 !important;
+}
+
+.mdc-evolution-chip-set__chips {
+  gap: 1rem;
+}
+
 .mdc-card__media:last-child {
   border-radius: 1.125rem !important;
+}
+
+.mat-mdc-unelevated-button.mat-unthemed {
+  &.active {
+    background-color: var(--cosmic-purple-600);
+  }
 }

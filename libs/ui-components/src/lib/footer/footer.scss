@@ -1,0 +1,24 @@
+footer {
+  align-items: center;
+  border-top: 1px dashed rgb(147 51 234 / 0.5);
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.75rem;
+  padding-bottom: 0.25rem;
+  padding-top: 1.75rem;
+  text-align: center;
+
+  a {
+    color: var(--cosmic-text-color);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--cosmic-violet-300);
+    }
+  }
+
+  img {
+    width: 1.5rem;
+  }
+}
