@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 .description {
   display: -webkit-box;
   line-clamp: 2;
@@ -10,4 +12,23 @@
   color: #4ade80;
   font-size: 1rem;
   font-weight: 700;
+}
+
+.cosmic-card {
+  @include mat.chips-overrides(
+    (
+      label-text-weight: 400,
+      outline-width: 0,
+    )
+  );
+
+  position: relative;
+
+  mat-chip {
+    box-shadow: 0 0 3px rgb(255 255 255 / 0.5);
+    left: 1rem;
+    padding: 0 0.1875rem;
+    position: absolute;
+    top: 1rem;
+  }
 }

@@ -71,3 +71,7 @@
     width: 1.5rem;
   }
 }
+
+.mdc-card__media:last-child {
+  border-radius: 1.125rem !important;
+}
