@@ -31,12 +31,18 @@ h1 {
 @keyframes cosmicShift {
   0% {
     background-position: 0% 50%;
+    letter-spacing: 1px;
+    transform: scale(1);
   }
   50% {
     background-position: 100% 50%;
+    letter-spacing: 1.5px;
+    transform: scale(1.01);
   }
   100% {
     background-position: 0% 50%;
+    letter-spacing: 1px;
+    transform: scale(1);
   }
 }
 
