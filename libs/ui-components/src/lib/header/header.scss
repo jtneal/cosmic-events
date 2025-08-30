@@ -1,0 +1,29 @@
+header {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  padding-bottom: 1.5rem;
+}
+
+h1 {
+  animation: cosmicShift 8s ease infinite;
+  background: linear-gradient(90deg, var(--cosmic-purple-600), #3b82f6, #06b6d4, var(--cosmic-purple-600));
+  background-clip: text;
+  background-size: 300% 300%;
+  letter-spacing: 1px;
+  line-height: 1;
+  text-transform: uppercase;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes cosmicShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
