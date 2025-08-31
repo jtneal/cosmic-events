@@ -45,7 +45,6 @@ export default [
     rules: {
       '@typescript-eslint/explicit-function-return-type': 'error',
       '@typescript-eslint/explicit-member-accessibility': 'error',
-      '@typescript-eslint/member-ordering': 'error',
       'arrow-parens': 'error',
       'import/order': [
         'error',

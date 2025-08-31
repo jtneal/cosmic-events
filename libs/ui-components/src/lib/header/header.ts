@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { UserDto } from '@cosmic-events/util-dtos';
 
 @Component({
   imports: [MatButtonModule, RouterModule],
@@ -9,4 +10,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './header.scss',
   templateUrl: './header.html',
 })
-export class Header {}
+export class Header {
+  public user = input.required<UserDto | null>();
+}

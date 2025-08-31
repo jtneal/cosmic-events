@@ -7,6 +7,18 @@
     <a matButton="filled" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
     <a matButton="filled" routerLink="/about" routerLinkActive="active">About</a>
     <a matButton="filled" routerLink="/contact" routerLinkActive="active">Contact</a>
-    <a matButton="filled" routerLink="/sign-in" routerLinkActive="active">Sign In</a>
+    @if (user()?.userId?.length) {
+      <a href="/api/auth/logout" matButton="filled">Sign Out</a>
+    } @else {
+      <div
+        class="g_id_signin"
+        data-type="standard"
+        data-shape="rectangular"
+        data-theme="outline"
+        data-text="signin_with"
+        data-size="large"
+        data-logo_alignment="left"
+      ></div>
+    }
   </nav>
 </header>

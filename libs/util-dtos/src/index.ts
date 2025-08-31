@@ -1,1 +1,2 @@
-export * from './lib/util-dtos';
+export * from './lib/event.dto';
+export * from './lib/user.dto';
