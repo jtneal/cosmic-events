@@ -46,6 +46,23 @@
   @include mat.button-overrides((
     filled-container-color: rgb(147 51 234 / 0.5),
     filled-container-shape: 0.5rem,
+    outlined-container-shape: 0.5rem,
+    outlined-outline-color: var(--cosmic-purple-500),
+    outlined-label-text-color: var(--cosmic-text-color),
+    // outline-container-color: rgb(147 51 234 / 0.5),
+    // outline-container-shape: 0.5rem,
+  ));
+
+  @include mat.slide-toggle-overrides((
+    selected-focus-handle-color: var(--cosmic-white),
+    selected-handle-color: var(--cosmic-white),
+    selected-pressed-handle-color: var(--cosmic-white),
+    selected-hover-handle-color: var(--cosmic-white),
+    selected-icon-color: var(--cosmic-purple-500),
+    selected-track-color: var(--cosmic-purple-500),
+    selected-focus-track-color: var(--cosmic-purple-500),
+    selected-pressed-track-color: var(--cosmic-purple-500),
+    selected-hover-track-color: var(--cosmic-purple-500),
   ));
 }
 
@@ -100,4 +117,8 @@
   &.active {
     background-color: var(--cosmic-purple-600);
   }
+}
+
+.mat-mdc-slide-toggle .mdc-label {
+  margin-left: 0.75rem;
 }

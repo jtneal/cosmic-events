@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SignInFeature } from './sign-in-feature';
+import { UserService } from './user.service';
 
-describe(SignInFeature.name, () => {
-  let component: SignInFeature;
-  let fixture: ComponentFixture<SignInFeature>;
+describe(UserService.name, () => {
+  let component: UserService;
+  let fixture: ComponentFixture<UserService>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SignInFeature],
+      imports: [UserService],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SignInFeature);
+    fixture = TestBed.createComponent(UserService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

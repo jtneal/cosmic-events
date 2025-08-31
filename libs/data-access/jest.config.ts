@@ -1,8 +1,8 @@
 export default {
-  displayName: 'feature-sign-in',
+  displayName: 'data-access',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/libs/feature-sign-in',
+  coverageDirectory: '../../coverage/libs/data-access',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

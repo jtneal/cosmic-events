@@ -1,7 +1,7 @@
 {
-  "name": "feature-sign-in",
+  "name": "data-access",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/feature-sign-in/src",
+  "sourceRoot": "libs/data-access/src",
   "prefix": "lib",
   "projectType": "library",
   "tags": ["type:ui"],
@@ -10,8 +10,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/feature-sign-in/jest.config.ts",
-        "tsConfig": "libs/feature-sign-in/tsconfig.spec.json"
+        "jestConfig": "libs/data-access/jest.config.ts",
+        "tsConfig": "libs/data-access/tsconfig.spec.json"
       }
     },
     "lint": {

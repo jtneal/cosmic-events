@@ -10,11 +10,7 @@ export const appRoutes: Route[] = [
     path: 'about',
   },
   {
-    loadComponent: () => import('@cosmic-events/feature-contact').then((m) => m.ContactFeature),
-    path: 'contact',
-  },
-  {
-    loadComponent: () => import('@cosmic-events/feature-sign-in').then((m) => m.SignInFeature),
-    path: 'sign-in',
+    loadComponent: () => import('@cosmic-events/feature-manage').then((m) => m.ManageFeature),
+    path: 'manage',
   },
 ];

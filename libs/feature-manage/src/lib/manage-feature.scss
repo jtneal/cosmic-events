@@ -1,0 +1,28 @@
+.event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.grid.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+
+.actions-right {
+  display: flex;
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .grid.two {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { UserService } from '@cosmic-events/data-access';
 import { Footer, Header } from '@cosmic-events/ui-components';
-import { UserService } from './user.service';
 
 @Component({
   imports: [CommonModule, Footer, Header, RouterModule],

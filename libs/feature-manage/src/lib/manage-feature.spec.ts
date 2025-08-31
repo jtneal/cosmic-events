@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContactFeature } from './contact-feature';
+import { ManageFeature } from './manage-feature';
 
-describe(ContactFeature.name, () => {
-  let component: ContactFeature;
-  let fixture: ComponentFixture<ContactFeature>;
+describe(ManageFeature.name, () => {
+  let component: ManageFeature;
+  let fixture: ComponentFixture<ManageFeature>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactFeature],
+      imports: [ManageFeature],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ContactFeature);
+    fixture = TestBed.createComponent(ManageFeature);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

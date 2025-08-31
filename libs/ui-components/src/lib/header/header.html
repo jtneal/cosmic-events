@@ -6,8 +6,8 @@
   <nav>
     <a matButton="filled" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
     <a matButton="filled" routerLink="/about" routerLinkActive="active">About</a>
-    <a matButton="filled" routerLink="/contact" routerLinkActive="active">Contact</a>
     @if (user()?.userId?.length) {
+      <a matButton="filled" routerLink="/manage" routerLinkActive="active">Manage Events</a>
       <a href="/api/auth/logout" matButton="filled">Sign Out</a>
     } @else {
       <div
