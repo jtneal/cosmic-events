@@ -1,10 +1,16 @@
 import { UserDto } from '@cosmic-events/util-dtos';
-import { Body, Controller, Get, Post, Redirect, Req, Session } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, Redirect, Req, Session } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
+import { OAuth2Client } from 'google-auth-library';
 import { UserInfo } from './user-info.interface';
 
 @Controller('auth')
 export class AuthController {
+  private readonly logger = new Logger(AuthController.name, { timestamp: true });
+
+  public constructor(private readonly config: ConfigService) {}
+
   @Get('user')
   public getUser(@Session() session: UserDto): UserDto {
     return { email: session.email, name: session.name, picture: session.picture, userId: session.userId };
@@ -12,27 +18,26 @@ export class AuthController {
 
   @Post()
   @Redirect('/', 302)
-  public handleCredentialResponse(@Body('credential') credential: string, @Session() session: UserDto): void {
-    const responsePayload = this.decodeJWT(credential);
+  public async handleCredentialResponse(
+    @Body('credential') credential: string,
+    @Session() session: UserDto
+  ): Promise<void> {
+    const client = new OAuth2Client();
 
-    session.email = responsePayload.email;
-    session.name = responsePayload.name;
-    session.picture = responsePayload.picture;
-    session.userId = responsePayload.sub;
-  }
+    try {
+      const ticket = await client.verifyIdToken({
+        idToken: credential,
+        audience: this.config.get<string>('GOOGLE_CLIENT_ID'),
+      });
+      const payload = ticket.getPayload() as UserInfo;
 
-  private decodeJWT(token: string): UserInfo {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split('')
-        .map(function (c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join('')
-    );
-    return JSON.parse(jsonPayload);
+      session.email = payload.email;
+      session.name = payload.name;
+      session.picture = payload.picture;
+      session.userId = payload.sub;
+    } catch (error) {
+      this.logger.error(error?.message, error?.stack);
+    }
   }
 
   @Get('logout')
