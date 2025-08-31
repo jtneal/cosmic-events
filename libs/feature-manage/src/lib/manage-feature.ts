@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -11,6 +12,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   imports: [
+    FormsModule,
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
@@ -25,4 +27,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   styleUrl: './manage-feature.scss',
   templateUrl: './manage-feature.html',
 })
-export class ManageFeature {}
+export class ManageFeature {
+  public isChecked = false;
+}

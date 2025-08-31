@@ -5,13 +5,13 @@
     </mat-card-header>
     <mat-card-content>
       <div class="grid two">
-        <mat-form-field>
+        <mat-form-field subscriptSizing="dynamic">
           <mat-label>Title</mat-label>
           <input matInput maxlength="64" />
           <mat-error>Title is required</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field subscriptSizing="dynamic">
           <mat-label>Type</mat-label>
           <mat-select>
             <mat-option value="Conventions"><mat-icon>groups</mat-icon>Conventions</mat-option>
@@ -23,17 +23,17 @@
       </div>
 
       <div class="grid two">
-        <mat-form-field>
+        <mat-form-field subscriptSizing="dynamic">
           <mat-label>Location</mat-label>
           <input matInput />
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field subscriptSizing="dynamic">
           <mat-label>Price (USD)</mat-label>
           <input matInput type="number" min="0" step="1" />
         </mat-form-field>
       </div>
 
-      <mat-form-field>
+      <mat-form-field subscriptSizing="dynamic">
         <mat-label>Description</mat-label>
         <textarea matInput maxlength="4000" rows="5"></textarea>
         <mat-hint align="end">0/4000</mat-hint>
@@ -70,23 +70,23 @@
     </mat-card-header>
     <mat-card-content>
       <div class="grid two">
-        <mat-form-field>
+        <mat-form-field subscriptSizing="dynamic">
           <mat-label>Main image URL</mat-label>
           <input matInput />
           <mat-error>Image is required</mat-error>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field subscriptSizing="dynamic">
           <mat-label>Marketing poster URL</mat-label>
           <input matInput />
         </mat-form-field>
       </div>
       <div class="grid two">
-        <mat-form-field>
+        <mat-form-field subscriptSizing="dynamic">
           <mat-label>Website</mat-label>
           <input matInput />
           <mat-error>Enter a valid URL</mat-error>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field subscriptSizing="dynamic">
           <mat-label>Purchase link</mat-label>
           <input matInput />
           <mat-error>Enter a valid URL</mat-error>
@@ -97,7 +97,7 @@
 
   <div class="actions">
     <div class="actions-left">
-      <mat-slide-toggle>Published</mat-slide-toggle>
+      <mat-slide-toggle name="published" [(ngModel)]="isChecked">{{ isChecked ? 'Published' : 'Unpublished' }}</mat-slide-toggle>
     </div>
     <div class="actions-right">
       <button matButton="outlined" type="button">Cancel</button>

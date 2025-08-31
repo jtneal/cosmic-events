@@ -43,27 +43,33 @@
     )
   );
 
-  @include mat.button-overrides((
-    filled-container-color: rgb(147 51 234 / 0.5),
-    filled-container-shape: 0.5rem,
-    outlined-container-shape: 0.5rem,
-    outlined-outline-color: var(--cosmic-purple-500),
-    outlined-label-text-color: var(--cosmic-text-color),
-    // outline-container-color: rgb(147 51 234 / 0.5),
-    // outline-container-shape: 0.5rem,
-  ));
+  @include mat.button-overrides(
+    (
+      filled-container-color: rgb(147 51 234 / 0.5),
+      filled-container-shape: 0.5rem,
+      outlined-container-shape: 0.5rem,
+      outlined-outline-color: var(--cosmic-purple-500),
+      outlined-label-text-color: var(--cosmic-text-color),
+    )
+  );
 
-  @include mat.slide-toggle-overrides((
-    selected-focus-handle-color: var(--cosmic-white),
-    selected-handle-color: var(--cosmic-white),
-    selected-pressed-handle-color: var(--cosmic-white),
-    selected-hover-handle-color: var(--cosmic-white),
-    selected-icon-color: var(--cosmic-purple-500),
-    selected-track-color: var(--cosmic-purple-500),
-    selected-focus-track-color: var(--cosmic-purple-500),
-    selected-pressed-track-color: var(--cosmic-purple-500),
-    selected-hover-track-color: var(--cosmic-purple-500),
-  ));
+  @include mat.slide-toggle-overrides(
+    (
+      selected-focus-handle-color: var(--cosmic-white),
+      selected-focus-track-color: var(--cosmic-purple-500),
+      selected-handle-color: var(--cosmic-white),
+      selected-hover-handle-color: var(--cosmic-white),
+      selected-hover-track-color: var(--cosmic-purple-500),
+      selected-icon-color: var(--cosmic-purple-500),
+      selected-pressed-handle-color: var(--cosmic-white),
+      selected-pressed-track-color: var(--cosmic-purple-500),
+      selected-track-color: var(--cosmic-purple-500),
+      unselected-focus-track-color: var(--cosmic-navy),
+      unselected-hover-track-color: var(--cosmic-navy),
+      unselected-pressed-track-color: var(--cosmic-navy),
+      unselected-track-color: var(--cosmic-navy),
+    )
+  );
 }
 
 .mat-form-field-appearance-fill {
@@ -117,6 +123,10 @@
   &.active {
     background-color: var(--cosmic-purple-600);
   }
+}
+
+.mat-mdc-outlined-button {
+  background-color: var(--cosmic-navy) !important;
 }
 
 .mat-mdc-slide-toggle .mdc-label {
