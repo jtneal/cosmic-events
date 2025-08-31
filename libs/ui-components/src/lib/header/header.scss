@@ -18,7 +18,13 @@ header {
 
 h1 {
   animation: cosmicShift 8s ease infinite;
-  background: linear-gradient(90deg, var(--cosmic-purple-500), #3b82f6, #06b6d4, var(--cosmic-purple-500));
+  background: linear-gradient(
+    90deg,
+    var(--cosmic-purple-600),
+    #3b82f6,
+    var(--cosmic-purple-400),
+    var(--cosmic-purple-600)
+  );
   background-clip: text;
   background-size: 300% 300%;
   color: var(--cosmic-purple-500);
