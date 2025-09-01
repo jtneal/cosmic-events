@@ -1,13 +1,15 @@
 @use '@angular/material' as mat;
 @use '../public/styles/reset';
 @use '../public/styles/material';
+@use '../public/styles/typography';
 
 :root {
   --cosmic-gradient: linear-gradient(
     90deg,
     var(--cosmic-purple-600),
-    #3b82f6,
-    var(--cosmic-purple-400),
+    var(--cosmic-violet-400),
+    var(--cosmic-secondary),
+    var(--cosmic-violet-400),
     var(--cosmic-purple-600)
   );
   --cosmic-gradient-b: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -39,10 +41,10 @@
   --cosmic-violet-900: #4c1d95;
   --cosmic-violet-950: #2e1065;
   --cosmic-white: #ffffff;
-  --mat-form-field-filled-focus-label-text-color: var(--cosmic-violet-300);
+  --mat-form-field-filled-focus-label-text-color: var(--cosmic-violet-400);
   --mat-sys-on-primary: var(--cosmic-white);
   --mat-sys-on-surface: var(--cosmic-text-color);
-  --mat-sys-on-surface-variant: var(--cosmic-violet-300);
+  --mat-sys-on-surface-variant: var(--cosmic-violet-400);
   --mat-sys-primary: var(--cosmic-purple-600);
   --mat-sys-secondary-container: var(--cosmic-purple-600);
   --mat-sys-surface: #0d1b2a;

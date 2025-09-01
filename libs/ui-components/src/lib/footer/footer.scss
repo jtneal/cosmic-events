@@ -29,11 +29,22 @@ footer {
 
 h3 {
   color: var(--cosmic-white);
-  font-family: 'Orbitron', monospace;
   margin-bottom: 0.5rem;
+}
 
-  &.cosmic {
-    color: var(--cosmic-violet-400);
+.footer-logo {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+
+  img {
+    width: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0;
   }
 }
 

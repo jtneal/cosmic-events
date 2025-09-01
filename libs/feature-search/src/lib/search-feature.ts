@@ -8,10 +8,10 @@ import { Hero, Search } from '@cosmic-events/ui-components';
   templateUrl: './search-feature.html',
 })
 export class SearchFeature {
-  public isHeroHidden = false;
+  public isHeroHidden = localStorage.getItem('isHeroHidden') === 'true';
 
   public hideHero(): void {
     this.isHeroHidden = true;
-    // Save cookie so it doesn't keep showing
+    localStorage.setItem('isHeroHidden', 'true');
   }
 }

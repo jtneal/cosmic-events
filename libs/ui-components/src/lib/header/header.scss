@@ -17,39 +17,7 @@ header {
 }
 
 h1 {
-  animation: cosmicShift 8s ease infinite;
-  background: linear-gradient(
-    90deg,
-    var(--cosmic-purple-600),
-    #3b82f6,
-    var(--cosmic-purple-400),
-    var(--cosmic-purple-600)
-  );
-  background-clip: text;
-  background-size: 300% 300%;
-  color: var(--cosmic-purple-500);
-  letter-spacing: 1px;
-  line-height: 1;
-  text-transform: uppercase;
-  -webkit-text-fill-color: transparent;
-}
-
-@keyframes cosmicShift {
-  0% {
-    background-position: 0% 50%;
-    letter-spacing: 1px;
-    transform: scale(1);
-  }
-  50% {
-    background-position: 100% 50%;
-    letter-spacing: 1.5px;
-    transform: scale(1.01);
-  }
-  100% {
-    background-position: 0% 50%;
-    letter-spacing: 1px;
-    transform: scale(1);
-  }
+  font-size: 2rem;
 }
 
 nav {
