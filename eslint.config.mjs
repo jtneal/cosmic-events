@@ -54,7 +54,6 @@ export default [
           alphabetize: { caseInsensitive: true, order: 'asc' }
         }
       ],
-      'sort-imports': ['error', { ignoreDeclarationSort: true }],
     },
   },
 ];

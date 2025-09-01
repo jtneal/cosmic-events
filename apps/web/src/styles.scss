@@ -3,6 +3,16 @@
 @use '../public/styles/material';
 
 :root {
+  --cosmic-gradient: linear-gradient(
+    90deg,
+    var(--cosmic-purple-600),
+    #3b82f6,
+    var(--cosmic-purple-400),
+    var(--cosmic-purple-600)
+  );
+  --cosmic-gradient-b: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --cosmic-gradient-c: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --cosmic-gradient-d: linear-gradient(180deg, #000428 0%, #004e92 100%);
   --cosmic-navy: #071225;
   --cosmic-purple-050: #faf5ff;
   --cosmic-purple-100: #f3e8ff;
@@ -15,6 +25,7 @@
   --cosmic-purple-800: #6b21a8;
   --cosmic-purple-900: #581c87;
   --cosmic-purple-950: #3b0764;
+  --cosmic-secondary: #06b6d4;
   --cosmic-text-color: #e0e1dd;
   --cosmic-violet-050: #f5f3ff;
   --cosmic-violet-100: #ede9fe;
@@ -45,7 +56,7 @@ html {
         tertiary: mat.$violet-palette,
       ),
       density: 0,
-      typography: Roboto,
+      typography: 'Space Grotesk',
     )
   );
 }
@@ -56,7 +67,6 @@ body {
   color-scheme: dark;
   font: var(--mat-sys-body-medium);
   min-height: 100vh;
-  padding: 1.5rem;
 
   &::before,
   &::after {

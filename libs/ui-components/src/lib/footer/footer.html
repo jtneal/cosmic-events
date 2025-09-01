@@ -1,15 +1,24 @@
 <footer>
-  <section class="copyright">
-    <img alt="Cosmic Events Logo with a cosmicly themed uppercase C" src="/images/cosmic-events-logo.png" />
-    <p>
-      Copyright &copy; {{ year }} <a href="https://www.jneal.com/codes" target="_blank">JNealCodes</a>. All Rights
-      Reserved.
-    </p>
+  <section class="columns">
+    <article>
+      <h3 class="cosmic">Cosmic Events</h3>
+      <p>Discover the mysteries of the universe through extraordinary adventures.</p>
+    </article>
+    <article>
+      <h3>Explore</h3>
+      <a routerLink="/">Find Events</a>
+      <a routerLink="/manage">List Event</a>
+      <a routerLink="/manage">Manage Events</a>
+    </article>
+    <article>
+      <h3>Support</h3>
+      <a routerLink="/about">About</a>
+      <a routerLink="/privacy-policy">Privacy Policy</a>
+      <a routerLink="/terms-of-use">Terms of Use</a>
+    </article>
   </section>
-  <nav>
-    <a routerLink="/">Home</a>
-    <a routerLink="/about">About</a>
-    <a routerLink="/contact">Contact</a>
-    <a routerLink="/sign-in">Sign In</a>
-  </nav>
+  <section class="copyright">
+    <p>Copyright &copy; {{ year }} Cosmic Events. All Rights Reserved.</p>
+    <p>As above, so below. Made with ❤️ by <a href="https://www.jneal.com" target="_blank">JNeal</a>.</p>
+  </section>
 </footer>

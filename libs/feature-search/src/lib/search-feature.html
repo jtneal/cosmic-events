@@ -1,1 +1,6 @@
-<lib-search />
+<div class="flex-container">
+  @if (!isHeroHidden) {
+    <lib-hero (heroClosed)="hideHero()" />
+  }
+  <lib-search />
+</div>

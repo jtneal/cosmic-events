@@ -1,0 +1,110 @@
+.close-button {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+}
+
+.hero {
+  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+h1 {
+  animation: cosmicFade 8s ease infinite;
+  background: var(--cosmic-gradient);
+  background-clip: text;
+  background-size: 300% 300%;
+  color: var(--cosmic-purple-500);
+  font-family: 'Orbitron', monospace;
+  font-size: 4rem;
+  font-weight: 900;
+  line-height: 1;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes cosmicFade {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+h2 {
+  color: var(--cosmic-secondary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+img {
+  animation: orbit-pulse 30s linear infinite;
+  height: 300px;
+  margin: 0 auto;
+  position: relative;
+
+  @keyframes orbit-pulse {
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+
+    16.667% {
+      transform: rotate(60deg) scale(0.9);
+    }
+
+    33.333% {
+      transform: rotate(120deg) scale(1);
+    }
+
+    50% {
+      transform: rotate(180deg) scale(0.9);
+    }
+
+    66.667% {
+      transform: rotate(240deg) scale(1);
+    }
+
+    83.333% {
+      transform: rotate(300deg) scale(0.9);
+    }
+
+    100% {
+      transform: rotate(360deg) scale(1);
+    }
+  }
+
+  @media (min-width: 768px) {
+    height: 500px;
+  }
+}
+
+.cosmic-button {
+  background: var(--cosmic-gradient-b);
+  font-size: 1rem;
+}
+
+.uncosmic-button {
+  font-size: 1rem;
+}

@@ -16,9 +16,9 @@
       container-shape-radius: 1.125rem,
       elevated-container-color: var(--cosmic-navy),
       elevated-selected-container-color: var(--cosmic-purple-600),
-      focus-outline-color: var(--cosmic-purple-500),
+      focus-outline-color: var(--cosmic-violet-500),
       label-text-color: var(--cosmic-violet-300),
-      outline-color: var(--cosmic-purple-500),
+      outline-color: var(--cosmic-violet-500),
       outline-width: 1px,
       selected-label-text-color: var(--cosmic-white),
     )
@@ -48,7 +48,7 @@
       filled-container-color: rgb(147 51 234 / 0.5),
       filled-container-shape: 0.5rem,
       outlined-container-shape: 0.5rem,
-      outlined-outline-color: var(--cosmic-purple-500),
+      outlined-outline-color: var(--cosmic-violet-500),
       outlined-label-text-color: var(--cosmic-text-color),
     )
   );
@@ -76,7 +76,7 @@
   width: 100%;
 
   .mdc-text-field--filled {
-    border: 1px solid var(--cosmic-purple-500);
+    border: 1px solid var(--cosmic-violet-500);
     border-radius: 0.5rem !important;
     margin: 1px;
 
