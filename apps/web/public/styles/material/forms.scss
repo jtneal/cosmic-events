@@ -15,10 +15,10 @@
       container-height: 2.25rem,
       container-shape-radius: 1.125rem,
       elevated-container-color: var(--cosmic-navy),
-      elevated-selected-container-color: var(--cosmic-purple-600),
-      focus-outline-color: var(--cosmic-violet-500),
+      elevated-selected-container-color: var(--cosmic-violet-600),
+      focus-outline-color: var(--cosmic-violet-600),
       label-text-color: var(--cosmic-violet-400),
-      outline-color: var(--cosmic-violet-500),
+      outline-color: var(--cosmic-violet-600),
       outline-width: 1px,
       selected-label-text-color: var(--cosmic-white),
     )
@@ -26,8 +26,8 @@
 
   @include mat.select-overrides(
     (
-      enabled-arrow-color: var(--cosmic-purple-400),
-      focused-arrow-color: var(--cosmic-purple-400),
+      enabled-arrow-color: var(--cosmic-violet-400),
+      focused-arrow-color: var(--cosmic-violet-400),
       panel-background-color: var(--cosmic-navy),
       placeholder-text-color: var(--cosmic-violet-400),
       trigger-text-size: 0.9375rem,
@@ -37,18 +37,18 @@
   @include mat.datepicker-overrides(
     (
       calendar-container-background-color: var(--cosmic-navy),
-      calendar-date-in-range-state-background-color: var(--cosmic-purple-950),
-      toggle-icon-color: var(--cosmic-purple-400),
-      toggle-active-state-icon-color: var(--cosmic-purple-400),
+      calendar-date-in-range-state-background-color: var(--cosmic-violet-950),
+      toggle-icon-color: var(--cosmic-violet-400),
+      toggle-active-state-icon-color: var(--cosmic-violet-400),
     )
   );
 
   @include mat.button-overrides(
     (
-      filled-container-color: rgb(147 51 234 / 0.5),
+      filled-container-color: var(--cosmic-violet-600-50),
       filled-container-shape: 0.5rem,
       outlined-container-shape: 0.5rem,
-      outlined-outline-color: var(--cosmic-violet-500),
+      outlined-outline-color: var(--cosmic-violet-600),
       outlined-label-text-color: var(--cosmic-text-color),
     )
   );
@@ -56,14 +56,14 @@
   @include mat.slide-toggle-overrides(
     (
       selected-focus-handle-color: var(--cosmic-white),
-      selected-focus-track-color: var(--cosmic-purple-500),
+      selected-focus-track-color: var(--cosmic-violet-600),
       selected-handle-color: var(--cosmic-white),
       selected-hover-handle-color: var(--cosmic-white),
-      selected-hover-track-color: var(--cosmic-purple-500),
-      selected-icon-color: var(--cosmic-purple-500),
+      selected-hover-track-color: var(--cosmic-violet-600),
+      selected-icon-color: var(--cosmic-violet-600),
       selected-pressed-handle-color: var(--cosmic-white),
-      selected-pressed-track-color: var(--cosmic-purple-500),
-      selected-track-color: var(--cosmic-purple-500),
+      selected-pressed-track-color: var(--cosmic-violet-600),
+      selected-track-color: var(--cosmic-violet-600),
       unselected-focus-track-color: var(--cosmic-navy),
       unselected-hover-track-color: var(--cosmic-navy),
       unselected-pressed-track-color: var(--cosmic-navy),
@@ -76,7 +76,7 @@
   width: 100%;
 
   .mdc-text-field--filled {
-    border: 1px solid var(--cosmic-violet-500);
+    border: 1px solid var(--cosmic-violet-600);
     border-radius: 0.5rem !important;
     margin: 1px;
 
@@ -87,7 +87,7 @@
     }
 
     .mat-icon {
-      color: var(--cosmic-purple-400);
+      color: var(--cosmic-violet-400);
     }
 
     .mdc-line-ripple {
@@ -121,7 +121,7 @@
 
 .mat-mdc-unelevated-button.mat-unthemed {
   &.active {
-    background-color: var(--cosmic-purple-600);
+    background-color: var(--cosmic-violet-600);
   }
 }
 

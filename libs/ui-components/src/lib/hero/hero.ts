@@ -1,4 +1,4 @@
-import { Component, DOCUMENT, inject, output } from '@angular/core';
+import { Component, DOCUMENT, inject, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 export class Hero {
   private readonly document = inject(DOCUMENT);
 
+  public isClosable = input<boolean>(true)
   public heroClosed = output<void>();
 
   public close(): void {

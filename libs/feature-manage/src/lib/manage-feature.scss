@@ -6,7 +6,7 @@
   gap: 1.5rem;
 
   @include mat.button-overrides((
-    filled-container-color: var(--cosmic-purple-600),
+    filled-container-color: var(--cosmic-violet-600),
   ));
 
   .mat-mdc-card-content {

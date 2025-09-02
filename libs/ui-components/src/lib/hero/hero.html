@@ -1,6 +1,8 @@
 <mat-card>
   <mat-card-content>
-    <button class="close-button" (click)="close()" matIconButton><mat-icon>close</mat-icon></button>
+    @if (isClosable()) {
+      <button class="close-button" (click)="close()" matIconButton><mat-icon>close</mat-icon></button>
+    }
     <section class="hero">
       <article>
         <h1 class="cosmic-fade">Cosmic Events</h1>
