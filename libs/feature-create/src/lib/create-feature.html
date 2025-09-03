@@ -1,0 +1,117 @@
+<form class="event-form">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Basic Info</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="grid two">
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Title</mat-label>
+          <input matInput maxlength="64" />
+          <mat-error>Title is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Type</mat-label>
+          <mat-select>
+            <mat-option value="Conventions"><mat-icon>groups</mat-icon>Conventions</mat-option>
+            <mat-option value="Cruise Experiences"><mat-icon>directions_boat</mat-icon>Cruise Experiences</mat-option>
+            <mat-option value="Guided Tours"><mat-icon>tour</mat-icon>Guided Tours</mat-option>
+          </mat-select>
+          <mat-error>Select a type</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="grid two">
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Location</mat-label>
+          <input matInput />
+        </mat-form-field>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Price (USD)</mat-label>
+          <input matInput type="number" min="0" step="1" />
+        </mat-form-field>
+      </div>
+
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Description</mat-label>
+        <textarea matInput maxlength="4000" rows="5"></textarea>
+        <mat-hint align="end">0/4000</mat-hint>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Schedule</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="grid two">
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Start Date</mat-label>
+          <input (focus)="startDatePicker.open()" [matDatepicker]="startDatePicker" matInput readonly />
+          <mat-datepicker-toggle [for]="startDatePicker" matSuffix />
+          <mat-datepicker #startDatePicker />
+        </mat-form-field>
+
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>End Date</mat-label>
+          <input (focus)="endDatePicker.open()" [matDatepicker]="endDatePicker" matInput readonly />
+          <mat-datepicker-toggle [for]="endDatePicker" matSuffix />
+          <mat-datepicker #endDatePicker />
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Marketing</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="grid two">
+        <div class="file-upload">
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-label>Header Image</mat-label>
+            <input #headerImage (change)="onHeaderImageSelected($event)" class="file-input" type="file" />
+            <input (click)="headerImage.click()" matInput readonly [value]="headerImageFile?.name" />
+            <mat-icon matSuffix>attach_file</mat-icon>
+            <mat-error>Image is required</mat-error>
+          </mat-form-field>
+          <button (click)="headerImage.click()" extended mat-fab>Browse</button>
+        </div>
+        <div class="file-upload">
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-label>Marketing Poster</mat-label>
+            <input #marketingPoster (change)="onMarketingPosterSelected($event)" class="file-input" type="file" />
+            <input (click)="marketingPoster.click()" matInput readonly [value]="marketingPosterFile?.name" />
+            <mat-icon matSuffix>attach_file</mat-icon>
+          </mat-form-field>
+          <button (click)="marketingPoster.click()" extended mat-fab>Browse</button>
+        </div>
+      </div>
+      <div class="grid two">
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Website URL</mat-label>
+          <input matInput />
+          <mat-error>Enter a valid URL</mat-error>
+        </mat-form-field>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Purchase URL</mat-label>
+          <input matInput />
+          <mat-error>Enter a valid URL</mat-error>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="actions">
+    <div class="actions-left">
+      <mat-slide-toggle name="published" [(ngModel)]="isChecked">{{ isChecked ? 'Published' : 'Unpublished' }}</mat-slide-toggle>
+    </div>
+    <div class="actions-right">
+      <button matButton="outlined" type="button">Cancel</button>
+      <button matButton="filled" type="submit">Save</button>
+    </div>
+  </div>
+</form>

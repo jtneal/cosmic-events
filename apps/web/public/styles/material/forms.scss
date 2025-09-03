@@ -53,6 +53,16 @@
     )
   );
 
+  @include mat.fab-overrides(
+    (
+      container-color: var(--cosmic-violet-600),
+      extended-container-shape: 0.5rem,
+      foreground-color: var(--cosmic-white),
+      small-container-color: var(--cosmic-navy),
+      small-foreground-color: var(--cosmic-white),
+    )
+  );
+
   @include mat.slide-toggle-overrides(
     (
       selected-focus-handle-color: var(--cosmic-white),
