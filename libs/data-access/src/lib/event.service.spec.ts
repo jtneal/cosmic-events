@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FileUpload } from './file-upload';
+import { EventService } from './event.service';
 
-describe(FileUpload.name, () => {
-  let component: FileUpload;
-  let fixture: ComponentFixture<FileUpload>;
+describe(EventService.name, () => {
+  let component: EventService;
+  let fixture: ComponentFixture<EventService>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FileUpload],
+      imports: [EventService],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FileUpload);
+    fixture = TestBed.createComponent(EventService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

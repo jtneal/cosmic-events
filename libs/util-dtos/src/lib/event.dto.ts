@@ -1,8 +1,9 @@
-export class Event {
+export class EventDto {
   public description = '';
   public endDate = new Date();
   public image = '';
-  public inventory = 0;
+  public isActive = false;
+  public isPublished = false;
   public location = '';
   public marketingPoster = '';
   public organizer = new EventOrganizer();
@@ -34,6 +35,7 @@ export class Speaker {
 
 export class EventOrganizer {
   public name = '';
+  public url = '';
 }
 
 export enum EventTypeEnum {

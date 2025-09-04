@@ -28,6 +28,7 @@
     (
       enabled-arrow-color: var(--cosmic-violet-400),
       focused-arrow-color: var(--cosmic-violet-400),
+      invalid-arrow-color: var(--cosmic-violet-400),
       panel-background-color: var(--cosmic-navy),
       placeholder-text-color: var(--cosmic-violet-400),
       trigger-text-size: 0.9375rem,
@@ -45,6 +46,7 @@
 
   @include mat.button-overrides(
     (
+      filled-disabled-container-color: var(--cosmic-violet-600-50),
       filled-container-color: var(--cosmic-violet-600-50),
       filled-container-shape: 0.5rem,
       outlined-container-shape: 0.5rem,
@@ -80,6 +82,10 @@
       unselected-track-color: var(--cosmic-navy),
     )
   );
+
+  @include mat.divider-overrides((
+    color: var(--cosmic-violet-600-25),
+  ));
 }
 
 .mat-form-field-appearance-fill {

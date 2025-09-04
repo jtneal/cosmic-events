@@ -7,4 +7,7 @@ export class Organizer {
 
   @Column()
   public name: string;
+
+  @Column()
+  public url: string;
 }

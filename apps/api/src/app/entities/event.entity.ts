@@ -18,9 +18,6 @@ export class Event {
   @Column()
   public image: string;
 
-  @Column()
-  public inventory: number;
-
   @Column({ default: false })
   public isActive: boolean;
 

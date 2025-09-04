@@ -5,8 +5,14 @@
 
 :root {
   --cosmic-black-50: rgb(0 0 0 / 0.5);
-  // prettier-ignore
-  --cosmic-gradient: linear-gradient(90deg, var(--cosmic-violet-600), var(--cosmic-violet-400), var(--cosmic-secondary), var(--cosmic-violet-400), var(--cosmic-violet-600));
+  --cosmic-gradient: linear-gradient(
+    90deg,
+    var(--cosmic-violet-600),
+    var(--cosmic-violet-400),
+    var(--cosmic-secondary),
+    var(--cosmic-violet-400),
+    var(--cosmic-violet-600)
+  );
   --cosmic-gradient-alt: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --cosmic-navy: #071225;
   --cosmic-secondary: #06b6d4;
@@ -18,6 +24,10 @@
   --cosmic-violet-950: #2e1065;
   --cosmic-white: #ffffff;
   --cosmic-white-50: rgb(255 255 255 / 0.5);
+  --mat-form-field-error-text-color: #f66;
+  --mat-form-field-filled-error-focus-label-text-color: #f66;
+  --mat-form-field-filled-error-hover-label-text-color: #f66;
+  --mat-form-field-filled-error-label-text-color: #f66;
   --mat-form-field-filled-focus-label-text-color: var(--cosmic-violet-400);
   --mat-sys-on-primary: var(--cosmic-white);
   --mat-sys-on-surface: var(--cosmic-text-color);

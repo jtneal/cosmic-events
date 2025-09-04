@@ -9,7 +9,8 @@
     filled-container-color: var(--cosmic-violet-600),
   ));
 
-  .mat-mdc-card-content {
+  .mat-mdc-card-content,
+  .speaker-group {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -17,6 +18,7 @@
 }
 
 .grid.two {
+  align-items: start;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
@@ -29,6 +31,7 @@
 }
 
 .actions-right {
+  align-items: center;
   display: flex;
   gap: 1rem;
 }
@@ -47,4 +50,8 @@
   align-items: center;
   display: flex;
   gap: 1rem;
+}
+
+.error {
+  color: var(--mat-form-field-error-text-color);
 }
