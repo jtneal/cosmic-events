@@ -9,7 +9,7 @@ import { Speaker } from '../entities/speaker.entity';
 export class EventService {
   public constructor(@InjectRepository(Event) private readonly event: Repository<Event>) {}
 
-  public getAll(): Promise<Event[]> {
+  public getEvents(): Promise<Event[]> {
     return this.event.find();
   }
 

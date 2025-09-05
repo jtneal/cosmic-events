@@ -1,5 +1,5 @@
 import { EventTypeEnum } from '@cosmic-events/util-dtos';
-import { Column, Entity, JoinTable, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, JoinTable, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Panel } from './panel.entity';
 import { Speaker } from './speaker.entity';
 
@@ -57,6 +57,10 @@ export class Event {
 
   @Column({ enum: EventTypeEnum, type: 'enum' })
   public type: EventTypeEnum;
+
+  @Column()
+  @Index()
+  public userId: number;
 
   @Column()
   public website: string;

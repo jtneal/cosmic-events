@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Event } from './event.entity';
 
 @Entity()
@@ -17,4 +17,8 @@ export class Speaker {
 
   @Column()
   public name: string;
+
+  @Column()
+  @Index()
+  public userId: number;
 }

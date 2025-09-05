@@ -20,7 +20,7 @@ export class EventController {
 
   @Get()
   public getData(): Promise<Event[]> {
-    return this.event.getAll();
+    return this.event.getEvents();
   }
 
   @Post()

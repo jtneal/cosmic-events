@@ -46,7 +46,7 @@ export class AppModule implements OnModuleInit {
   public constructor(private readonly dataSource: DataSource) {}
 
   public async onModuleInit(): Promise<void> {
-    // Completely wipe out the database and recreate it
+    // Completely wipe out the database and recreate it (for development purposes only)
     await this.dataSource.synchronize(true);
   }
 }

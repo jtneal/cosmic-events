@@ -51,4 +51,50 @@ export class EventMapper {
 
     return speaker;
   }
+
+  public toEventDto(event: Event): EventDto {
+    const dto = new EventDto();
+
+    dto.description = event.description;
+    dto.endDate = event.endDate;
+    dto.id = event.id;
+    dto.image = event.image;
+    dto.isActive = event.isActive;
+    dto.isPublished = event.isPublished;
+    dto.location = event.location;
+    dto.marketingPoster = event.marketingPoster;
+    dto.organizerName = event.organizerName;
+    dto.organizerUrl = event.organizerUrl;
+    dto.panels = event.panels.map((panel) => this.toPanelDto(panel));
+    dto.price = event.price;
+    dto.purchaseLink = event.purchaseLink;
+    dto.speakers = event.speakers.map((speaker) => this.toSpeakerDto(speaker));
+    dto.startDate = event.startDate;
+    dto.title = event.title;
+    dto.type = event.type;
+    dto.website = event.website;
+
+    return dto;
+  }
+
+  public toPanelDto(panel: Panel): PanelDto {
+    const dto = new PanelDto();
+
+    dto.description = panel.description;
+    dto.id = panel.id;
+    dto.title = panel.title;
+
+    return dto;
+  }
+
+  public toSpeakerDto(speaker: Speaker): SpeakerDto {
+    const dto = new SpeakerDto();
+
+    dto.description = speaker.description;
+    dto.id = speaker.id;
+    dto.image = speaker.image;
+    dto.name = speaker.name;
+
+    return dto;
+  }
 }
