@@ -9,7 +9,15 @@ import { Observable } from 'rxjs';
 export class EventService {
   private readonly http = inject(HttpClient);
 
+  public getEvents(): Observable<EventDto[]> {
+    return this.http.get<EventDto[]>('/api/events');
+  }
+
+  public getUserEvents(): Observable<EventDto[]> {
+    return this.http.get<EventDto[]>('/api/user/events');
+  }
+
   public postEvent(event: EventDto): Observable<EventDto> {
-    return this.http.post<EventDto>('/api/event', event);
+    return this.http.post<EventDto>('/api/events', event);
   }
 }

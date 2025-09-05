@@ -1,4 +1,4 @@
-import { EventDto } from '@cosmic-events/util-dtos';
+import { EventDto, UserDto } from '@cosmic-events/util-dtos';
 import {
   Body,
   ClassSerializerInterceptor,
@@ -6,46 +6,34 @@ import {
   Get,
   Post,
   SerializeOptions,
+  Session,
   UseInterceptors,
 } from '@nestjs/common';
-import { Event } from '../entities/event.entity';
-import { Panel } from '../entities/panel.entity';
-import { Speaker } from '../entities/speaker.entity';
 import { EventMapper } from './event.mapper';
 import { EventService } from './event.service';
 
-@Controller('event')
+@Controller()
 export class EventController {
   public constructor(private readonly event: EventService, private readonly mapper: EventMapper) {}
 
-  @Get()
-  public getData(): Promise<Event[]> {
-    return this.event.getEvents();
+  @Get('events')
+  public async getEvents(): Promise<EventDto[]> {
+    const events = await this.event.getEvents();
+
+    return events.map((event) => this.mapper.toEventDto(event));
   }
 
-  @Post()
+  @Get('user/events')
+  public async getUserEvents(@Session() session: UserDto): Promise<EventDto[]> {
+    const events = await this.event.getUserEvents(session.userId);
+
+    return events.map((event) => this.mapper.toEventDto(event));
+  }
+
+  @Post('events')
   @UseInterceptors(ClassSerializerInterceptor)
   @SerializeOptions({ type: EventDto })
-  public async postEvent(@Body() event: EventDto): Promise<void> {
-    const panels: Panel[] = [];
-    const speakers: Speaker[] = [];
-
-    for (const panelDto of event.panels) {
-      const panel = this.mapper.toPanel(panelDto);
-
-      await this.event.postPanel(panel);
-
-      panels.push(panel);
-    }
-
-    for (const speakerDto of event.speakers) {
-      const speaker = this.mapper.toSpeaker(speakerDto);
-
-      await this.event.postSpeaker(speaker);
-
-      speakers.push(speaker);
-    }
-
-    await this.event.postEvent(this.mapper.toEvent(event, panels, speakers));
+  public postEvent(@Body() event: EventDto, @Session() session: UserDto): Promise<void> {
+    return this.event.postEvent(this.mapper.toEvent(event, session.userId));
   }
 }

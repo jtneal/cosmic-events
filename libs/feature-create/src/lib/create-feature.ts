@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { Router } from '@angular/router';
 import { EventService } from '@cosmic-events/data-access';
 import { EventDto } from '@cosmic-events/util-dtos';
 import { firstValueFrom } from 'rxjs';
@@ -35,23 +36,36 @@ import { firstValueFrom } from 'rxjs';
 export class CreateFeature {
   private readonly event = inject(EventService);
   private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
 
   public form = this.formBuilder.group({
-    title: ['Title', Validators.required],
+    title: ['This is my event title', Validators.required],
     type: ['Guided Tours', Validators.required],
-    location: ['Location', Validators.required],
-    price: ['1', Validators.required],
-    description: [''],
-    startDate: [new Date('9/1/2025'), Validators.required],
+    location: ['Egypt', Validators.required],
+    price: ['5000', Validators.required],
+    description: ['This is my event description.'],
+    startDate: [new Date('9/14/2025'), Validators.required],
     endDate: [new Date('9/30/2025'), Validators.required],
     image: [''],
     marketingPoster: [''],
-    website: [''],
-    purchaseLink: [''],
-    isPublished: [''],
-    organizer: this.formBuilder.group({ name: ['Organizer', Validators.required], url: [''] }),
-    panels: this.formBuilder.array([]),
-    speakers: this.formBuilder.array([]),
+    website: ['https://www.cosmicevents.app'],
+    purchaseLink: ['https://www.cosmicevents.app'],
+    isPublished: [true],
+    organizerName: ['Organizer Name', Validators.required],
+    organizerUrl: ['https://www.cosmicevents.app'],
+    panels: this.formBuilder.array([
+      this.formBuilder.group({
+        description: ['This is my panel description.', Validators.required],
+        title: ['This is my panel title', Validators.required],
+      }),
+    ]),
+    speakers: this.formBuilder.array([
+      this.formBuilder.group({
+        description: ['This is my speaker description.'],
+        image: [''],
+        name: ['Speaker Name', Validators.required],
+      }),
+    ]),
   });
   // public form = this.formBuilder.group({
   //   title: ['', Validators.required],
@@ -65,7 +79,7 @@ export class CreateFeature {
   //   marketingPoster: [''],
   //   website: [''],
   //   purchaseLink: [''],
-  //   isPublished: [''],
+  //   isPublished: [false],
   //   organizer: this.formBuilder.group({ name: ['', Validators.required], url: [''] }),
   //   panels: this.formBuilder.array([]),
   //   speakers: this.formBuilder.array([]),
@@ -81,18 +95,6 @@ export class CreateFeature {
 
   public get panels(): FormArray {
     return this.form.get('panels') as FormArray;
-  }
-
-  public get formStatus(): string {
-    if (this.form.invalid) {
-      return 'Invalid Entry';
-    }
-
-    if (this.form.dirty) {
-      return 'Unsaved Changes';
-    }
-
-    return 'No Changes';
   }
 
   public addSpeaker(): void {
@@ -153,5 +155,6 @@ export class CreateFeature {
 
   public async onSubmit(): Promise<void> {
     await firstValueFrom(this.event.postEvent(this.form.value as unknown as EventDto));
+    this.router.navigate(['/manage']);
   }
 }

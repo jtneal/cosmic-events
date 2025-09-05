@@ -1,10 +1,10 @@
 <form class="event-form" [formGroup]="form" (submit)="onSubmit()">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Basic Info</mat-card-title>
+      <mat-card-title>Event Information</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class="grid two">
+      <div class="wide-split">
         <mat-form-field subscriptSizing="dynamic">
           <mat-label>Title</mat-label>
           <input formControlName="title" matInput maxlength="64" />
@@ -22,100 +22,7 @@
         </mat-form-field>
       </div>
 
-      <div class="grid two">
-        <mat-form-field subscriptSizing="dynamic">
-          <mat-label>Location</mat-label>
-          <input formControlName="location" matInput />
-          <mat-error>Location is required</mat-error>
-        </mat-form-field>
-        <mat-form-field subscriptSizing="dynamic">
-          <mat-label>Price (USD)</mat-label>
-          <input formControlName="price" matInput />
-          <mat-error>Price is required</mat-error>
-        </mat-form-field>
-      </div>
-
-      <mat-form-field subscriptSizing="dynamic">
-        <mat-label>Description</mat-label>
-        <textarea formControlName="description" matInput maxlength="4000" rows="5"></textarea>
-      </mat-form-field>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Speakers</mat-card-title>
-    </mat-card-header>
-    <mat-card-content formArrayName="speakers">
-      @for (speaker of speakers.controls; track speaker; let i = $index) {
-        <div class="speaker-group-container">
-          <div class="speaker-group" [formGroupName]="i">
-            <div class="grid two">
-              <mat-form-field subscriptSizing="dynamic">
-                <mat-label>Speaker Name</mat-label>
-                <input formControlName="name" matInput />
-                <mat-error>Speaker Name is required</mat-error>
-              </mat-form-field>
-              <div class="file-upload">
-                <mat-form-field subscriptSizing="dynamic">
-                  <mat-label>Speaker Photo</mat-label>
-                  <input #speakerPhoto (change)="onSpeakerPhotoSelected($event, i)" class="file-input" type="file" />
-                  <input (click)="speakerPhoto.click()" formControlName="image" matInput readonly />
-                  <mat-icon matSuffix>attach_file</mat-icon>
-                  <mat-error>Image is required</mat-error>
-                </mat-form-field>
-                <button (click)="speakerPhoto.click()" extended mat-fab type="button">Browse</button>
-              </div>
-            </div>
-            <mat-form-field subscriptSizing="dynamic">
-              <mat-label>Description</mat-label>
-              <textarea formControlName="description" matInput maxlength="4000" rows="5"></textarea>
-            </mat-form-field>
-          </div>
-          <button class="delete-button" (click)="deleteSpeaker(i)" mat-fab type="button">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-        <mat-divider></mat-divider>
-      }
-      <button (click)="addSpeaker()" mat-flat-button type="button"><mat-icon>add</mat-icon>Add Speaker</button>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Panels</mat-card-title>
-    </mat-card-header>
-    <mat-card-content formArrayName="panels">
-      @for (panel of panels.controls; track panel; let i = $index) {
-        <div class="panel-group-container">
-          <div class="panel-group" [formGroupName]="i">
-            <mat-form-field subscriptSizing="dynamic">
-              <mat-label>Title</mat-label>
-              <input formControlName="title" matInput />
-              <mat-error>Title is required</mat-error>
-            </mat-form-field>
-            <mat-form-field subscriptSizing="dynamic">
-              <mat-label>Description</mat-label>
-              <textarea formControlName="description" matInput maxlength="4000" rows="5"></textarea>
-            </mat-form-field>
-          </div>
-          <button class="delete-button" (click)="deletePanel(i)" mat-fab type="button">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-        <mat-divider></mat-divider>
-      }
-      <button (click)="addPanel()" mat-flat-button type="button"><mat-icon>add</mat-icon>Add Panel</button>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Schedule</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="grid two">
+      <div class="wide-split">
         <mat-form-field subscriptSizing="dynamic">
           <mat-label>Start Date</mat-label>
           <input
@@ -144,15 +51,57 @@
           <mat-error>End Date is required</mat-error>
         </mat-form-field>
       </div>
+
+      <div class="wide-split">
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Location</mat-label>
+          <input formControlName="location" matInput />
+          <mat-error>Location is required</mat-error>
+        </mat-form-field>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Price (USD)</mat-label>
+          <input formControlName="price" matInput />
+          <mat-error>Price is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Description</mat-label>
+        <textarea formControlName="description" matInput maxlength="4000" rows="5"></textarea>
+      </mat-form-field>
     </mat-card-content>
   </mat-card>
 
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Marketing</mat-card-title>
+      <mat-card-title>Marketing Information</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class="grid two">
+      <div class="wide-split">
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Organizer Name</mat-label>
+          <input formControlName="organizerName" matInput />
+          <mat-error>Organizer Name is required</mat-error>
+        </mat-form-field>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Organizer URL</mat-label>
+          <input formControlName="organizerUrl" matInput />
+          <mat-error>Enter a valid URL</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="wide-split">
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Website URL</mat-label>
+          <input formControlName="website" matInput />
+          <mat-error>Enter a valid URL</mat-error>
+        </mat-form-field>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Purchase URL</mat-label>
+          <input formControlName="purchaseLink" matInput />
+          <mat-error>Enter a valid URL</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="wide-split">
         <div class="file-upload">
           <mat-form-field subscriptSizing="dynamic">
             <mat-label>Header Image</mat-label>
@@ -165,7 +114,7 @@
             />
             <input (click)="headerImage.click()" matInput readonly [value]="headerImageFile?.name" />
             <mat-icon matSuffix>attach_file</mat-icon>
-            <mat-error>Image is required</mat-error>
+            <mat-hint>Ideal Dimensions: 800x450</mat-hint>
           </mat-form-field>
           <button (click)="headerImage.click()" extended mat-fab type="button">Browse</button>
         </div>
@@ -181,45 +130,93 @@
             />
             <input (click)="marketingPoster.click()" matInput readonly [value]="marketingPosterFile?.name" />
             <mat-icon matSuffix>attach_file</mat-icon>
+            <mat-hint>Ideal Dimensions: 450x800</mat-hint>
           </mat-form-field>
           <button (click)="marketingPoster.click()" extended mat-fab type="button">Browse</button>
         </div>
       </div>
-      <div class="grid two">
-        <mat-form-field subscriptSizing="dynamic">
-          <mat-label>Website URL</mat-label>
-          <input formControlName="website" matInput />
-          <mat-error>Enter a valid URL</mat-error>
-        </mat-form-field>
-        <mat-form-field subscriptSizing="dynamic">
-          <mat-label>Purchase URL</mat-label>
-          <input formControlName="purchaseLink" matInput />
-          <mat-error>Enter a valid URL</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="grid two" formGroupName="organizer">
-        <mat-form-field subscriptSizing="dynamic">
-          <mat-label>Organizer Name</mat-label>
-          <input formControlName="name" matInput />
-          <mat-error>Organizer Name is required</mat-error>
-        </mat-form-field>
-        <mat-form-field subscriptSizing="dynamic">
-          <mat-label>Organizer URL</mat-label>
-          <input formControlName="url" matInput />
-          <mat-error>Enter a valid URL</mat-error>
-        </mat-form-field>
-      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Speaker Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content formArrayName="speakers">
+      @for (speaker of speakers.controls; track speaker; let i = $index) {
+        <div class="speaker-group-container">
+          <div class="speaker-group" [formGroupName]="i">
+            <div class="wide-split">
+              <mat-form-field subscriptSizing="dynamic">
+                <mat-label>Name</mat-label>
+                <input formControlName="name" matInput />
+                <mat-error>Name is required</mat-error>
+              </mat-form-field>
+              <div class="file-upload">
+                <mat-form-field subscriptSizing="dynamic">
+                  <mat-label>Photo</mat-label>
+                  <input #speakerPhoto (change)="onSpeakerPhotoSelected($event, i)" class="file-input" type="file" />
+                  <input (click)="speakerPhoto.click()" formControlName="image" matInput readonly />
+                  <mat-icon matSuffix>attach_file</mat-icon>
+                  <mat-error>Photo is required</mat-error>
+                </mat-form-field>
+                <button (click)="speakerPhoto.click()" extended mat-fab type="button">Browse</button>
+              </div>
+            </div>
+            <mat-form-field subscriptSizing="dynamic">
+              <mat-label>Description</mat-label>
+              <textarea formControlName="description" matInput maxlength="4000" rows="5"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="action-buttons">
+            <button class="delete-button" (click)="deleteSpeaker(i)" mat-fab type="button">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      }
+      <button (click)="addSpeaker()" mat-flat-button type="button"><mat-icon>add</mat-icon>Add Speaker</button>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Custom Information Panels</mat-card-title>
+    </mat-card-header>
+    <mat-card-content formArrayName="panels">
+      @for (panel of panels.controls; track panel; let i = $index) {
+        <div class="panel-group-container">
+          <div class="panel-group" [formGroupName]="i">
+            <mat-form-field subscriptSizing="dynamic">
+              <mat-label>Title</mat-label>
+              <input formControlName="title" matInput />
+              <mat-error>Title is required</mat-error>
+            </mat-form-field>
+            <mat-form-field subscriptSizing="dynamic">
+              <mat-label>Description</mat-label>
+              <textarea formControlName="description" matInput maxlength="4000" rows="5"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="action-buttons">
+            <button class="delete-button" (click)="deletePanel(i)" mat-fab type="button">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      }
+      <button (click)="addPanel()" mat-flat-button type="button"><mat-icon>add</mat-icon>Add Panel</button>
     </mat-card-content>
   </mat-card>
 
   <div class="actions">
     <div class="actions-left">
       <mat-slide-toggle formControlName="isPublished" name="published">
-        {{ isChecked ? 'Published' : 'Unpublished' }}
+        Publish
       </mat-slide-toggle>
     </div>
     <div class="actions-right">
-      <p [class.error]="form.invalid">{{ formStatus }}</p>
       <button matButton="outlined" type="button">Cancel</button>
       <button [disabled]="form.invalid" matButton="filled" type="submit">Save</button>
     </div>

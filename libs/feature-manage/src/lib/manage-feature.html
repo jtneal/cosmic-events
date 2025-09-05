@@ -4,9 +4,10 @@
   <h2>My Events</h2>
 
   <div class="cards">
-    @for (item of [1, 2, 3, 4, 5, 6]; track $index) {
-      <lib-event-card [showManagementLinks]="true" />
-      <!-- no more hover, just actions view/edit/delete ? -->
+    @if (events.hasValue()) {
+      @for (item of events.value(); track item) {
+        <lib-event-card [showManagementLinks]="true" />
+      }
     }
   </div>
 </section>

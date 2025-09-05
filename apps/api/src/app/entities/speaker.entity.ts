@@ -20,5 +20,5 @@ export class Speaker {
 
   @Column()
   @Index()
-  public userId: number;
+  public userId: string;
 }

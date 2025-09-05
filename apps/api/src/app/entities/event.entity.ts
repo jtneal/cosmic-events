@@ -35,7 +35,7 @@ export class Event {
   @Column()
   public organizerUrl: string;
 
-  @OneToMany(() => Panel, (panel) => panel.event, { eager: true })
+  @OneToMany(() => Panel, (panel) => panel.event, { eager: true, cascade: true })
   @JoinTable()
   public panels: Panel[];
 
@@ -45,7 +45,7 @@ export class Event {
   @Column()
   public purchaseLink: string;
 
-  @OneToMany(() => Speaker, (speaker) => speaker.event, { eager: true })
+  @OneToMany(() => Speaker, (speaker) => speaker.event, { eager: true, cascade: true })
   @JoinTable()
   public speakers: Speaker[];
 
@@ -60,7 +60,7 @@ export class Event {
 
   @Column()
   @Index()
-  public userId: number;
+  public userId: string;
 
   @Column()
   public website: string;

@@ -5,7 +5,7 @@ import { Request } from 'express';
 import { OAuth2Client } from 'google-auth-library';
 import { UserInfo } from './user-info.interface';
 
-@Controller('auth')
+@Controller()
 export class AuthController {
   private readonly logger = new Logger(AuthController.name, { timestamp: true });
 
@@ -16,7 +16,7 @@ export class AuthController {
     return { email: session.email, name: session.name, picture: session.picture, userId: session.userId };
   }
 
-  @Post()
+  @Post('auth')
   @Redirect('/', 302)
   public async handleCredentialResponse(
     @Body('credential') credential: string,
@@ -40,7 +40,7 @@ export class AuthController {
     }
   }
 
-  @Get('logout')
+  @Get('auth/logout')
   @Redirect('/', 302)
   public logout(@Req() req: Request): void {
     req.session.destroy(() => null);

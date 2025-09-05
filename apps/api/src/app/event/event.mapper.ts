@@ -6,7 +6,7 @@ import { Speaker } from '../entities/speaker.entity';
 
 @Injectable()
 export class EventMapper {
-  public toEvent(dto: EventDto, panels: Panel[], speakers: Speaker[]): Event {
+  public toEvent(dto: EventDto, userId: string): Event {
     const event = new Event();
 
     event.description = dto.description;
@@ -19,13 +19,35 @@ export class EventMapper {
     event.marketingPoster = dto.marketingPoster;
     event.organizerName = dto.organizerName;
     event.organizerUrl = dto.organizerUrl;
-    event.panels = panels;
+    event.panels = dto.panels.map((panelDto) => {
+      const panel = new Panel();
+
+      panel.description = panelDto.description;
+      panel.event = event;
+      panel.id = panelDto.id;
+      panel.title = panelDto.title;
+      panel.userId = userId;
+
+      return panel;
+    });
     event.price = dto.price;
     event.purchaseLink = dto.purchaseLink;
-    event.speakers = speakers;
+    event.speakers = dto.speakers.map((speakerDto) => {
+      const speaker = new Speaker();
+
+      speaker.description = speakerDto.description;
+      speaker.event = event;
+      speaker.id = speakerDto.id;
+      speaker.image = speakerDto.image;
+      speaker.name = speakerDto.name;
+      speaker.userId = userId;
+
+      return speaker;
+    });
     event.startDate = dto.startDate;
     event.title = dto.title;
     event.type = dto.type;
+    event.userId = userId;
     event.website = dto.website;
 
     return event;

@@ -10,6 +10,6 @@ export class UserService {
   private readonly http = inject(HttpClient);
 
   public getUser(): Observable<UserDto> {
-    return this.http.get<UserDto>('/api/auth/user');
+    return this.http.get<UserDto>('/api/user');
   }
 }

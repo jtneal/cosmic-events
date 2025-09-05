@@ -1,3 +1,4 @@
+import { httpResource } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { EventCard } from '@cosmic-events/ui-components';
+import { EventDto } from '@cosmic-events/util-dtos';
 
 @Component({
   imports: [
@@ -28,5 +30,6 @@ import { EventCard } from '@cosmic-events/ui-components';
   templateUrl: './manage-feature.html',
 })
 export class ManageFeature {
+  public events = httpResource<EventDto[]>(() => '/api/user/events');
   public isChecked = false;
 }

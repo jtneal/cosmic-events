@@ -17,5 +17,5 @@ export class Panel {
 
   @Column()
   @Index()
-  public userId: number;
+  public userId: string;
 }
