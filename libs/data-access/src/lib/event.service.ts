@@ -10,6 +10,6 @@ export class EventService {
   private readonly http = inject(HttpClient);
 
   public postEvent(event: EventDto): Observable<EventDto> {
-    return this.http.post<EventDto>('/api/auth/user', event);
+    return this.http.post<EventDto>('/api/event', event);
   }
 }

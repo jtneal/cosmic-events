@@ -1,8 +1,8 @@
 export default {
-  displayName: 'feature-contact',
+  displayName: 'feature-create',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/libs/feature-contact',
+  coverageDirectory: '../../coverage/libs/feature-create',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

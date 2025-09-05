@@ -11,6 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { EventService } from '@cosmic-events/data-access';
+import { EventDto } from '@cosmic-events/util-dtos';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   imports: [
@@ -35,27 +37,39 @@ export class CreateFeature {
   private readonly formBuilder = inject(FormBuilder);
 
   public form = this.formBuilder.group({
-    title: ['', Validators.required],
-    type: ['', Validators.required],
-    location: ['', Validators.required],
-    price: ['', Validators.required],
+    title: ['Title', Validators.required],
+    type: ['Guided Tours', Validators.required],
+    location: ['Location', Validators.required],
+    price: ['1', Validators.required],
     description: [''],
-    startDate: ['', Validators.required],
-    endDate: ['', Validators.required],
+    startDate: [new Date('9/1/2025'), Validators.required],
+    endDate: [new Date('9/30/2025'), Validators.required],
     image: [''],
     marketingPoster: [''],
     website: [''],
     purchaseLink: [''],
     isPublished: [''],
-    organizer: this.formBuilder.group({ name: ['', Validators.required], url: [''] }),
-    // panels: this.formBuilder.array([
-    //   this.formBuilder.group({
-    //     title: ['', Validators.required],
-    //     description: ['', Validators.required],
-    //   }),
-    // ]),
+    organizer: this.formBuilder.group({ name: ['Organizer', Validators.required], url: [''] }),
+    panels: this.formBuilder.array([]),
     speakers: this.formBuilder.array([]),
   });
+  // public form = this.formBuilder.group({
+  //   title: ['', Validators.required],
+  //   type: ['', Validators.required],
+  //   location: ['', Validators.required],
+  //   price: ['', Validators.required],
+  //   description: [''],
+  //   startDate: ['', Validators.required],
+  //   endDate: ['', Validators.required],
+  //   image: [''],
+  //   marketingPoster: [''],
+  //   website: [''],
+  //   purchaseLink: [''],
+  //   isPublished: [''],
+  //   organizer: this.formBuilder.group({ name: ['', Validators.required], url: [''] }),
+  //   panels: this.formBuilder.array([]),
+  //   speakers: this.formBuilder.array([]),
+  // });
   public headerImageFile: File | null = null;
   public isChecked = false;
   public marketingPosterFile: File | null = null;
@@ -63,6 +77,10 @@ export class CreateFeature {
 
   public get speakers(): FormArray {
     return this.form.get('speakers') as FormArray;
+  }
+
+  public get panels(): FormArray {
+    return this.form.get('panels') as FormArray;
   }
 
   public get formStatus(): string {
@@ -78,11 +96,32 @@ export class CreateFeature {
   }
 
   public addSpeaker(): void {
-    this.speakers.push(this.formBuilder.group({
-      description: [''],
-      image: [''],
-      name: ['', Validators.required],
-    }),);
+    this.speakers.push(
+      this.formBuilder.group({
+        description: [''],
+        image: [''],
+        name: ['', Validators.required],
+      })
+    );
+    this.speakerPhotoFiles.push(null);
+  }
+
+  public deleteSpeaker(index: number): void {
+    this.speakers.removeAt(index);
+    this.speakerPhotoFiles.splice(index);
+  }
+
+  public addPanel(): void {
+    this.panels.push(
+      this.formBuilder.group({
+        description: ['', Validators.required],
+        title: ['', Validators.required],
+      })
+    );
+  }
+
+  public deletePanel(index: number): void {
+    this.panels.removeAt(index);
   }
 
   public onHeaderImageSelected(event: Event): void {
@@ -105,11 +144,14 @@ export class CreateFeature {
     const input = event.target as HTMLInputElement;
 
     if (input.files?.length) {
-      this.speakerPhotoFiles[index] = input.files[0];
+      const file = input.files[0];
+
+      this.speakerPhotoFiles[index] = file;
+      this.speakers.at(index).get('image')?.setValue(file.name);
     }
   }
 
-  public onSubmit(): void {
-    console.log(this.form.value);
+  public async onSubmit(): Promise<void> {
+    await firstValueFrom(this.event.postEvent(this.form.value as unknown as EventDto));
   }
 }

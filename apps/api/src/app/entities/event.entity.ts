@@ -1,6 +1,5 @@
-import { Column, Entity, JoinColumn, JoinTable, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { EventType } from '../enums/event-type.enum';
-import { Organizer } from './organizer.entity';
+import { EventTypeEnum } from '@cosmic-events/util-dtos';
+import { Column, Entity, JoinTable, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Panel } from './panel.entity';
 import { Speaker } from './speaker.entity';
 
@@ -30,9 +29,11 @@ export class Event {
   @Column()
   public marketingPoster: string;
 
-  @OneToOne(() => Organizer)
-  @JoinColumn()
-  public organizer: Organizer;
+  @Column()
+  public organizerName: string;
+
+  @Column()
+  public organizerUrl: string;
 
   @OneToMany(() => Panel, (panel) => panel.event, { eager: true })
   @JoinTable()
@@ -54,8 +55,8 @@ export class Event {
   @Column()
   public title: string;
 
-  @Column({ enum: EventType, type: 'enum' })
-  public type: EventType;
+  @Column({ enum: EventTypeEnum, type: 'enum' })
+  public type: EventTypeEnum;
 
   @Column()
   public website: string;

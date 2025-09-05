@@ -1,45 +1,117 @@
+import { Type } from 'class-transformer';
+import {
+  IsArray,
+  IsBoolean,
+  IsDate,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsUrl,
+  Max,
+  Min,
+  ValidateIf,
+  ValidateNested,
+} from 'class-validator';
+
+export enum EventTypeEnum {
+  CONVENTIONS = 'Conventions',
+  CRUISE_EXPERIENCES = 'Cruise Experiences',
+  GUIDED_TOURS = 'Guided Tours',
+}
+
 export class EventDto {
+  @IsOptional()
   public description = '';
+
+  @IsDate()
+  @Type(() => Date)
   public endDate = new Date();
+
+  @IsNumber()
+  @Min(0)
+  public id = 0;
+
+  @IsOptional()
   public image = '';
+
+  @IsBoolean()
   public isActive = false;
+
+  @IsBoolean()
   public isPublished = false;
+
+  @IsNotEmpty()
   public location = '';
+
+  @IsOptional()
   public marketingPoster = '';
-  public organizer = new EventOrganizer();
-  public panels = [] as Panel[];
+
+  @IsNotEmpty()
+  public organizerName = '';
+
+  @ValidateIf((x) => x.organizerUrl !== '')
+  @IsUrl()
+  public organizerUrl = '';
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => PanelDto)
+  public panels = [] as PanelDto[];
+
+  @IsNumber()
+  @Min(0)
+  @Max(999_999)
+  @Type(() => Number)
   public price = 0;
+
+  @ValidateIf((x) => x.purchaseLink !== '')
+  @IsUrl()
   public purchaseLink = '';
-  public speakers = [] as Speaker[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => SpeakerDto)
+  public speakers = [] as SpeakerDto[];
+
+  @IsDate()
+  @Type(() => Date)
   public startDate = new Date();
+
+  @IsNotEmpty()
   public title = '';
-  public type = EventTypeEnum.Guided_Tours;
+
+  @IsEnum(EventTypeEnum)
+  public type = EventTypeEnum.GUIDED_TOURS;
+
+  @ValidateIf((x) => x.website !== '')
+  @IsUrl()
   public website = '';
 }
 
-export class GuidedTour extends Event {
-  public deposit = 0;
-  public singleOccupancySupplement = 0;
-}
-
-export class Panel {
+export class PanelDto {
+  @IsNotEmpty()
   public description = '';
+
+  @IsNumber()
+  @Min(0)
+  public id = 0;
+
+  @IsNotEmpty()
   public title = '';
 }
 
-export class Speaker {
+export class SpeakerDto {
+  @IsOptional()
   public description = '';
+
+  @IsNumber()
+  @Min(0)
+  public id = 0;
+
+  @IsOptional()
   public image = '';
-  public name = '';
-}
 
-export class EventOrganizer {
+  @IsNotEmpty()
   public name = '';
-  public url = '';
-}
-
-export enum EventTypeEnum {
-  Conventions = 'Conventions',
-  Cruise_Experiences = 'Cruise Experiences',
-  Guided_Tours = 'Guided Tours',
 }

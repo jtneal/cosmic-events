@@ -5,16 +5,40 @@
   flex-direction: column;
   gap: 1.5rem;
 
-  @include mat.button-overrides((
-    filled-container-color: var(--cosmic-violet-600),
-  ));
+  @include mat.button-overrides(
+    (
+      filled-container-color: var(--cosmic-violet-600),
+    )
+  );
 
   .mat-mdc-card-content,
-  .speaker-group {
+  .speaker-group,
+  .panel-group {
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
+}
+
+.speaker-group-container,
+.panel-group-container {
+  display: flex;
+  gap: 1rem;
+
+  .speaker-group,
+  .panel-group {
+    width: 100%;
+  }
+}
+
+.delete-button {
+  @include mat.fab-overrides(
+    (
+      container-color: var(--cosmic-red),
+    )
+  );
+
+  height: 232px;
 }
 
 .grid.two {
