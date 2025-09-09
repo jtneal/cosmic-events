@@ -39,10 +39,16 @@
             <p class="price">{{ event.price | currency }}</p>
             <p>per person</p>
           </div>
-          <div class="button-container">
-            <button color="primary" matButton="filled">Book Now</button>
-            <button color="primary" matButton="outlined">Website</button>
-          </div>
+          @if (event.purchaseLink || event.website) {
+            <div class="button-container">
+              @if (event.purchaseLink) {
+                <a [href]="event.purchaseLink" matButton="filled" rel="noreferrer" target="_blank"> Book Now </a>
+              }
+              @if (event.website) {
+                <a [href]="event.website" matButton="outlined" rel="noreferrer" target="_blank"> Website </a>
+              }
+            </div>
+          }
           <mat-divider></mat-divider>
           <div class="info-container">
             <div class="definition-list">
@@ -75,29 +81,31 @@
           </div>
         </mat-card-content>
       </mat-card>
-      <h2>Speakers</h2>
-      <div class="speakers">
-        @for (speaker of event.speakers; track speaker) {
-          <mat-card class="cosmic-card">
-            <mat-card-content>
-              <div class="speaker">
-                <div class="speaker-image">
-                  @if (speaker.image) {
-                    <img [alt]="speaker.name" [src]="speaker.image" />
-                  } @else {
-                    <span class="gravatar">{{ speaker.name.charAt(0) }}</span>
-                  }
+      @if (event.speakers.length) {
+        <h2>Speakers</h2>
+        <div class="speakers">
+          @for (speaker of event.speakers; track speaker) {
+            <mat-card class="cosmic-card">
+              <mat-card-content>
+                <div class="speaker">
+                  <div class="speaker-image">
+                    @if (speaker.image) {
+                      <img [alt]="speaker.name" [src]="speaker.image" />
+                    } @else {
+                      <span class="gravatar">{{ speaker.name.charAt(0) }}</span>
+                    }
+                  </div>
+                  <div class="speaker-info">
+                    <p class="speaker-name">{{ speaker.name }}</p>
+                    <p class="speaker-title">{{ speaker.description }}</p>
+                  </div>
                 </div>
-                <div class="speaker-info">
-                  <p class="speaker-name">{{ speaker.name }}</p>
-                  <p class="speaker-title">{{ speaker.description }}</p>
-                </div>
-              </div>
-              <p class="speaker-description">{{ speaker.description }}</p>
-            </mat-card-content>
-          </mat-card>
-        }
-      </div>
+                <p class="speaker-description">{{ speaker.description }}</p>
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
+      }
       @if (event.marketingPoster) {
         <div class="marketing-poster">
           <img [alt]="event.title" [src]="event.marketingPoster || 'https://placehold.co/450x600'" />
