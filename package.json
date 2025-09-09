@@ -32,7 +32,6 @@
     "slug": "^11.0.0",
     "typeorm": "^0.3.26",
     "typeorm-aurora-data-api-driver": "^3.0.2",
-    "uuid": "^13.0.0",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
