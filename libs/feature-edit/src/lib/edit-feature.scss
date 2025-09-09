@@ -48,7 +48,7 @@
 .move-button {
   @include mat.fab-overrides(
     (
-      container-color: var(--cosmic-violet-600-50),
+      container-color: var(--cosmic-violet-600-25),
     )
   );
 
