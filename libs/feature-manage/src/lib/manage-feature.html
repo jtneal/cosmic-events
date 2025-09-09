@@ -6,7 +6,11 @@
   <div class="cards">
     @if (events.hasValue()) {
       @for (item of events.value(); track item) {
-        <lib-event-card [showManagementLinks]="true" />
+        <lib-event-card (delete)="deleteEvent(item.id)" [event]="item" [showManagementLinks]="true" />
+      }
+    } @else {
+      @for (i of [].constructor(12); track i) {
+        <lib-event-card-skeleton />
       }
     }
   </div>

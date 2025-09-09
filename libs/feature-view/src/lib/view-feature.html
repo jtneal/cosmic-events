@@ -1,0 +1,108 @@
+@if (event$ | async; as event) {
+  <section>
+    <article>
+      <mat-card class="cosmic-card">
+        <img
+          [alt]="event.title"
+          class="header-image"
+          mat-card-image
+          [src]="event.image || '/images/event-image-placeholder.jpg'"
+        />
+        <mat-card-header>
+          <div class="header-float">
+            <mat-chip>
+              <mat-icon matChipAvatar>{{ eventTypeIcons[event.type] }}</mat-icon>
+              {{ event.type }}
+            </mat-chip>
+          </div>
+          <mat-card-title>{{ event.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="description">{{ event.description }}</p>
+        </mat-card-content>
+      </mat-card>
+      <mat-accordion>
+        @for (panel of event.panels; track panel) {
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{ panel.title }}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>{{ panel.description }}</p>
+          </mat-expansion-panel>
+        }
+      </mat-accordion>
+    </article>
+    <article>
+      <mat-card class="cosmic-card">
+        <mat-card-content>
+          <div class="definition-list">
+            <p class="price">{{ event.price | currency }}</p>
+            <p>per person</p>
+          </div>
+          <div class="button-container">
+            <button color="primary" matButton="filled">Book Now</button>
+            <button color="primary" matButton="outlined">Website</button>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="info-container">
+            <div class="definition-list">
+              <p>Dates:</p>
+              <p>
+                {{ event.startDate | date }}
+                @if (event.startDate !== event.endDate) {
+                  - {{ event.endDate | date }}
+                }
+              </p>
+            </div>
+            <div class="definition-list">
+              <p>Location:</p>
+              <p>{{ event.location }}</p>
+            </div>
+            <div class="definition-list">
+              <p>Duration:</p>
+              <p>{{ duration$ | async }}</p>
+            </div>
+            <div class="definition-list">
+              <p>Organizer:</p>
+              <p>
+                @if (event.organizerUrl) {
+                  <a [href]="event.organizerUrl" rel="noreferrer" target="_blank">{{ event.organizerName }}</a>
+                } @else {
+                  {{ event.organizerName }}
+                }
+              </p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <h2>Speakers</h2>
+      <div class="speakers">
+        @for (speaker of event.speakers; track speaker) {
+          <mat-card class="cosmic-card">
+            <mat-card-content>
+              <div class="speaker">
+                <div class="speaker-image">
+                  @if (speaker.image) {
+                    <img [alt]="speaker.name" [src]="speaker.image" />
+                  } @else {
+                    <span class="gravatar">{{ speaker.name.charAt(0) }}</span>
+                  }
+                </div>
+                <div class="speaker-info">
+                  <p class="speaker-name">{{ speaker.name }}</p>
+                  <p class="speaker-title">{{ speaker.description }}</p>
+                </div>
+              </div>
+              <p class="speaker-description">{{ speaker.description }}</p>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+      @if (event.marketingPoster) {
+        <div class="marketing-poster">
+          <img [alt]="event.title" [src]="event.marketingPoster || 'https://placehold.co/450x600'" />
+        </div>
+      }
+    </article>
+  </section>
+}

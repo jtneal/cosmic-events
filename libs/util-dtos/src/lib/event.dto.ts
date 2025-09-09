@@ -8,17 +8,13 @@ import {
   IsNumber,
   IsOptional,
   IsUrl,
+  IsUUID,
   Max,
   Min,
   ValidateIf,
   ValidateNested,
 } from 'class-validator';
-
-export enum EventTypeEnum {
-  CONVENTIONS = 'Conventions',
-  CRUISE_EXPERIENCES = 'Cruise Experiences',
-  GUIDED_TOURS = 'Guided Tours',
-}
+import { EventTypeEnum } from './event-type.enum';
 
 export class EventDto {
   @IsOptional()
@@ -28,9 +24,9 @@ export class EventDto {
   @Type(() => Date)
   public endDate = new Date();
 
-  @IsNumber()
-  @Min(0)
-  public id = 0;
+  @ValidateIf((x) => x.id !== '')
+  @IsUUID()
+  public id = '';
 
   @IsOptional()
   public image = '';
@@ -93,9 +89,9 @@ export class PanelDto {
   @IsNotEmpty()
   public description = '';
 
-  @IsNumber()
-  @Min(0)
-  public id = 0;
+  @ValidateIf((x) => x.id !== '')
+  @IsUUID()
+  public id = '';
 
   @IsNotEmpty()
   public title = '';
@@ -105,9 +101,9 @@ export class SpeakerDto {
   @IsOptional()
   public description = '';
 
-  @IsNumber()
-  @Min(0)
-  public id = 0;
+  @ValidateIf((x) => x.id !== '')
+  @IsUUID()
+  public id = '';
 
   @IsOptional()
   public image = '';

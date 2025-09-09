@@ -1,0 +1,9 @@
+@use '@angular/material' as mat;
+
+.delete {
+  @include mat.button-overrides(
+    (
+      filled-container-color: var(--cosmic-red),
+    )
+  );
+}

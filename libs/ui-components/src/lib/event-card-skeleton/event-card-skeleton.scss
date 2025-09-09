@@ -1,0 +1,57 @@
+.skeleton-card {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes pulse {
+    50% {
+      opacity: 0.5;
+    }
+  }
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 15.25rem;
+  background-color: var(--cosmic-white-25);
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.skeleton-chip {
+  width: 60px;
+  height: 20px;
+  background-color: var(--cosmic-white-25);
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.skeleton-title {
+  width: 80%;
+  height: 24px;
+  background-color: var(--cosmic-white-25);
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.skeleton-description {
+  width: 100%;
+  height: 48px;
+  background-color: var(--cosmic-white-25);
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.skeleton-list-item {
+  width: 100%;
+  height: 16px;
+  background-color: var(--cosmic-white-25);
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.skeleton-price {
+  width: 40%;
+  height: 20px;
+  background-color: var(--cosmic-white-25);
+  border-radius: 4px;
+  margin-top: 16px;
+}

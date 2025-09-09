@@ -17,9 +17,10 @@
     "paths": {
       "@cosmic-events/data-access": ["libs/data-access/src/index.ts"],
       "@cosmic-events/feature-about": ["libs/feature-about/src/index.ts"],
-      "@cosmic-events/feature-create": ["libs/feature-create/src/index.ts"],
+      "@cosmic-events/feature-edit": ["libs/feature-edit/src/index.ts"],
       "@cosmic-events/feature-manage": ["libs/feature-manage/src/index.ts"],
       "@cosmic-events/feature-search": ["libs/feature-search/src/index.ts"],
+      "@cosmic-events/feature-view": ["libs/feature-view/src/index.ts"],
       "@cosmic-events/ui-components": ["libs/ui-components/src/index.ts"],
       "@cosmic-events/util-dtos": ["libs/util-dtos/src/index.ts"]
     }

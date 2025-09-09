@@ -10,8 +10,12 @@ export const appRoutes: Route[] = [
     path: 'about',
   },
   {
-    loadComponent: () => import('@cosmic-events/feature-create').then((m) => m.CreateFeature),
-    path: 'create',
+    loadComponent: () => import('@cosmic-events/feature-edit').then((m) => m.EditFeature),
+    path: 'edit/:eventId',
+  },
+  {
+    loadComponent: () => import('@cosmic-events/feature-view').then((m) => m.ViewFeature),
+    path: 'events/:eventId/:slug',
   },
   {
     loadComponent: () => import('@cosmic-events/feature-manage').then((m) => m.ManageFeature),

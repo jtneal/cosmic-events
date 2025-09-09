@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CreateFeature } from './create-feature';
+import { EventCard } from './confirm-delete';
 
-describe(CreateFeature.name, () => {
-  let component: CreateFeature;
-  let fixture: ComponentFixture<CreateFeature>;
+describe(EventCard.name, () => {
+  let component: EventCard;
+  let fixture: ComponentFixture<EventCard>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateFeature],
+      imports: [EventCard],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CreateFeature);
+    fixture = TestBed.createComponent(EventCard);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

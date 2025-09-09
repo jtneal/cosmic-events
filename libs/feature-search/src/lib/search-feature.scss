@@ -3,3 +3,49 @@
   flex-direction: column;
   gap: 1.5rem;
 }
+
+.search-form,
+.search-section,
+.search-filters,
+.search-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem 1rem;
+}
+
+.search-form {
+  scroll-margin-top: 1.5rem;
+}
+
+@media (min-width: 540px) {
+  .search-filters {
+    flex-direction: row;
+
+    > * {
+      width: 50%;
+    }
+  }
+}
+
+@media (min-width: 960px) {
+  .search-section {
+    flex-direction: row;
+
+    > * {
+      width: 50%;
+    }
+  }
+
+  .search-options {
+    flex-direction: row;
+    justify-content: space-between;
+
+    > *:last-child {
+      width: 16rem;
+    }
+  }
+}
+
+.result-count {
+  margin-top: 0.5rem;
+}

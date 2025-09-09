@@ -6,12 +6,27 @@
       elevated-container-color: var(--cosmic-navy),
     )
   );
+
+  @include mat.expansion-overrides((
+    container-background-color: var(--cosmic-navy),
+    container-elevation-shadow: 0.5rem 0.5rem 1rem var(--cosmic-black-50),
+    header-hover-state-layer-color: var(--cosmic-navy-highlight),
+  ));
 }
 
 .mat-mdc-card {
   border: 1px solid var(--cosmic-violet-600-25) !important;
   box-shadow: 0.5rem 0.5rem 1rem var(--cosmic-black-50) !important;
   overflow: hidden;
+
+  a {
+    color: var(--cosmic-violet-400);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--cosmic-violet-300);
+    }
+  }
 
   img {
     height: 15.25rem;
@@ -48,4 +63,39 @@
       width: 1rem;
     }
   }
+}
+
+.cards {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(1, 1fr);
+  margin-top: 1.5rem;
+
+  @media (min-width: 720px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1060px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 1400px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (min-width: 1740px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  @media (min-width: 2080px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.mat-expansion-panel {
+  border: 1px solid var(--cosmic-violet-600-25) !important;
+}
+
+.mat-expansion-indicator svg {
+  max-width: unset;
 }

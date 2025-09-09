@@ -9,6 +9,10 @@ import { Observable } from 'rxjs';
 export class EventService {
   private readonly http = inject(HttpClient);
 
+  public getEvent(eventId: string): Observable<EventDto> {
+    return this.http.get<EventDto>(`/api/events/${eventId}`);
+  }
+
   public getEvents(): Observable<EventDto[]> {
     return this.http.get<EventDto[]>('/api/events');
   }
@@ -19,5 +23,9 @@ export class EventService {
 
   public postEvent(event: EventDto): Observable<EventDto> {
     return this.http.post<EventDto>('/api/events', event);
+  }
+
+  public deleteEvent(eventId: string): Observable<void> {
+    return this.http.delete<void>(`/api/events/${eventId}`);
   }
 }

@@ -2,5 +2,68 @@
   @if (!isHeroHidden) {
     <lib-hero (heroClosed)="hideHero()" />
   }
-  <lib-search />
+  <div>
+    <form class="search-form" id="search-form">
+      <section class="search-section">
+        <article class="search-filters">
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-label>Location</mat-label>
+            <mat-select multiple>
+              <mat-option value="Egypt">Egypt</mat-option>
+              <mat-option value="Peru">Peru</mat-option>
+              <mat-option value="England">England</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-label>Dates</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input (focus)="picker.open()" matStartDate placeholder="Start date" readonly />
+              <input (focus)="picker.open()" matEndDate placeholder="End date" readonly />
+            </mat-date-range-input>
+            <mat-datepicker-toggle [for]="picker" matIconSuffix />
+            <mat-date-range-picker #picker />
+          </mat-form-field>
+        </article>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Search</mat-label>
+          <input matInput type="search" />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </section>
+      <section class="search-options">
+        <mat-chip-listbox multiple>
+          <mat-chip-option selected value="Conventions">Conventions</mat-chip-option>
+          <mat-chip-option selected value="Cruise Experiences">Cruise Experiences</mat-chip-option>
+          <mat-chip-option selected value="Guided Tours">Guided Tours</mat-chip-option>
+        </mat-chip-listbox>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Sort by</mat-label>
+          <mat-select value="Sort by Relevance">
+            <mat-option value="Sort by Relevance">Relevance</mat-option>
+            <mat-option value="Price: Low to High">Price: Low to High</mat-option>
+            <mat-option value="Price: High to Low">Price: High to Low</mat-option>
+            <mat-option value="Date: Earliest First">Date: Earliest First</mat-option>
+            <mat-option value="Date: Latest First">Date: Latest First</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </section>
+    </form>
+
+    @if (events.hasValue()) {
+      @let items = events.value();
+      <p class="result-count">{{ items.length }} Results</p>
+      <section class="cards">
+        @for (item of items; track item) {
+          <lib-event-card [event]="item" />
+        }
+      </section>
+    } @else {
+      <p class="result-count">Results loading...</p>
+      <section class="cards">
+        @for (i of [].constructor(12); track i) {
+          <lib-event-card-skeleton />
+        }
+      </section>
+    }
+  </div>
 </div>

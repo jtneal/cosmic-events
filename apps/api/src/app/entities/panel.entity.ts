@@ -6,11 +6,11 @@ export class Panel {
   @Column()
   public description: string;
 
-  @ManyToOne(() => Event, (event) => event.panels)
+  @ManyToOne(() => Event, (event) => event.panels, { onDelete: 'CASCADE', orphanedRowAction: 'delete' })
   public event: Event;
 
-  @PrimaryGeneratedColumn()
-  public id: number;
+  @PrimaryGeneratedColumn('uuid')
+  public id: string;
 
   @Column()
   public title: string;

@@ -11,7 +11,6 @@ export class EventMapper {
 
     event.description = dto.description;
     event.endDate = dto.endDate;
-    event.id = dto.id;
     event.image = dto.image;
     event.isActive = dto.isActive;
     event.isPublished = dto.isPublished;
@@ -24,9 +23,12 @@ export class EventMapper {
 
       panel.description = panelDto.description;
       panel.event = event;
-      panel.id = panelDto.id;
       panel.title = panelDto.title;
       panel.userId = userId;
+
+      if (panelDto.id !== '') {
+        panel.id = panelDto.id;
+      }
 
       return panel;
     });
@@ -37,10 +39,13 @@ export class EventMapper {
 
       speaker.description = speakerDto.description;
       speaker.event = event;
-      speaker.id = speakerDto.id;
       speaker.image = speakerDto.image;
       speaker.name = speakerDto.name;
       speaker.userId = userId;
+
+      if (speakerDto.id !== '') {
+        speaker.id = speakerDto.id;
+      }
 
       return speaker;
     });
@@ -49,6 +54,10 @@ export class EventMapper {
     event.type = dto.type;
     event.userId = userId;
     event.website = dto.website;
+
+    if (dto.id !== '') {
+      event.id = dto.id;
+    }
 
     return event;
   }

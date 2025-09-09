@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -10,10 +11,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '@cosmic-events/data-access';
-import { EventDto } from '@cosmic-events/util-dtos';
-import { firstValueFrom } from 'rxjs';
+import { EventDto, PanelDto, SpeakerDto } from '@cosmic-events/util-dtos';
+import { firstValueFrom, map, of, switchMap } from 'rxjs';
+import { mockEvent } from './event.mock';
 
 @Component({
   imports: [
@@ -29,65 +31,53 @@ import { firstValueFrom } from 'rxjs';
     ReactiveFormsModule,
   ],
   providers: [provideNativeDateAdapter()],
-  selector: 'lib-create-feature',
-  styleUrl: './create-feature.scss',
-  templateUrl: './create-feature.html',
+  selector: 'lib-edit-feature',
+  styleUrl: './edit-feature.scss',
+  templateUrl: './edit-feature.html',
 })
-export class CreateFeature {
-  private readonly event = inject(EventService);
+export class EditFeature implements OnInit {
+  private readonly service = inject(EventService);
   private readonly formBuilder = inject(FormBuilder);
+  private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
-  public form = this.formBuilder.group({
-    title: ['This is my event title', Validators.required],
-    type: ['Guided Tours', Validators.required],
-    location: ['Egypt', Validators.required],
-    price: ['5000', Validators.required],
-    description: ['This is my event description.'],
-    startDate: [new Date('9/14/2025'), Validators.required],
-    endDate: [new Date('9/30/2025'), Validators.required],
-    image: [''],
-    marketingPoster: [''],
-    website: ['https://www.cosmicevents.app'],
-    purchaseLink: ['https://www.cosmicevents.app'],
-    isPublished: [true],
-    organizerName: ['Organizer Name', Validators.required],
-    organizerUrl: ['https://www.cosmicevents.app'],
-    panels: this.formBuilder.array([
-      this.formBuilder.group({
-        description: ['This is my panel description.', Validators.required],
-        title: ['This is my panel title', Validators.required],
-      }),
-    ]),
-    speakers: this.formBuilder.array([
-      this.formBuilder.group({
-        description: ['This is my speaker description.'],
-        image: [''],
-        name: ['Speaker Name', Validators.required],
-      }),
-    ]),
-  });
-  // public form = this.formBuilder.group({
-  //   title: ['', Validators.required],
-  //   type: ['', Validators.required],
-  //   location: ['', Validators.required],
-  //   price: ['', Validators.required],
-  //   description: [''],
-  //   startDate: ['', Validators.required],
-  //   endDate: ['', Validators.required],
-  //   image: [''],
-  //   marketingPoster: [''],
-  //   website: [''],
-  //   purchaseLink: [''],
-  //   isPublished: [false],
-  //   organizer: this.formBuilder.group({ name: ['', Validators.required], url: [''] }),
-  //   panels: this.formBuilder.array([]),
-  //   speakers: this.formBuilder.array([]),
-  // });
   public headerImageFile: File | null = null;
   public isChecked = false;
   public marketingPosterFile: File | null = null;
   public speakerPhotoFiles: (File | null)[] = [];
+
+  public form = this.formBuilder.group({
+    id: [0],
+    title: ['', Validators.required],
+    type: ['', Validators.required],
+    location: ['', Validators.required],
+    price: ['', Validators.required],
+    description: [''],
+    startDate: ['', Validators.required],
+    endDate: ['', Validators.required],
+    image: [''],
+    marketingPoster: [''],
+    website: [''],
+    purchaseLink: [''],
+    isPublished: [false],
+    organizerName: ['', Validators.required],
+    organizerUrl: [''],
+    panels: this.formBuilder.array([]),
+    speakers: this.formBuilder.array([]),
+  });
+
+  public event$ = this.route.paramMap.pipe(
+    map((params) => params.get('eventId')),
+    switchMap((eventId) => {
+      if (eventId && eventId !== 'new') {
+        return this.service.getEvent(eventId);
+      }
+
+      return of(mockEvent);
+      // return of(new EventDto());
+    }),
+    takeUntilDestroyed(),
+  );
 
   public get speakers(): FormArray {
     return this.form.get('speakers') as FormArray;
@@ -97,13 +87,29 @@ export class CreateFeature {
     return this.form.get('panels') as FormArray;
   }
 
-  public addSpeaker(): void {
+  public ngOnInit(): void {
+    this.event$.subscribe((event) => {
+      // if (event.id > 0) {
+        this.form.reset(event as never);
+
+        for (const panel of event.panels) {
+          this.addPanel(Object.assign(new PanelDto(), panel));
+        }
+
+        for (const speaker of event.speakers) {
+          this.addSpeaker(Object.assign(new SpeakerDto(), speaker));
+        }
+      // }
+    });
+  }
+
+  public addSpeaker(speaker = new SpeakerDto()): void {
     this.speakers.push(
       this.formBuilder.group({
-        description: [''],
-        image: [''],
-        name: ['', Validators.required],
-      })
+        description: [speaker.description],
+        image: [speaker.image],
+        name: [speaker.name, Validators.required],
+      }),
     );
     this.speakerPhotoFiles.push(null);
   }
@@ -113,12 +119,12 @@ export class CreateFeature {
     this.speakerPhotoFiles.splice(index);
   }
 
-  public addPanel(): void {
+  public addPanel(panel = new PanelDto()): void {
     this.panels.push(
       this.formBuilder.group({
-        description: ['', Validators.required],
-        title: ['', Validators.required],
-      })
+        description: [panel.description, Validators.required],
+        title: [panel.title, Validators.required],
+      }),
     );
   }
 
@@ -154,7 +160,7 @@ export class CreateFeature {
   }
 
   public async onSubmit(): Promise<void> {
-    await firstValueFrom(this.event.postEvent(this.form.value as unknown as EventDto));
+    await firstValueFrom(this.service.postEvent(this.form.value as unknown as EventDto));
     this.router.navigate(['/manage']);
   }
 }

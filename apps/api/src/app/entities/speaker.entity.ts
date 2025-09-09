@@ -6,11 +6,11 @@ export class Speaker {
   @Column()
   public description: string;
 
-  @ManyToOne(() => Event, (event) => event.speakers)
+  @ManyToOne(() => Event, (event) => event.speakers, { onDelete: 'CASCADE', orphanedRowAction: 'delete' })
   public event: Event;
 
-  @PrimaryGeneratedColumn()
-  public id: number;
+  @PrimaryGeneratedColumn('uuid')
+  public id: string;
 
   @Column()
   public image: string;

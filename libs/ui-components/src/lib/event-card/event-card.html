@@ -1,31 +1,48 @@
-<mat-card class="cosmic-card" [class.cosmic-card-link]="!showManagementLinks()">
-  <img
-    alt="Nothern Lights Photography Expedition"
-    mat-card-image
-    src="https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=800"
-  />
+<mat-card
+  class="cosmic-card"
+  [class.cosmic-card-link]="!showManagementLinks()"
+  [routerLink]="!showManagementLinks() ? ['/events', event().id, event().title | slugify] : null"
+>
+  <img [alt]="event().title" mat-card-image [src]="event().image || '/images/event-image-placeholder.jpg'" />
   <mat-card-header>
     <div class="header-float">
-      <mat-chip><mat-icon matChipAvatar>tour</mat-icon>Guided Tour</mat-chip>
+      <mat-chip>
+        <mat-icon matChipAvatar>{{ eventTypeIcons[event().type] }}</mat-icon>
+        {{ event().type }}
+      </mat-chip>
       @if (showManagementLinks()) {
         <div class="header-actions">
-          <button matMiniFab><mat-icon>visibility</mat-icon></button>
-          <button matMiniFab><mat-icon>edit_square</mat-icon></button>
-          <button matMiniFab><mat-icon>delete</mat-icon></button>
+          <a matMiniFab [routerLink]="['/events', event().id, event().title | slugify]">
+            <mat-icon>visibility</mat-icon>
+          </a>
+          <a matMiniFab [routerLink]="['/edit', event().id]"><mat-icon>edit_square</mat-icon></a>
+          <button (click)="deleteEvent(event().id)" matMiniFab><mat-icon>delete</mat-icon></button>
         </div>
       }
     </div>
-    <mat-card-title>Nothern Lights Photography Expedition</mat-card-title>
+    <mat-card-title>{{ event().title }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <p class="description">
-      Join our expert photographers for an unforgettable journey to capture the aurora borealis in all its glory.
-    </p>
+    <p class="description">{{ event().description }}</p>
     <ul class="icon-list">
-      <li><mat-icon>event_note</mat-icon><span>Mar 14, 2025</span></li>
-      <li><mat-icon>location_on</mat-icon><span>Tromso, Norway</span></li>
-      <li><mat-icon>access_time</mat-icon><span>7 days</span></li>
+      <li>
+        <mat-icon>event_note</mat-icon>
+        <span>
+          {{ event().startDate | date }}
+          @if (event().startDate !== event().endDate) {
+            - {{ event().endDate | date }}
+          }
+        </span>
+      </li>
+      <li>
+        <mat-icon>location_on</mat-icon>
+        <span>{{ event().location }}</span>
+      </li>
+      <li>
+        <mat-icon>access_time</mat-icon>
+        <span>{{ duration }}</span>
+      </li>
     </ul>
-    <p class="price">$ 2,499</p>
+    <p class="price">{{ event().price | currency }}</p>
   </mat-card-content>
 </mat-card>

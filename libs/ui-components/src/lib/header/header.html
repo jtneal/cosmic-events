@@ -6,18 +6,18 @@
   <nav>
     <a matButton="filled" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
     @if (user()?.userId?.length) {
-      <a matButton="filled" routerLink="/create" routerLinkActive="active">Create Event</a>
+      <a matButton="filled" routerLink="/edit/new" routerLinkActive="active">Create Event</a>
       <a matButton="filled" routerLink="/manage" routerLinkActive="active">Manage Events</a>
       <a href="/api/auth/logout" matButton="filled">Sign Out</a>
     } @else {
       <div
         class="g_id_signin"
-        data-type="standard"
-        data-shape="rectangular"
-        data-theme="outline"
-        data-text="signin_with"
-        data-size="large"
         data-logo_alignment="left"
+        data-shape="rectangular"
+        data-size="large"
+        data-text="signin_with"
+        data-theme="outline"
+        data-type="standard"
       ></div>
     }
   </nav>

@@ -11,8 +11,8 @@ export class Event {
   @Column()
   public endDate: Date;
 
-  @PrimaryGeneratedColumn()
-  public id: number;
+  @PrimaryGeneratedColumn('uuid')
+  public id: string;
 
   @Column()
   public image: string;
@@ -36,7 +36,6 @@ export class Event {
   public organizerUrl: string;
 
   @OneToMany(() => Panel, (panel) => panel.event, { eager: true, cascade: true })
-  @JoinTable()
   public panels: Panel[];
 
   @Column()
@@ -46,7 +45,6 @@ export class Event {
   public purchaseLink: string;
 
   @OneToMany(() => Speaker, (speaker) => speaker.event, { eager: true, cascade: true })
-  @JoinTable()
   public speakers: Speaker[];
 
   @Column()
