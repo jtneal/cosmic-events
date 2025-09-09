@@ -1,3 +1,4 @@
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -19,6 +20,8 @@ import { mockEvent } from './event.mock';
 
 @Component({
   imports: [
+    CdkDrag,
+    CdkDropList,
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
@@ -47,7 +50,7 @@ export class EditFeature implements OnInit {
   public speakerPhotoFiles: (File | null)[] = [];
 
   public form = this.formBuilder.group({
-    id: [0],
+    id: [''],
     title: ['', Validators.required],
     type: ['', Validators.required],
     location: ['', Validators.required],
@@ -90,15 +93,15 @@ export class EditFeature implements OnInit {
   public ngOnInit(): void {
     this.event$.subscribe((event) => {
       // if (event.id > 0) {
-        this.form.reset(event as never);
+      this.form.reset(event as never);
 
-        for (const panel of event.panels) {
-          this.addPanel(Object.assign(new PanelDto(), panel));
-        }
+      for (const panel of event.panels) {
+        this.addPanel(Object.assign(new PanelDto(), panel));
+      }
 
-        for (const speaker of event.speakers) {
-          this.addSpeaker(Object.assign(new SpeakerDto(), speaker));
-        }
+      for (const speaker of event.speakers) {
+        this.addSpeaker(Object.assign(new SpeakerDto(), speaker));
+      }
       // }
     });
   }
@@ -107,6 +110,7 @@ export class EditFeature implements OnInit {
     this.speakers.push(
       this.formBuilder.group({
         description: [speaker.description],
+        id: [speaker.id],
         image: [speaker.image],
         name: [speaker.name, Validators.required],
       }),
@@ -123,6 +127,7 @@ export class EditFeature implements OnInit {
     this.panels.push(
       this.formBuilder.group({
         description: [panel.description, Validators.required],
+        id: [panel.id],
         title: [panel.title, Validators.required],
       }),
     );
@@ -162,5 +167,25 @@ export class EditFeature implements OnInit {
   public async onSubmit(): Promise<void> {
     await firstValueFrom(this.service.postEvent(this.form.value as unknown as EventDto));
     this.router.navigate(['/manage']);
+  }
+
+  public onSpeakerDrop(event: CdkDragDrop<SpeakerDto[]>): void {
+    this.moveItemInFormArray(this.speakers, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.speakerPhotoFiles, event.previousIndex, event.currentIndex);
+  }
+
+  public onPanelDrop(event: CdkDragDrop<PanelDto[]>): void {
+    this.moveItemInFormArray(this.panels, event.previousIndex, event.currentIndex);
+  }
+
+  private moveItemInFormArray(formArray: FormArray, fromIndex: number, toIndex: number): void {
+    if (fromIndex === toIndex) {
+      return;
+    }
+
+    const item = formArray.at(fromIndex);
+
+    formArray.removeAt(fromIndex);
+    formArray.insert(toIndex, item);
   }
 }
