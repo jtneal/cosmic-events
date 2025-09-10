@@ -39,11 +39,11 @@
         <mat-form-field subscriptSizing="dynamic">
           <mat-label>Sort by</mat-label>
           <mat-select formControlName="sort" value="Sort by Relevance">
-            <mat-option value="Sort by Relevance">Relevance</mat-option>
-            <mat-option value="Price: Low to High">Price: Low to High</mat-option>
-            <mat-option value="Price: High to Low">Price: High to Low</mat-option>
-            <mat-option value="Date: Earliest First">Date: Earliest First</mat-option>
-            <mat-option value="Date: Latest First">Date: Latest First</mat-option>
+            <mat-option value="">Relevance</mat-option>
+            <mat-option value="price-asc">Price: Low to High</mat-option>
+            <mat-option value="price-desc">Price: High to Low</mat-option>
+            <mat-option value="date-asc">Date: Earliest First</mat-option>
+            <mat-option value="date-desc">Date: Latest First</mat-option>
           </mat-select>
         </mat-form-field>
       </section>

@@ -24,6 +24,7 @@ import { EventModule } from './event/event.module';
         region: config.get<string>('DATABASE_REGION'),
         resourceArn: config.get<string>('DATABASE_RESOURCE_ARN'),
         secretArn: config.get<string>('DATABASE_SECRET_ARN'),
+        // synchronize: true,
         type: 'aurora-postgres',
       }),
     }),

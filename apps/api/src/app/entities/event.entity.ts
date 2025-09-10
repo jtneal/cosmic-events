@@ -1,5 +1,5 @@
 import { EventTypeEnum } from '@cosmic-events/util-dtos';
-import { Column, Entity, Index, JoinTable, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Panel } from './panel.entity';
 import { Speaker } from './speaker.entity';
 

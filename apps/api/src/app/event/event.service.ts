@@ -1,14 +1,61 @@
+import { EventTypeEnum } from '@cosmic-events/util-dtos';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, MoreThanOrEqual, Repository } from 'typeorm';
 import { Event } from '../entities/event.entity';
+
+export interface EventFilters {
+  endDate: string;
+  location: string;
+  search: string;
+  sort: string;
+  startDate: string;
+  type: string;
+}
 
 @Injectable()
 export class EventService {
   public constructor(@InjectRepository(Event) private readonly event: Repository<Event>) {}
 
-  public getEvents(): Promise<Event[]> {
-    return this.event.find();
+  public getEvents(filters: EventFilters): Promise<Event[]> {
+    const query = this.event
+      .createQueryBuilder('event')
+      .leftJoinAndSelect('event.panels', 'panels')
+      .leftJoinAndSelect('event.speakers', 'speakers');
+
+    if (filters.location) {
+      query.andWhere('event.location IN (:...locations)', { locations: filters.location.split(',') });
+    }
+
+    if (filters.type) {
+      query.andWhere('event.type::text IN (:...types)', { types: filters.type.split(',') });
+    }
+
+    if (filters.startDate) {
+      query.andWhere('event.startDate >= :startDate', { startDate: new Date(filters.startDate) });
+    }
+
+    if (filters.endDate) {
+      query.andWhere('event.endDate <= :endDate', { endDate: new Date(filters.endDate) });
+    }
+
+    if (filters.search) {
+      query.andWhere('LOWER(event.title) LIKE :search OR LOWER(event.description) LIKE :search', {
+        search: `%${filters.search.toLowerCase()}%`,
+      });
+    }
+
+    if (filters.sort === 'price-asc') {
+      query.orderBy('event.price', 'ASC');
+    } else if (filters.sort === 'price-desc') {
+      query.orderBy('event.price', 'DESC');
+    } else if (filters.sort === 'date-asc') {
+      query.orderBy('event.startDate', 'ASC');
+    } else if (filters.sort === 'date-desc') {
+      query.orderBy('event.startDate', 'DESC');
+    }
+
+    return query.getMany();
   }
 
   public async getEvent(eventId: string): Promise<Event> {

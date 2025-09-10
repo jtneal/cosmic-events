@@ -7,6 +7,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   SerializeOptions,
   Session,
   UseInterceptors,
@@ -22,8 +23,15 @@ export class EventController {
   ) {}
 
   @Get('events')
-  public async getEvents(): Promise<EventDto[]> {
-    const events = await this.event.getEvents();
+  public async getEvents(
+    @Query('location') location: string,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+    @Query('search') search: string,
+    @Query('type') type: string,
+    @Query('sort') sort: string,
+  ): Promise<EventDto[]> {
+    const events = await this.event.getEvents({ endDate, location, search, sort, startDate, type });
 
     return events.map((event) => this.mapper.toEventDto(event));
   }
