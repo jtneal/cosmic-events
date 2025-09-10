@@ -1,10 +1,11 @@
 import { Component, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { UserDto } from '@cosmic-events/util-dtos';
 
 @Component({
-  imports: [MatButtonModule, RouterModule],
+  imports: [MatButtonModule, MatIconModule, RouterModule],
   providers: [],
   selector: 'lib-header',
   styleUrl: './header.scss',

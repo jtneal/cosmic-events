@@ -1,7 +1,6 @@
-import { EventTypeEnum } from '@cosmic-events/util-dtos';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindOptionsWhere, MoreThanOrEqual, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Event } from '../entities/event.entity';
 
 export interface EventFilters {
@@ -40,9 +39,12 @@ export class EventService {
     }
 
     if (filters.search) {
-      query.andWhere('LOWER(event.title) LIKE :search OR LOWER(event.description) LIKE :search', {
-        search: `%${filters.search.toLowerCase()}%`,
-      });
+      query.andWhere(
+        'LOWER(event.title) LIKE :search OR LOWER(event.subtitle) LIKE :search OR LOWER(event.description) LIKE :search',
+        {
+          search: `%${filters.search.toLowerCase()}%`,
+        },
+      );
     }
 
     if (filters.sort === 'price-asc') {
@@ -103,6 +105,7 @@ export class EventService {
           price: event.price,
           purchaseLink: event.purchaseLink,
           startDate: event.startDate,
+          subtitle: event.subtitle,
           title: event.title,
           type: event.type,
           userId: event.userId,
@@ -152,10 +155,11 @@ export class EventService {
             .into('Speaker')
             .values({
               description: speaker.description,
+              event: { id: event.id },
               image: speaker.image,
               name: speaker.name,
+              title: speaker.title,
               userId: speaker.userId,
-              event: { id: event.id },
             })
             .execute();
         }

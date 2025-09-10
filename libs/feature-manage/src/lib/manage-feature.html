@@ -1,12 +1,15 @@
-<section class="dashboard">
-  <h1>Organizer Dashboard</h1>
-  <p>Welcome back, Arctic Adventures Photography</p>
-  <h2>My Events</h2>
+<section>
+  <h1>Manage Events</h1>
 
   <div class="cards">
     @if (events.hasValue()) {
-      @for (item of events.value(); track item) {
+      @for (item of events.value(); track item.id) {
         <lib-event-card (delete)="deleteEvent(item.id)" [event]="item" [showManagementLinks]="true" />
+      } @empty {
+        <div class="no-events">
+          <p>No events yet.</p>
+          <p><a matButton="filled" routerLink="/edit/new">Create one</a></p>
+        </div>
       }
     } @else {
       @for (i of [].constructor(12); track i) {

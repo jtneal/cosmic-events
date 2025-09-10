@@ -52,6 +52,7 @@ export class EditFeature implements OnInit {
   public form = this.formBuilder.group({
     id: [''],
     title: ['', Validators.required],
+    subtitle: ['', Validators.required],
     type: ['', Validators.required],
     location: ['', Validators.required],
     price: ['', Validators.required],
@@ -113,6 +114,7 @@ export class EditFeature implements OnInit {
         id: [speaker.id],
         image: [speaker.image],
         name: [speaker.name, Validators.required],
+        title: [speaker.title, Validators.required],
       }),
     );
     this.speakerPhotoFiles.push(null);

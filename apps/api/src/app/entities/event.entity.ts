@@ -51,6 +51,9 @@ export class Event {
   public startDate: Date;
 
   @Column()
+  public subtitle: string;
+
+  @Column()
   public title: string;
 
   @Column({ enum: EventTypeEnum, type: 'enum' })

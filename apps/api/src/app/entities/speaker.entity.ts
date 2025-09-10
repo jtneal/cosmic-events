@@ -19,6 +19,9 @@ export class Speaker {
   public name: string;
 
   @Column()
+  public title: string;
+
+  @Column()
   @Index()
   public userId: string;
 }

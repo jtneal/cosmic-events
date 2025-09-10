@@ -4,11 +4,23 @@
     <h1 class="cosmic-fade">Cosmic Events</h1>
   </div>
   <nav>
-    <a matButton="filled" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a matButton="filled" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <mat-icon>home</mat-icon>
+      Home
+    </a>
     @if (user()?.userId?.length) {
-      <a matButton="filled" routerLink="/edit/new" routerLinkActive="active">Create Event</a>
-      <a matButton="filled" routerLink="/manage" routerLinkActive="active">Manage Events</a>
-      <a href="/api/auth/logout" matButton="filled">Sign Out</a>
+      <a matButton="filled" routerLink="/edit/new" routerLinkActive="active">
+        <mat-icon>add_circle</mat-icon>
+        Create Event
+      </a>
+      <a matButton="filled" routerLink="/manage" routerLinkActive="active">
+        <mat-icon>list_alt</mat-icon>
+        Manage Events
+      </a>
+      <a href="/api/auth/logout" matButton="filled">
+        <mat-icon>logout</mat-icon>
+        Sign Out
+      </a>
     } @else {
       <div
         class="g_id_signin"

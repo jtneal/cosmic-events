@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { RouterModule } from '@angular/router';
 import { EventService } from '@cosmic-events/data-access';
 import { EventCard, EventCardSkeleton } from '@cosmic-events/ui-components';
 import { EventDto } from '@cosmic-events/util-dtos';
@@ -27,6 +28,7 @@ import { firstValueFrom } from 'rxjs';
     MatInputModule,
     MatSelectModule,
     MatSlideToggleModule,
+    RouterModule,
   ],
   selector: 'lib-manage-feature',
   styleUrl: './manage-feature.scss',

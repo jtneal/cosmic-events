@@ -75,6 +75,9 @@ export class EventDto {
   public startDate = new Date();
 
   @IsNotEmpty()
+  public subtitle = '';
+
+  @IsNotEmpty()
   public title = '';
 
   @IsEnum(EventTypeEnum)
@@ -110,4 +113,7 @@ export class SpeakerDto {
 
   @IsNotEmpty()
   public name = '';
+
+  @IsNotEmpty()
+  public title = '';
 }

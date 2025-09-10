@@ -10,10 +10,12 @@ export const mockSpeaker = new SpeakerDto();
 mockSpeaker.description = 'This is my speaker description.';
 mockSpeaker.image = '';
 mockSpeaker.name = 'Speaker Name';
+mockSpeaker.title = 'Speaker Title';
 
 // Mock Event
 export const mockEvent = new EventDto();
 mockEvent.title = 'This is my event title';
+mockEvent.subtitle = 'This is my event subtitle';
 mockEvent.type = EventTypeEnum.GUIDED_TOURS;
 mockEvent.location = 'Egypt';
 mockEvent.price = 5000;

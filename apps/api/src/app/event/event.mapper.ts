@@ -41,6 +41,7 @@ export class EventMapper {
       speaker.event = event;
       speaker.image = speakerDto.image;
       speaker.name = speakerDto.name;
+      speaker.title = speakerDto.title;
       speaker.userId = userId;
 
       if (speakerDto.id !== '') {
@@ -50,6 +51,7 @@ export class EventMapper {
       return speaker;
     });
     event.startDate = dto.startDate;
+    event.subtitle = dto.subtitle;
     event.title = dto.title;
     event.type = dto.type;
     event.userId = userId;
@@ -79,6 +81,7 @@ export class EventMapper {
     speaker.id = dto.id;
     speaker.image = dto.image;
     speaker.name = dto.name;
+    speaker.title = dto.title;
 
     return speaker;
   }
@@ -101,6 +104,7 @@ export class EventMapper {
     dto.purchaseLink = event.purchaseLink;
     dto.speakers = event.speakers.map((speaker) => this.toSpeakerDto(speaker));
     dto.startDate = event.startDate;
+    dto.subtitle = event.subtitle;
     dto.title = event.title;
     dto.type = event.type;
     dto.website = event.website;
@@ -125,6 +129,7 @@ export class EventMapper {
     dto.id = speaker.id;
     dto.image = speaker.image;
     dto.name = speaker.name;
+    dto.title = speaker.title;
 
     return dto;
   }
