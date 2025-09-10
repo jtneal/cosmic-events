@@ -3,12 +3,12 @@
     <lib-hero (heroClosed)="hideHero()" />
   }
   <div>
-    <form class="search-form" id="search-form">
+    <form class="search-form" [formGroup]="form" id="search-form">
       <section class="search-section">
         <article class="search-filters">
           <mat-form-field subscriptSizing="dynamic">
             <mat-label>Location</mat-label>
-            <mat-select multiple>
+            <mat-select formControlName="location" multiple>
               <mat-option value="Egypt">Egypt</mat-option>
               <mat-option value="Peru">Peru</mat-option>
               <mat-option value="England">England</mat-option>
@@ -17,8 +17,8 @@
           <mat-form-field subscriptSizing="dynamic">
             <mat-label>Dates</mat-label>
             <mat-date-range-input [rangePicker]="picker">
-              <input (focus)="picker.open()" matStartDate placeholder="Start date" readonly />
-              <input (focus)="picker.open()" matEndDate placeholder="End date" readonly />
+              <input (focus)="picker.open()" formControlName="startDate" matStartDate placeholder="Start date" readonly />
+              <input (focus)="picker.open()" formControlName="endDate" matEndDate placeholder="End date" readonly />
             </mat-date-range-input>
             <mat-datepicker-toggle [for]="picker" matIconSuffix />
             <mat-date-range-picker #picker />
@@ -26,19 +26,19 @@
         </article>
         <mat-form-field subscriptSizing="dynamic">
           <mat-label>Search</mat-label>
-          <input matInput type="search" />
+          <input formControlName="search" matInput type="search" />
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
       </section>
       <section class="search-options">
-        <mat-chip-listbox multiple>
+        <mat-chip-listbox formControlName="type" multiple>
           <mat-chip-option selected value="Conventions">Conventions</mat-chip-option>
           <mat-chip-option selected value="Cruise Experiences">Cruise Experiences</mat-chip-option>
           <mat-chip-option selected value="Guided Tours">Guided Tours</mat-chip-option>
         </mat-chip-listbox>
         <mat-form-field subscriptSizing="dynamic">
           <mat-label>Sort by</mat-label>
-          <mat-select value="Sort by Relevance">
+          <mat-select formControlName="sort" value="Sort by Relevance">
             <mat-option value="Sort by Relevance">Relevance</mat-option>
             <mat-option value="Price: Low to High">Price: Low to High</mat-option>
             <mat-option value="Price: High to Low">Price: High to Low</mat-option>
