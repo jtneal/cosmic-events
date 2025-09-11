@@ -17,7 +17,7 @@ export class Event {
   @Column()
   public image: string;
 
-  @Column({ default: false })
+  @Column({ default: true })
   public isActive: boolean;
 
   @Column({ default: false })

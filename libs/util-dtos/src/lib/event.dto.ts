@@ -32,7 +32,7 @@ export class EventDto {
   public image = '';
 
   @IsBoolean()
-  public isActive = false;
+  public isActive = true;
 
   @IsBoolean()
   public isPublished = false;

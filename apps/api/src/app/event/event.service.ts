@@ -20,7 +20,9 @@ export class EventService {
     const query = this.event
       .createQueryBuilder('event')
       .leftJoinAndSelect('event.panels', 'panels')
-      .leftJoinAndSelect('event.speakers', 'speakers');
+      .leftJoinAndSelect('event.speakers', 'speakers')
+      .andWhere('event.isActive = true')
+      .andWhere('event.isPublished = true');
 
     if (filters.location) {
       query.andWhere('event.location IN (:...locations)', { locations: filters.location.split(',') });
@@ -65,7 +67,7 @@ export class EventService {
       .createQueryBuilder('event')
       .leftJoinAndSelect('event.panels', 'panels')
       .leftJoinAndSelect('event.speakers', 'speakers')
-      .where('event.id = :id::uuid', { id: eventId })
+      .where('event.id = :eventId::uuid', { eventId })
       .getOne();
 
     if (!event) {
@@ -77,6 +79,22 @@ export class EventService {
 
   public getUserEvents(userId: string): Promise<Event[]> {
     return this.event.find({ where: { userId } });
+  }
+
+  public async getUserEvent(userId: string, eventId: string): Promise<Event> {
+    const event = await this.event
+      .createQueryBuilder('event')
+      .leftJoinAndSelect('event.panels', 'panels')
+      .leftJoinAndSelect('event.speakers', 'speakers')
+      .where('event.id = :eventId::uuid', { eventId })
+      .where('event.userId = :userId', { userId })
+      .getOne();
+
+    if (!event) {
+      throw new NotFoundException(`Event with ID ${eventId} not found`);
+    }
+
+    return event;
   }
 
   public async postEvent(event: Event): Promise<void> {
