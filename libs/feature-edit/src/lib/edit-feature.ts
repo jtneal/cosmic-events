@@ -1,4 +1,5 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '@cosmic-events/data-access';
 import { PanelDto, SpeakerDto } from '@cosmic-events/util-dtos';
@@ -31,18 +33,20 @@ import { mockEvent } from './event.mock';
     MatInputModule,
     MatSelectModule,
     MatSlideToggleModule,
+    MatTooltipModule,
     ReactiveFormsModule,
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [DatePipe, provideNativeDateAdapter()],
   selector: 'lib-edit-feature',
   styleUrl: './edit-feature.scss',
   templateUrl: './edit-feature.html',
 })
 export class EditFeature implements OnInit {
-  private readonly service = inject(EventService);
+  private readonly datePipe = inject(DatePipe);
   private readonly formBuilder = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly service = inject(EventService);
 
   public headerImageFile: File | null = null;
   public isChecked = false;
@@ -89,6 +93,10 @@ export class EditFeature implements OnInit {
 
   public get panels(): FormArray {
     return this.form.get('panels') as FormArray;
+  }
+
+  public get showGeneratePanelsButton(): boolean {
+    return this.panels.length === 0 && this.form.value.startDate !== '' && this.form.value.endDate !== '';
   }
 
   public ngOnInit(): void {
@@ -196,6 +204,25 @@ export class EditFeature implements OnInit {
 
   public onPanelDrop(event: CdkDragDrop<PanelDto[]>): void {
     this.moveItemInFormArray(this.panels, event.previousIndex, event.currentIndex);
+  }
+
+  public generatePanels(): void {
+    if (!this.form.value.startDate || !this.form.value.endDate) {
+      return;
+    }
+
+    const startDate = new Date(this.form.value.startDate);
+    const endDate = new Date(this.form.value.endDate);
+    let day = 1;
+
+    while (startDate <= endDate) {
+      const panel = new PanelDto();
+
+      panel.title = `Day ${day}: ${this.datePipe.transform(startDate, 'fullDate')}`;
+      this.addPanel(panel);
+      startDate.setDate(startDate.getDate() + 1);
+      day++;
+    }
   }
 
   private moveItemInFormArray(formArray: FormArray, fromIndex: number, toIndex: number): void {

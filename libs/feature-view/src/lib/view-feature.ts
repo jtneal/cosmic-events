@@ -44,7 +44,7 @@ export class ViewFeature {
       const start = new Date(event.startDate);
       const end = new Date(event.endDate);
       const diffTime = Math.abs(end.getTime() - start.getTime());
-      const diffDays = Math.ceil(diffTime / 86_400_000); // 1000 * 60 * 60 * 24
+      const diffDays = Math.ceil(diffTime / 86_400_000) + 1; // 1000 * 60 * 60 * 24
 
       return `${diffDays} day${diffDays > 1 ? 's' : ''}`;
     }),
