@@ -21,7 +21,7 @@ import { EventModule } from './event/event.module';
         database: config.get<string>('DATABASE_NAME'),
         dropSchema: true,
         entities: [Event, Panel, Speaker],
-        region: config.get<string>('DATABASE_REGION'),
+        region: config.get<string>('AWS_REGION'),
         resourceArn: config.get<string>('DATABASE_RESOURCE_ARN'),
         secretArn: config.get<string>('DATABASE_SECRET_ARN'),
         synchronize: true,

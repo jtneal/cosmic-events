@@ -1,4 +1,5 @@
-import { Type } from 'class-transformer';
+import { BadRequestException } from '@nestjs/common';
+import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
@@ -116,4 +117,43 @@ export class SpeakerDto {
 
   @IsNotEmpty()
   public title = '';
+}
+
+export class EventFormDto {
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      try {
+        const event = JSON.parse(value) as EventDto;
+
+        event.startDate = new Date(event.startDate);
+        event.endDate = new Date(event.endDate);
+
+        if (Array.isArray(event.panels)) {
+          event.panels = event.panels.map((panel) => Object.assign(new PanelDto(), panel));
+        }
+
+        if (Array.isArray(event.speakers)) {
+          event.speakers = event.speakers.map((speaker) => Object.assign(new SpeakerDto(), speaker));
+        }
+
+        return Object.assign(new EventDto(), event);
+      } catch {
+        throw new BadRequestException('`data` must be valid JSON');
+      }
+    }
+
+    return value;
+  })
+  @ValidateNested()
+  @Type(() => EventDto)
+  public data!: EventDto;
+
+  @IsOptional()
+  public headerImage?: File;
+
+  @IsOptional()
+  public marketingPoster?: File;
+
+  @IsOptional()
+  public speakerPhotos?: File[];
 }

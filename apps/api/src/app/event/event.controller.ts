@@ -1,4 +1,5 @@
-import { EventDto, UserDto } from '@cosmic-events/util-dtos';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { EventDto, EventFormDto, UserDto } from '@cosmic-events/util-dtos';
 import {
   Body,
   ClassSerializerInterceptor,
@@ -10,8 +11,11 @@ import {
   Query,
   SerializeOptions,
   Session,
+  UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import { v4 as uuidv4 } from 'uuid';
 import { EventMapper } from './event.mapper';
 import { EventService } from './event.service';
 
@@ -20,6 +24,7 @@ export class EventController {
   public constructor(
     private readonly event: EventService,
     private readonly mapper: EventMapper,
+    private readonly s3Client: S3Client,
   ) {}
 
   @Get('events')
@@ -49,14 +54,63 @@ export class EventController {
   }
 
   @Post('events')
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'headerImage', maxCount: 1 },
+      { name: 'marketingPoster', maxCount: 1 },
+      { name: 'speakerPhotos' },
+    ]),
+  )
   @UseInterceptors(ClassSerializerInterceptor)
-  @SerializeOptions({ type: EventDto })
-  public postEvent(@Body() event: EventDto, @Session() session: UserDto): Promise<void> {
-    return this.event.postEvent(this.mapper.toEvent(event, session.userId));
+  @SerializeOptions({ type: EventFormDto })
+  public async postEvent(
+    @Body() eventForm: EventFormDto,
+    @UploadedFiles()
+    files: {
+      headerImage?: Express.Multer.File;
+      marketingPoster?: Express.Multer.File;
+      speakerPhotos?: Express.Multer.File[];
+    },
+    @Session() session: UserDto,
+  ): Promise<void> {
+    if (Array.isArray(files.headerImage) && files.headerImage.length) {
+      eventForm.data.image = await this.uploadFileToS3(files.headerImage[0]);
+    }
+
+    if (Array.isArray(files.marketingPoster) && files.marketingPoster.length) {
+      eventForm.data.marketingPoster = await this.uploadFileToS3(files.marketingPoster[0]);
+    }
+
+    if (files.speakerPhotos && files.speakerPhotos.length) {
+      for (const photo of files.speakerPhotos) {
+        const speaker = eventForm.data.speakers.find((s) => s.image === photo.originalname);
+
+        if (speaker) {
+          speaker.image = await this.uploadFileToS3(photo);
+        }
+      }
+    }
+
+    return this.event.postEvent(this.mapper.toEvent(eventForm.data, session.userId));
   }
 
   @Delete('events/:eventId')
   public deleteEvent(@Param('eventId') eventId: string): Promise<void> {
     return this.event.deleteEvent(eventId);
+  }
+
+  private async uploadFileToS3(file: Express.Multer.File): Promise<string> {
+    try {
+      const filename = `${uuidv4()}.${file.originalname.split('.').pop()}`;
+      const params = { Body: file.buffer, Bucket: 'cdn.nonprod.cosmicevents.app', Key: filename };
+
+      await this.s3Client.send(new PutObjectCommand(params));
+
+      return filename;
+    } catch (error) {
+      console.error('Error uploading file:', error);
+
+      return '';
+    }
   }
 }

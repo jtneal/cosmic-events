@@ -14,7 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '@cosmic-events/data-access';
-import { EventDto, PanelDto, SpeakerDto } from '@cosmic-events/util-dtos';
+import { PanelDto, SpeakerDto } from '@cosmic-events/util-dtos';
 import { firstValueFrom, map, of, switchMap } from 'rxjs';
 import { mockEvent } from './event.mock';
 
@@ -167,7 +167,25 @@ export class EditFeature implements OnInit {
   }
 
   public async onSubmit(): Promise<void> {
-    await firstValueFrom(this.service.postEvent(this.form.value as unknown as EventDto));
+    const formData = new FormData();
+
+    formData.append('data', JSON.stringify(this.form.value));
+
+    if (this.headerImageFile) {
+      formData.append('headerImage', this.headerImageFile);
+    }
+
+    if (this.marketingPosterFile) {
+      formData.append('marketingPoster', this.marketingPosterFile);
+    }
+
+    this.speakerPhotoFiles.forEach((file, index) => {
+      if (file) {
+        formData.append(`speakerPhotos[${index}]`, file);
+      }
+    });
+
+    await firstValueFrom(this.service.postEvent(formData));
     this.router.navigate(['/manage']);
   }
 
