@@ -14,6 +14,7 @@ import {
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { v4 as uuidv4 } from 'uuid';
 import { EventMapper } from './event.mapper';
@@ -22,6 +23,7 @@ import { EventService } from './event.service';
 @Controller()
 export class EventController {
   public constructor(
+    private readonly config: ConfigService,
     private readonly event: EventService,
     private readonly mapper: EventMapper,
     private readonly s3Client: S3Client,
@@ -102,11 +104,11 @@ export class EventController {
   private async uploadFileToS3(file: Express.Multer.File): Promise<string> {
     try {
       const filename = `${uuidv4()}.${file.originalname.split('.').pop()}`;
-      const params = { Body: file.buffer, Bucket: 'cdn.nonprod.cosmicevents.app', Key: filename };
+      const params = { Body: file.buffer, Bucket: this.config.get<string>('CDN_BUCKET'), Key: filename };
 
       await this.s3Client.send(new PutObjectCommand(params));
 
-      return filename;
+      return `${this.config.get<string>('CDN_URL')}/${filename}`;
     } catch (error) {
       console.error('Error uploading file:', error);
 
