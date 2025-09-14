@@ -34,7 +34,7 @@ import { EventModule } from './event/event.module';
       inject: [ConfigService],
       provide: RedisStore,
       useFactory: (config: ConfigService): RedisStore => {
-        const redisClient = createClient({ url: config.get<string>('REDIS_URL') });
+        const redisClient = createClient({ url: config.get<string>('CACHE_URL') });
 
         redisClient.connect().catch(console.error);
 
