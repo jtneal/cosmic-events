@@ -6,6 +6,9 @@ import { Speaker } from './speaker.entity';
 @Entity()
 export class Event {
   @Column()
+  public clicks: number;
+
+  @Column()
   public description: string;
 
   @Column()
@@ -16,6 +19,9 @@ export class Event {
 
   @Column()
   public image: string;
+
+  @Column()
+  public impressions: number;
 
   @Column({ default: true })
   public isActive: boolean;
@@ -35,6 +41,9 @@ export class Event {
   @Column()
   public organizerUrl: string;
 
+  @Column()
+  public organizerUrlClicks: number;
+
   @OneToMany(() => Panel, (panel) => panel.event, { eager: true, cascade: true })
   public panels: Panel[];
 
@@ -43,6 +52,9 @@ export class Event {
 
   @Column()
   public purchaseLink: string;
+
+    @Column()
+  public purchaseLinkClicks: number;
 
   @OneToMany(() => Speaker, (speaker) => speaker.event, { eager: true, cascade: true })
   public speakers: Speaker[];
@@ -64,5 +76,11 @@ export class Event {
   public userId: string;
 
   @Column()
+  public views: number;
+
+  @Column()
   public website: string;
+
+  @Column()
+  public websiteClicks: number;
 }

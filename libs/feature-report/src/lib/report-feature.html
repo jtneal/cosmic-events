@@ -1,0 +1,59 @@
+<section>
+  <h1>Performance Report</h1>
+
+  <div class="table-scroll">
+    <table class="mat-elevation-z8" [dataSource]="dataSource()" matSort mat-table>
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by title">
+          Title
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="impressions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by impressions">
+          Impressions
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.impressions }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="clicks">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by clicks">
+          Clicks
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.clicks }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="views">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by views">
+          Views
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.views }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="organizerUrlClicks">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by organizer URL clicks">
+          Organizer Clicks
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.organizerUrlClicks }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="purchaseLinkClicks">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by purchase link clicks">
+          Purchase Clicks
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.purchaseLinkClicks }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="websiteClicks">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by website clicks">
+          Website Clicks
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.websiteClicks }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</section>

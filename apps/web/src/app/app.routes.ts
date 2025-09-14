@@ -21,4 +21,8 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('@cosmic-events/feature-manage').then((m) => m.ManageFeature),
     path: 'manage',
   },
+  {
+    loadComponent: () => import('@cosmic-events/feature-report').then((m) => m.ReportFeature),
+    path: 'manage/report',
+  },
 ];

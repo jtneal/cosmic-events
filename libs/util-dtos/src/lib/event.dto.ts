@@ -18,6 +18,10 @@ import {
 import { EventTypeEnum } from './event-type.enum';
 
 export class EventDto {
+  @IsNumber()
+  @Min(0)
+  public clicks = 0;
+
   @IsOptional()
   public description = '';
 
@@ -31,6 +35,10 @@ export class EventDto {
 
   @IsOptional()
   public image = '';
+
+  @IsNumber()
+  @Min(0)
+  public impressions = 0;
 
   @IsBoolean()
   public isActive = true;
@@ -51,6 +59,10 @@ export class EventDto {
   @IsUrl()
   public organizerUrl = '';
 
+  @IsNumber()
+  @Min(0)
+  public organizerUrlClicks = 0;
+
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => PanelDto)
@@ -65,6 +77,10 @@ export class EventDto {
   @ValidateIf((x) => x.purchaseLink !== '')
   @IsUrl()
   public purchaseLink = '';
+
+  @IsNumber()
+  @Min(0)
+  public purchaseLinkClicks = 0;
 
   @IsArray()
   @ValidateNested({ each: true })
@@ -84,9 +100,17 @@ export class EventDto {
   @IsEnum(EventTypeEnum)
   public type = EventTypeEnum.GUIDED_TOURS;
 
+  @IsNumber()
+  @Min(0)
+  public views = 0;
+
   @ValidateIf((x) => x.website !== '')
   @IsUrl()
   public website = '';
+
+  @IsNumber()
+  @Min(0)
+  public websiteClicks = 0;
 }
 
 export class PanelDto {

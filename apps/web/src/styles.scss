@@ -71,7 +71,7 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 0;
+    z-index: -1;
   }
 
   &::before {
@@ -82,10 +82,6 @@ body {
   &::after {
     animation: slide2 120s linear infinite;
     background: transparent url('/images/stars2.png') repeat;
-  }
-
-  * {
-    z-index: 1;
   }
 }
 

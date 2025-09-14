@@ -9,15 +9,19 @@ export class EventMapper {
   public toEvent(dto: EventDto, userId: string): Event {
     const event = new Event();
 
+    event.clicks = dto.clicks;
+    event.description = dto.description;
     event.description = dto.description;
     event.endDate = dto.endDate;
     event.image = dto.image;
+    event.impressions = dto.impressions;
     event.isActive = dto.isActive;
     event.isPublished = dto.isPublished;
     event.location = dto.location;
     event.marketingPoster = dto.marketingPoster;
     event.organizerName = dto.organizerName;
     event.organizerUrl = dto.organizerUrl;
+    event.organizerUrlClicks = dto.organizerUrlClicks;
     event.panels = dto.panels.map((panelDto) => {
       const panel = new Panel();
 
@@ -34,6 +38,7 @@ export class EventMapper {
     });
     event.price = dto.price;
     event.purchaseLink = dto.purchaseLink;
+    event.purchaseLinkClicks = dto.purchaseLinkClicks;
     event.speakers = dto.speakers.map((speakerDto) => {
       const speaker = new Speaker();
 
@@ -55,7 +60,9 @@ export class EventMapper {
     event.title = dto.title;
     event.type = dto.type;
     event.userId = userId;
+    event.views = dto.views;
     event.website = dto.website;
+    event.websiteClicks = dto.websiteClicks;
 
     if (dto.id !== '') {
       event.id = dto.id;
@@ -89,25 +96,31 @@ export class EventMapper {
   public toEventDto(event: Event): EventDto {
     const dto = new EventDto();
 
+    dto.clicks = event.clicks;
     dto.description = event.description;
     dto.endDate = event.endDate;
     dto.id = event.id;
     dto.image = event.image;
+    dto.impressions = event.impressions;
     dto.isActive = event.isActive;
     dto.isPublished = event.isPublished;
     dto.location = event.location;
     dto.marketingPoster = event.marketingPoster;
     dto.organizerName = event.organizerName;
     dto.organizerUrl = event.organizerUrl;
+    dto.organizerUrlClicks = event.organizerUrlClicks;
     dto.panels = event.panels.map((panel) => this.toPanelDto(panel));
     dto.price = event.price;
     dto.purchaseLink = event.purchaseLink;
+    dto.purchaseLinkClicks = event.purchaseLinkClicks;
     dto.speakers = event.speakers.map((speaker) => this.toSpeakerDto(speaker));
     dto.startDate = event.startDate;
     dto.subtitle = event.subtitle;
     dto.title = event.title;
     dto.type = event.type;
+    dto.views = event.views;
     dto.website = event.website;
+    dto.websiteClicks = event.websiteClicks;
 
     return dto;
   }

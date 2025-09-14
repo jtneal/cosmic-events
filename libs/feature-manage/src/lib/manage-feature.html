@@ -1,7 +1,12 @@
 <section>
   <h1>Manage Events</h1>
 
-  <p>Reports</p>
+  <a matButton="filled" routerLink="/manage/report">
+    <mat-icon>table_chart</mat-icon>
+    Performance Report
+  </a>
+
+  <h2>My Events</h2>
 
   <div class="cards">
     @if (events.hasValue()) {
