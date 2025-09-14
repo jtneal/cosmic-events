@@ -2,6 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Event } from '../entities/event.entity';
+import { Panel } from '../entities/panel.entity';
+import { Speaker } from '../entities/speaker.entity';
 
 export interface EventFilters {
   endDate: string;
@@ -97,7 +99,7 @@ export class EventService {
     return event;
   }
 
-  public async postEvent(event: Event): Promise<void> {
+  public async postEvent(userId: string, event: Event): Promise<void> {
     // For new events (no ID), use regular save
     if (!event.id) {
       await this.event.save(event);
@@ -130,20 +132,21 @@ export class EventService {
           website: event.website,
         })
         .where('id = :id::uuid', { id: event.id })
+        .where('userId = :userId', { userId })
         .execute();
 
       // Delete existing panels and speakers, then insert new ones
       await manager
         .createQueryBuilder()
         .delete()
-        .from('Panel')
+        .from(Panel)
         .where('event.id = :eventId::uuid', { eventId: event.id })
         .execute();
 
       await manager
         .createQueryBuilder()
         .delete()
-        .from('Speaker')
+        .from(Speaker)
         .where('event.id = :eventId::uuid', { eventId: event.id })
         .execute();
 
@@ -153,7 +156,7 @@ export class EventService {
           await manager
             .createQueryBuilder()
             .insert()
-            .into('Panel')
+            .into(Panel)
             .values({
               description: panel.description,
               title: panel.title,
@@ -170,7 +173,7 @@ export class EventService {
           await manager
             .createQueryBuilder()
             .insert()
-            .into('Speaker')
+            .into(Speaker)
             .values({
               description: speaker.description,
               event: { id: event.id },
@@ -185,7 +188,12 @@ export class EventService {
     });
   }
 
-  public async deleteEvent(eventId: string): Promise<void> {
-    await this.event.delete(eventId);
+  public async deleteEvent(userId: string, eventId: string): Promise<void> {
+    await this.event.manager.createQueryBuilder()
+      .delete()
+      .from(Event)
+      .where('id = :eventId::uuid', { eventId })
+      .andWhere('userId = :userId', { userId })
+      .execute();
   }
 }

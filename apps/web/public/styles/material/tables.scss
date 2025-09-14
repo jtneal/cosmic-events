@@ -1,23 +1,9 @@
 @use '@angular/material' as mat;
 
-:root {
-  @include mat.table-overrides((
-    // background-color: #fff,
-    // header-headline-color: var(--cosmic-text-color),
-    // row-item-label-text-color
-    // row-item-outline-color
-    // header-headline-size
-    // header-headline-weight
-    // row-item-label-text-size
-    // row-item-label-text-weight
-    // header-container-height
-    // footer-container-height
-    // row-item-container-height
-  ));
-}
-
 .table-scroll {
   border: 1px solid var(--cosmic-violet-600-25) !important;
   border-radius: 0.75rem;
   box-shadow: 0.5rem 0.5rem 1rem var(--cosmic-black-50) !important;
+  overflow-x: auto;
+  width: 100%;
 }

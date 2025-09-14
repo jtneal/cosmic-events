@@ -93,12 +93,12 @@ export class EventController {
       }
     }
 
-    return this.event.postEvent(this.mapper.toEvent(eventForm.data, session.userId));
+    return this.event.postEvent(session.userId, this.mapper.toEvent(eventForm.data, session.userId));
   }
 
   @Delete('events/:eventId')
-  public deleteEvent(@Param('eventId') eventId: string): Promise<void> {
-    return this.event.deleteEvent(eventId);
+  public deleteEvent(@Param('eventId') eventId: string, @Session() session: UserDto): Promise<void> {
+    return this.event.deleteEvent(session.userId, eventId);
   }
 
   private async uploadFileToS3(file: Express.Multer.File): Promise<string> {
