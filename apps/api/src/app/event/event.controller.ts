@@ -1,6 +1,7 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { EventDto, EventFormDto, UserDto } from '@cosmic-events/util-dtos';
 import {
+  BadRequestException,
   Body,
   ClassSerializerInterceptor,
   Controller,
@@ -40,12 +41,18 @@ export class EventController {
   ): Promise<EventDto[]> {
     const events = await this.event.getEvents({ endDate, location, search, sort, startDate, type });
 
+    await this.event.incrementImpressions({ endDate, location, search, sort, startDate, type });
+
     return events.map((event) => this.mapper.toEventDto(event));
   }
 
   @Get('events/:eventId')
   public async getEvent(@Param('eventId') eventId: string): Promise<EventDto> {
-    return this.mapper.toEventDto(await this.event.getEvent(eventId));
+    const event = await this.event.getEvent(eventId);
+
+    await this.event.incrementViews(eventId);
+
+    return this.mapper.toEventDto(event);
   }
 
   @Get('user/events')
@@ -113,6 +120,25 @@ export class EventController {
       console.error('Error uploading file:', error);
 
       return '';
+    }
+  }
+
+  @Post('events/:eventId/event/:eventType')
+  public handleEvent(
+    @Param('eventId') eventId: string,
+    @Param('eventType') eventType: string,
+  ): Promise<void> {
+    switch (eventType) {
+      case 'organizerUrlClicked':
+        return this.event.incrementOrganizerUrlClicks(eventId);
+      case 'purchaseLinkClicked':
+        return this.event.incrementPurchaseLinkClicks(eventId);
+      case 'websiteClicked':
+        return this.event.incrementWebsiteClicks(eventId);
+      case 'eventClicked':
+        return this.event.incrementEventClicks(eventId);
+      default:
+        throw new BadRequestException('Invalid event type');
     }
   }
 }

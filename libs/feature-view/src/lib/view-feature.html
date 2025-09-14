@@ -43,10 +43,26 @@
           @if (event.purchaseLink || event.website) {
             <div class="button-container">
               @if (event.purchaseLink) {
-                <a [href]="event.purchaseLink" matButton="filled" rel="noreferrer" target="_blank"> Book Now </a>
+                <a
+                  [href]="event.purchaseLink"
+                  ping="/api/events/{{ event.id }}/event/purchaseLinkClicked"
+                  matButton="filled"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Book Now
+                </a>
               }
               @if (event.website) {
-                <a [href]="event.website" matButton="outlined" rel="noreferrer" target="_blank"> Website </a>
+                <a
+                  [href]="event.website"
+                  ping="/api/events/{{ event.id }}/event/websiteClicked"
+                  matButton="outlined"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Website
+                </a>
               }
             </div>
           }
@@ -73,7 +89,14 @@
               <p>Organizer:</p>
               <p>
                 @if (event.organizerUrl) {
-                  <a [href]="event.organizerUrl" rel="noreferrer" target="_blank">{{ event.organizerName }}</a>
+                  <a
+                    [href]="event.organizerUrl"
+                    ping="/api/events/{{ event.id }}/event/organizerUrlClicked"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {{ event.organizerName }}
+                  </a>
                 } @else {
                   {{ event.organizerName }}
                 }

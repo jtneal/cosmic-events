@@ -56,4 +56,14 @@ export class EventCard {
       }
     });
   }
+
+  public logEventClick(): void {
+    if (!this.showManagementLinks()) {
+      try {
+        fetch(`/api/events/${this.event().id}/event/eventClicked`, { method: 'POST' });
+      } catch {
+        console.error('Failed to log event click');
+      }
+    }
+  }
 }

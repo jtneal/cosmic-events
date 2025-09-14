@@ -18,6 +18,94 @@ export interface EventFilters {
 export class EventService {
   public constructor(@InjectRepository(Event) private readonly event: Repository<Event>) {}
 
+  public async incrementImpressions(filters: EventFilters): Promise<void> {
+    const query = this.event
+      .createQueryBuilder()
+      .update(Event)
+      .set({ impressions: () => '"impressions" + 1' })
+      .andWhere('isActive = true')
+      .andWhere('isPublished = true');
+
+    if (filters.location) {
+      query.andWhere('location IN (:...locations)', { locations: filters.location.split(',') });
+    }
+
+    if (filters.type) {
+      query.andWhere('type::text IN (:...types)', { types: filters.type.split(',') });
+    }
+
+    if (filters.startDate) {
+      query.andWhere('startDate >= :startDate', { startDate: new Date(filters.startDate) });
+    }
+
+    if (filters.endDate) {
+      query.andWhere('endDate <= :endDate', { endDate: new Date(filters.endDate) });
+    }
+
+    if (filters.search) {
+      query.andWhere(
+        'LOWER(title) LIKE :search OR LOWER(subtitle) LIKE :search OR LOWER(event.description) LIKE :search',
+        {
+          search: `%${filters.search.toLowerCase()}%`,
+        },
+      );
+    }
+
+    await query.execute();
+  }
+
+  public async incrementViews(eventId: string): Promise<void> {
+    const query = this.event
+      .createQueryBuilder()
+      .update(Event)
+      .set({ views: () => '"views" + 1' })
+      .andWhere('isActive = true')
+      .andWhere('isPublished = true')
+      .andWhere('event.id = :eventId::uuid', { eventId });
+
+    await query.execute();
+  }
+
+  public async incrementOrganizerUrlClicks(eventId: string): Promise<void> {
+    const query = this.event
+      .createQueryBuilder()
+      .update(Event)
+      .set({ organizerUrlClicks: () => '"organizerUrlClicks" + 1' })
+      .andWhere('event.id = :eventId::uuid', { eventId });
+
+    await query.execute();
+  }
+
+  public async incrementPurchaseLinkClicks(eventId: string): Promise<void> {
+    const query = this.event
+      .createQueryBuilder()
+      .update(Event)
+      .set({ purchaseLinkClicks: () => '"purchaseLinkClicks" + 1' })
+      .andWhere('event.id = :eventId::uuid', { eventId });
+
+    await query.execute();
+  }
+
+  public async incrementWebsiteClicks(eventId: string): Promise<void> {
+    const query = this.event
+      .createQueryBuilder()
+      .update(Event)
+      .set({ websiteClicks: () => '"websiteClicks" + 1' })
+      .andWhere('event.id = :eventId::uuid', { eventId });
+
+    await query.execute();
+  }
+
+  public async incrementEventClicks(eventId: string): Promise<void> {
+    const query = this.event
+      .createQueryBuilder()
+      .update(Event)
+      .set({ clicks: () => '"clicks" + 1' })
+      .andWhere('event.id = :eventId::uuid', { eventId });
+
+    await query.execute();
+  }
+
   public getEvents(filters: EventFilters): Promise<Event[]> {
     const query = this.event
       .createQueryBuilder('event')
@@ -69,7 +157,9 @@ export class EventService {
       .createQueryBuilder('event')
       .leftJoinAndSelect('event.panels', 'panels')
       .leftJoinAndSelect('event.speakers', 'speakers')
-      .where('event.id = :eventId::uuid', { eventId })
+      .andWhere('event.isActive = true')
+      .andWhere('event.isPublished = true')
+      .andWhere('event.id = :eventId::uuid', { eventId })
       .getOne();
 
     if (!event) {
@@ -189,7 +279,7 @@ export class EventService {
   }
 
   public async deleteEvent(userId: string, eventId: string): Promise<void> {
-    await this.event.manager.createQueryBuilder()
+    await this.event.createQueryBuilder()
       .delete()
       .from(Event)
       .where('id = :eventId::uuid', { eventId })

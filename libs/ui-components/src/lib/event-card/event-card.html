@@ -1,6 +1,7 @@
 <mat-card
   class="cosmic-card"
   [class.cosmic-card-link]="!showManagementLinks()"
+  (click)="logEventClick()"
   [routerLink]="!showManagementLinks() ? ['/events', event().id, event().title | slugify] : null"
 >
   <img [alt]="event().title" mat-card-image [src]="event().image || '/images/event-image-placeholder.jpg'" />
