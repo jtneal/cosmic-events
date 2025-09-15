@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EventCard } from './confirm-delete';
+import { ConfirmDelete } from './confirm-delete';
 
-describe(EventCard.name, () => {
-  let component: EventCard;
-  let fixture: ComponentFixture<EventCard>;
+describe(ConfirmDelete.name, () => {
+  let component: ConfirmDelete;
+  let fixture: ComponentFixture<ConfirmDelete>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EventCard],
+      imports: [ConfirmDelete],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(EventCard);
+    fixture = TestBed.createComponent(ConfirmDelete);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

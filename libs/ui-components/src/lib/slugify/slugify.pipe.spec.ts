@@ -1,21 +1,13 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Footer } from './footer';
+import { SlugifyPipe } from './slugify.pipe';
 
-describe(Footer.name, () => {
-  let component: Footer;
-  let fixture: ComponentFixture<Footer>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [Footer],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(Footer);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+describe(SlugifyPipe.name, () => {
+  const pipe = new SlugifyPipe();
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(pipe).toBeTruthy();
+  });
+
+  it('should transform text to slug format', () => {
+    expect(pipe.transform('My Title')).toBe('my-title');
   });
 });

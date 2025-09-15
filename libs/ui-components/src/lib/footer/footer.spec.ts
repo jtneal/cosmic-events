@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 import { Footer } from './footer';
 
 describe(Footer.name, () => {
@@ -8,6 +9,12 @@ describe(Footer.name, () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Footer],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {},
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Footer);
