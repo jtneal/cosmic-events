@@ -53,14 +53,14 @@
       @let items = events.value();
       <p class="result-count">{{ items.length }} Results</p>
       <section class="cards">
-        @for (item of items; track item) {
+        @for (item of items; track item.id) {
           <lib-event-card [event]="item" />
         }
       </section>
     } @else {
       <p class="result-count">Results loading...</p>
       <section class="cards">
-        @for (i of [].constructor(12); track i) {
+        @for (i of [].constructor(12); track $index) {
           <lib-event-card-skeleton />
         }
       </section>

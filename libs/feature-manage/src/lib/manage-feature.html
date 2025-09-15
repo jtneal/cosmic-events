@@ -19,7 +19,7 @@
         </div>
       }
     } @else {
-      @for (i of [].constructor(12); track i) {
+      @for (i of [].constructor(12); track $index) {
         <lib-event-card-skeleton />
       }
     }

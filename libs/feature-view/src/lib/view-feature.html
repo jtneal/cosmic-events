@@ -23,7 +23,7 @@
         </mat-card-content>
       </mat-card>
       <mat-accordion>
-        @for (panel of event.panels; track panel) {
+        @for (panel of event.panels; track panel.id) {
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>{{ panel.title }}</mat-panel-title>
@@ -108,7 +108,7 @@
       @if (event.speakers.length) {
         <h2>Speakers</h2>
         <div class="speakers">
-          @for (speaker of event.speakers; track speaker) {
+          @for (speaker of event.speakers; track speaker.id) {
             <mat-card class="cosmic-card">
               <mat-card-content>
                 <div class="speaker">
