@@ -1,21 +1,16 @@
 import { EventTypeEnum } from '@cosmic-events/util-dtos';
-import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { BaseEntity } from './base.entity';
 import { Panel } from './panel.entity';
 import { Speaker } from './speaker.entity';
 
 @Entity()
-export class Event {
+export class Event extends BaseEntity {
   @Column()
   public clicks: number;
 
   @Column()
-  public description: string;
-
-  @Column()
   public endDate: Date;
-
-  @PrimaryGeneratedColumn('uuid')
-  public id: string;
 
   @Column()
   public image: string;
@@ -53,7 +48,7 @@ export class Event {
   @Column()
   public purchaseLink: string;
 
-    @Column()
+  @Column()
   public purchaseLinkClicks: number;
 
   @OneToMany(() => Speaker, (speaker) => speaker.event, { eager: true, cascade: true })
@@ -65,15 +60,8 @@ export class Event {
   @Column()
   public subtitle: string;
 
-  @Column()
-  public title: string;
-
   @Column({ enum: EventTypeEnum, type: 'enum' })
   public type: EventTypeEnum;
-
-  @Column()
-  @Index()
-  public userId: string;
 
   @Column()
   public views: number;
