@@ -1,3 +1,4 @@
+```mermaid
 classDiagram
     class Event {
         +string id
@@ -62,3 +63,4 @@ classDiagram
     EventService ..> Event : operates on
     EventService ..> Panel : operates on
     EventService ..> Speaker : operates on
+```
