@@ -13,6 +13,7 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
       "@cosmic-events/data-access": ["libs/data-access/src/index.ts"],

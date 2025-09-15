@@ -7,4 +7,7 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/libs/util-dtos',
+  collectCoverage: true,
+  coveragePathIgnorePatterns: [],
+  coverageReporters: ['text', 'lcov', 'html'],
 };

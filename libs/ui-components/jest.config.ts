@@ -3,6 +3,9 @@ export default {
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   coverageDirectory: '../../coverage/libs/ui-components',
+  collectCoverage: true,
+  coveragePathIgnorePatterns: [],
+  coverageReporters: ['text', 'lcov', 'html'],
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

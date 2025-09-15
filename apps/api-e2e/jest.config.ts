@@ -15,4 +15,7 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/api-e2e',
+  collectCoverage: true,
+  coveragePathIgnorePatterns: [],
+  coverageReporters: ['text', 'lcov', 'html'],
 };
