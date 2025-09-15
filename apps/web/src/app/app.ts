@@ -13,7 +13,7 @@ import { Footer, Header } from '@cosmic-events/ui-components';
 export class App implements OnInit {
   private readonly user = inject(UserService);
   private readonly viewportScroller = inject(ViewportScroller);
-  
+
   public user$ = this.user.getUser();
 
   public ngOnInit(): void {
