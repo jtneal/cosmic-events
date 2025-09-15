@@ -1,6 +1,9 @@
-import { Column, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 export abstract class BaseEntity {
+  @CreateDateColumn()
+  public createdAt: Date;
+
   @Column()
   public description: string;
 
@@ -9,6 +12,9 @@ export abstract class BaseEntity {
 
   @Column()
   public title: string;
+
+  @UpdateDateColumn()
+  public updatedAt: Date;
 
   @Column()
   @Index()

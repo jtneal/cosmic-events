@@ -22,6 +22,8 @@ export class EventDto {
   @Min(0)
   public clicks = 0;
 
+  public createdAt?: Date;
+
   @IsOptional()
   public description = '';
 
@@ -99,6 +101,8 @@ export class EventDto {
 
   @IsEnum(EventTypeEnum)
   public type = EventTypeEnum.GUIDED_TOURS;
+
+  public updatedAt?: Date;
 
   @IsNumber()
   @Min(0)

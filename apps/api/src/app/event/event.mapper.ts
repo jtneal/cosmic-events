@@ -97,6 +97,7 @@ export class EventMapper {
     const dto = new EventDto();
 
     dto.clicks = event.clicks;
+    dto.createdAt = event.createdAt;
     dto.description = event.description;
     dto.endDate = event.endDate;
     dto.id = event.id;
@@ -118,6 +119,7 @@ export class EventMapper {
     dto.subtitle = event.subtitle;
     dto.title = event.title;
     dto.type = event.type;
+    dto.updatedAt = event.updatedAt;
     dto.views = event.views;
     dto.website = event.website;
     dto.websiteClicks = event.websiteClicks;

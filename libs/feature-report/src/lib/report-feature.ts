@@ -54,6 +54,8 @@ export class ReportFeature {
     'organizerUrlClicks',
     'purchaseLinkClicks',
     'websiteClicks',
+    'createdAt',
+    'updatedAt',
   ];
 
   @ViewChild(MatSort) public sort!: MatSort;
