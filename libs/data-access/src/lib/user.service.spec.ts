@@ -1,21 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
+import { TestBed } from '@angular/core/testing';
 import { UserService } from './user.service';
 
 describe(UserService.name, () => {
-  let component: UserService;
-  let fixture: ComponentFixture<UserService>;
+  let service: UserService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserService],
+      providers: [
+        {
+          provide: HttpClient,
+          useValue: { get: jest.fn() },
+        },
+      ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(UserService);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    service = TestBed.inject(UserService);
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(service).toBeTruthy();
   });
 });
