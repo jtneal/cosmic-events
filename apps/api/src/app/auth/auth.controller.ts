@@ -9,7 +9,10 @@ import { UserInfo } from './user-info.interface';
 export class AuthController {
   private readonly logger = new Logger(AuthController.name, { timestamp: true });
 
-  public constructor(private readonly config: ConfigService) {}
+  public constructor(
+    private readonly client: OAuth2Client,
+    private readonly config: ConfigService,
+  ) {}
 
   @Get('user')
   public getUser(@Session() session: UserDto): UserDto {
@@ -22,10 +25,8 @@ export class AuthController {
     @Body('credential') credential: string,
     @Session() session: UserDto
   ): Promise<void> {
-    const client = new OAuth2Client();
-
-    try {
-      const ticket = await client.verifyIdToken({
+      try {
+      const ticket = await this.client.verifyIdToken({
         idToken: credential,
         audience: this.config.get<string>('GOOGLE_CLIENT_ID'),
       });
@@ -43,6 +44,8 @@ export class AuthController {
   @Get('auth/logout')
   @Redirect('/', 302)
   public logout(@Req() req: Request): void {
-    req.session.destroy(() => null);
+    if (req.session) {
+      req.session.destroy(() => null);
+    }
   }
 }

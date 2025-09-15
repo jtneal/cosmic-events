@@ -7,4 +7,7 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/apps/api',
+  collectCoverage: true,
+  coveragePathIgnorePatterns: ['.dto.ts', '.entity.ts', '.module.ts'],
+  coverageReporters: ['text', 'lcov', 'html'],
 };
