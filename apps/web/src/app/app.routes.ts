@@ -25,4 +25,12 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('@cosmic-events/feature-report').then((m) => m.ReportFeature),
     path: 'manage/report',
   },
+  {
+    loadComponent: () => import('@cosmic-events/feature-privacy').then((m) => m.PrivacyFeature),
+    path: 'privacy',
+  },
+  {
+    loadComponent: () => import('@cosmic-events/feature-terms').then((m) => m.TermsFeature),
+    path: 'terms',
+  },
 ];
