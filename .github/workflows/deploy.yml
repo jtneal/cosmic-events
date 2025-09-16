@@ -15,6 +15,7 @@ jobs:
   build:
     name: Deployment
     runs-on: ubuntu-latest
+    environment: nonprod
     steps:
     - name: Set short git commit SHA
       id: commit
