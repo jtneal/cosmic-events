@@ -18,11 +18,14 @@ spec:
         app: cosmic-events
     spec:
       containers:
-      - name: cosmic-events
-        image: DOCKER_IMAGE
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
+        - name: cosmic-events
+          image: DOCKER_IMAGE
+          envFrom:
+            - secretRef:
+                name: cosmic-events-app
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
   strategy:
     type: RollingUpdate
     rollingUpdate:
