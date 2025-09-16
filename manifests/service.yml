@@ -4,6 +4,7 @@ kind: Service
 
 metadata:
   name: cosmic-events-service
+  namespace: cosmic-events
   labels:
     app: cosmic-events
 

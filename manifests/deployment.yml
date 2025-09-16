@@ -4,6 +4,7 @@ kind: Deployment
 
 metadata:
   name: cosmic-events-app
+  namespace: cosmic-events
   labels: 
      app: cosmic-events
 
