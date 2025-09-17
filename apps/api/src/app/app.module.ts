@@ -1,5 +1,7 @@
+import { join } from 'node:path';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RedisStore } from 'connect-redis';
 import { createClient } from 'redis';
@@ -16,6 +18,9 @@ import { HealthModule } from './health/health.module';
     ConfigModule.forRoot(),
     EventModule,
     HealthModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'web'),
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

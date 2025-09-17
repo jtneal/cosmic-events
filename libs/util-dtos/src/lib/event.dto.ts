@@ -1,4 +1,3 @@
-import { BadRequestException } from '@nestjs/common';
 import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
@@ -166,7 +165,7 @@ export class EventFormDto {
 
         return Object.assign(new EventDto(), event);
       } catch {
-        throw new BadRequestException('`data` must be valid JSON');
+        throw new Error('`data` must be valid JSON');
       }
     }
 

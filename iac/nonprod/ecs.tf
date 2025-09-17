@@ -75,6 +75,13 @@ resource "aws_iam_role_policy" "ecs_task_execution_policy" {
           "logs:PutLogEvents"
         ]
         Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "ssm:GetParameters"
+        ]
+        Resource = "arn:aws:ssm:us-east-2:186050465172:parameter/nonprod/*"
       }
     ]
   })
@@ -217,7 +224,7 @@ resource "aws_ecs_task_definition" "service" {
   container_definitions = jsonencode([
     {
       name        = "${local.name}-api"
-      image       = "186050465172.dkr.ecr.us-east-2.amazonaws.com/nonprod-cosmic-events-ecr:d312f4d"
+      image       = "186050465172.dkr.ecr.us-east-2.amazonaws.com/nonprod-cosmic-events-ecr:93b5854"
       cpu         = 256
       memory      = 512
       essential   = true
@@ -235,6 +242,48 @@ resource "aws_ecs_task_definition" "service" {
           awslogs-stream-prefix = "api"
         }
       }
+      secrets = [
+        {
+          name      = "AWS_ACCESS_KEY_ID"
+          valueFrom = "arn:aws:ssm:us-east-2:186050465172:parameter/nonprod/AWS_ACCESS_KEY_ID"
+        },
+        {
+          name      = "AWS_REGION"
+          valueFrom = "arn:aws:ssm:us-east-2:186050465172:parameter/nonprod/AWS_REGION"
+        },
+        {
+          name      = "AWS_SECRET_ACCESS_KEY"
+          valueFrom = "arn:aws:ssm:us-east-2:186050465172:parameter/nonprod/AWS_SECRET_ACCESS_KEY"
+        },
+        {
+          name      = "CACHE_URL"
+          valueFrom = "arn:aws:ssm:us-east-2:186050465172:parameter/nonprod/CACHE_URL"
+        },
+        {
+          name      = "CDN_BUCKET"
+          valueFrom = "arn:aws:ssm:us-east-2:186050465172:parameter/nonprod/CDN_BUCKET"
+        },
+        {
+          name      = "DATABASE_NAME"
+          valueFrom = "arn:aws:ssm:us-east-2:186050465172:parameter/nonprod/DATABASE_NAME"
+        },
+        {
+          name      = "DATABASE_RESOURCE_ARN"
+          valueFrom = "arn:aws:ssm:us-east-2:186050465172:parameter/nonprod/DATABASE_RESOURCE_ARN"
+        },
+        {
+          name      = "DATABASE_SECRET_ARN"
+          valueFrom = "arn:aws:ssm:us-east-2:186050465172:parameter/nonprod/DATABASE_SECRET_ARN"
+        },
+        {
+          name      = "GOOGLE_CLIENT_ID"
+          valueFrom = "arn:aws:ssm:us-east-2:186050465172:parameter/nonprod/GOOGLE_CLIENT_ID"
+        },
+        {
+          name      = "SESSION_SECRET"
+          valueFrom = "arn:aws:ssm:us-east-2:186050465172:parameter/nonprod/SESSION_SECRET"
+        }
+      ]
     }
   ])
 }
