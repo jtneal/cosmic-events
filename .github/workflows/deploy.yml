@@ -56,7 +56,10 @@ jobs:
       run: |
         kubectl get ns "$KUBE_NS" >/dev/null 2>&1 || kubectl create ns "$KUBE_NS"
         kubectl -n "$KUBE_NS" create secret generic cosmic-events-app \
+          --from-literal=AWS_REGION="$AWS_REGION" \
           --from-literal=CACHE_URL="$CACHE_URL" \
+          --from-literal=AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
+          --from-literal=AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" \
           --from-literal=CDN_BUCKET="$CDN_BUCKET" \
           --from-literal=DATABASE_NAME="$DATABASE_NAME" \
           --from-literal=DATABASE_RESOURCE_ARN="$DATABASE_RESOURCE_ARN" \
