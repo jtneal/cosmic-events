@@ -19,7 +19,7 @@ import { HealthModule } from './health/health.module';
     EventModule,
     HealthModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'web'),
+      rootPath: join(__dirname, '..', 'web', 'browser'),
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
