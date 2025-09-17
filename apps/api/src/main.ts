@@ -10,7 +10,7 @@ async function bootstrap(): Promise<void> {
   const config = app.get<ConfigService>(ConfigService);
   const redisStore = app.get<RedisStore>(RedisStore);
   const globalPrefix = 'api';
-  const port = process.env.PORT || 8080;
+  const port = process.env.PORT || 3000;
 
   app.setGlobalPrefix(globalPrefix);
   app.useGlobalPipes(new ValidationPipe({ forbidNonWhitelisted: true, transform: true, whitelist: true }));
