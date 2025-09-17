@@ -8,12 +8,14 @@ import { Event } from './entities/event.entity';
 import { Panel } from './entities/panel.entity';
 import { Speaker } from './entities/speaker.entity';
 import { EventModule } from './event/event.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
     AuthModule,
     ConfigModule.forRoot(),
     EventModule,
+    HealthModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

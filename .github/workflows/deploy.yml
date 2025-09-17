@@ -1,4 +1,4 @@
-name: Deploy to EKS
+name: Deploy to ECS
 
 on:
   push:
@@ -6,9 +6,9 @@ on:
       - main
 
 env:
-  ECR_REPOSITORY: nonprod-cosmic-events-ecr
-  EKS_CLUSTER_NAME: nonprod-cosmic-events-eks
   AWS_REGION: us-east-2
+  ECS_CLUSTER_NAME: nonprod-cosmic-events-cluster
+  ECR_REPOSITORY: nonprod-cosmic-events-ecr
 
 jobs:
 
@@ -38,40 +38,3 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-    - name: Update kube config
-      run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
-    - name: Create/Update K8s Secret
-      env:
-        KUBE_NS: cosmic-events
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        CACHE_URL: ${{ secrets.CACHE_URL }}
-        CDN_BUCKET: ${{ secrets.CDN_BUCKET }}
-        DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-        DATABASE_RESOURCE_ARN: ${{ secrets.DATABASE_RESOURCE_ARN }}
-        DATABASE_SECRET_ARN: ${{ secrets.DATABASE_SECRET_ARN }}
-        GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-        SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-      run: |
-        kubectl get ns "$KUBE_NS" >/dev/null 2>&1 || kubectl create ns "$KUBE_NS"
-        kubectl -n "$KUBE_NS" create secret generic cosmic-events-app \
-          --from-literal=AWS_REGION="$AWS_REGION" \
-          --from-literal=CACHE_URL="$CACHE_URL" \
-          --from-literal=AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
-          --from-literal=AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" \
-          --from-literal=CDN_BUCKET="$CDN_BUCKET" \
-          --from-literal=DATABASE_NAME="$DATABASE_NAME" \
-          --from-literal=DATABASE_RESOURCE_ARN="$DATABASE_RESOURCE_ARN" \
-          --from-literal=DATABASE_SECRET_ARN="$DATABASE_SECRET_ARN" \
-          --from-literal=GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID" \
-          --from-literal=SESSION_SECRET="$SESSION_SECRET" \
-          --dry-run=client -o yaml | kubectl apply -f -
-    - name: Deploy to EKS
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ steps.commit.outputs.short }}
-      run: |
-        sed -i.bak "s|DOCKER_IMAGE|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" manifests/deployment.yml && \
-        kubectl apply -f manifests/deployment.yml
-        kubectl apply -f manifests/service.yml
