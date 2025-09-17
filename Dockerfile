@@ -8,7 +8,6 @@ RUN npm prune --production
 
 FROM node:lts-alpine AS production
 WORKDIR /app
-ENV PORT 8080
 COPY --from=builder /app/dist/apps/api ./dist
 COPY --from=builder /app/node_modules ./node_modules
 EXPOSE 8080
