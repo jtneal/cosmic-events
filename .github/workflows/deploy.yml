@@ -43,6 +43,9 @@ jobs:
     - name: Create/Update K8s Secret
       env:
         KUBE_NS: cosmic-events
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         CACHE_URL: ${{ secrets.CACHE_URL }}
         CDN_BUCKET: ${{ secrets.CDN_BUCKET }}
         DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
