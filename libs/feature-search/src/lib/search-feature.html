@@ -9,9 +9,13 @@
           <mat-form-field subscriptSizing="dynamic">
             <mat-label>Location</mat-label>
             <mat-select formControlName="location" multiple>
-              <mat-option value="Egypt">Egypt</mat-option>
-              <mat-option value="Peru">Peru</mat-option>
-              <mat-option value="England">England</mat-option>
+              @if (locations.hasValue()) {
+                @for (location of locations.value(); track location) {
+                  <mat-option [value]="location">{{ location }}</mat-option>
+                }
+              } @else {
+                <mat-option disabled>Loading...</mat-option>
+              }
             </mat-select>
           </mat-form-field>
           <mat-form-field subscriptSizing="dynamic">

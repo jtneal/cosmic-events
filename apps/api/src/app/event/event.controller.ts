@@ -55,6 +55,11 @@ export class EventController {
     return this.mapper.toEventDto(event);
   }
 
+  @Get('locations')
+  public async getLocations(): Promise<string[]> {
+    return this.event.getLocations();
+  }
+
   @Get('user/events')
   public async getUserEvents(@Session() session: UserDto): Promise<EventDto[]> {
     const events = await this.event.getUserEvents(session.userId);

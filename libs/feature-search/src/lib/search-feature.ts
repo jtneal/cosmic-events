@@ -36,6 +36,7 @@ export class SearchFeature implements OnInit {
   private readonly queryParams = signal('');
 
   public readonly events = httpResource<EventDto[]>(() => `/api/events${this.queryParams()}`);
+  public readonly locations = httpResource<string[]>(() => '/api/locations');
   public isHeroHidden = localStorage.getItem('isHeroHidden') === 'true';
 
   public readonly form = this.formBuilder.group({
@@ -50,7 +51,9 @@ export class SearchFeature implements OnInit {
   private readonly formChange$ = this.form.valueChanges.pipe(debounceTime(250), takeUntilDestroyed());
 
   public ngOnInit(): void {
-    this.formChange$.subscribe((formValue) => this.setQueryParams(formValue as Record<string, string>));
+    this.formChange$.subscribe((formValue) => {
+      this.setQueryParams({ ...formValue, location: JSON.stringify(formValue.location) } as Record<string, string>);
+    });
   }
 
   public hideHero(): void {

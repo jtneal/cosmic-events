@@ -115,7 +115,15 @@ export class EventService {
       .andWhere('event.isPublished = true');
 
     if (filters.location) {
-      query.andWhere('event.location IN (:...locations)', { locations: filters.location.split(',') });
+      let locations: string[] = [];
+
+      try {
+        locations = JSON.parse(filters.location);
+      } catch {
+        console.error('Error parsing location filter:', filters.location);
+      }
+
+      query.andWhere('event.location IN (:...locations)', { locations });
     }
 
     if (filters.type) {
@@ -167,6 +175,18 @@ export class EventService {
     }
 
     return event;
+  }
+
+  public async getLocations(): Promise<string[]> {
+    const locations = await this.event
+      .createQueryBuilder('event')
+      .select('DISTINCT event.location', 'location')
+      .where('event.isActive = true')
+      .andWhere('event.isPublished = true')
+      .orderBy('event.location', 'ASC')
+      .getRawMany();
+
+    return locations.map((x) => x.location);
   }
 
   public getUserEvents(userId: string): Promise<Event[]> {
