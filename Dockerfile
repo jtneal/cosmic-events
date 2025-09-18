@@ -12,6 +12,8 @@ COPY --from=builder /app/dist/apps/api ./dist/api
 COPY --from=builder /app/dist/apps/web ./dist/web
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/docker-entrypoint.sh ./docker-entrypoint.sh
+# COPY docker-entrypoint.sh ./docker-entrypoint.sh
+# RUN chmod +x ./docker-entrypoint.sh
 EXPOSE 3000
-ENTRYPOINT [ "docker-entrypoint.sh" ]
-CMD ["node", "dist/api/main"]
+ENTRYPOINT [ "./docker-entrypoint.sh" ]
+CMD ["node", "./dist/api/main"]
