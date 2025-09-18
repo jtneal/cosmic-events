@@ -3,10 +3,12 @@ import {
   IsArray,
   IsBoolean,
   IsDate,
+  IsDefined,
   IsEnum,
   IsNotEmpty,
   IsNumber,
   IsOptional,
+  IsPositive,
   IsUrl,
   IsUUID,
   Max,
@@ -69,10 +71,10 @@ export class EventDto {
   @Type(() => PanelDto)
   public panels = [] as PanelDto[];
 
-  @IsNumber()
-  @Min(0)
-  @Max(999_999)
+  @IsDefined()
   @Type(() => Number)
+  @IsNumber({ allowNaN: false })
+  @IsPositive()
   public price = 0;
 
   @ValidateIf((x) => x.purchaseLink !== '')

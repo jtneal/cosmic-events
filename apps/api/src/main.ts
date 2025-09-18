@@ -13,7 +13,12 @@ async function bootstrap(): Promise<void> {
   const port = process.env.PORT || 3000;
 
   app.setGlobalPrefix(globalPrefix);
-  app.useGlobalPipes(new ValidationPipe({ forbidNonWhitelisted: true, transform: true, whitelist: true }));
+  app.useGlobalPipes(new ValidationPipe({
+    forbidNonWhitelisted: true,
+    transform: true,
+    whitelist: true,
+    transformOptions: { enableImplicitConversion: true },
+  }));
   app.use(
     session({
       resave: false,
