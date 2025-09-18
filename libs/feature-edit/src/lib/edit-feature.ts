@@ -100,6 +100,14 @@ export class EditFeature implements OnInit {
   public ngOnInit(): void {
     this.event$.subscribe((event) => {
       if (event.id) {
+        if (event.image) {
+          event.image = ''; // can't set files directly, so just clear out the value
+        }
+
+        if (event.marketingPoster) {
+          event.marketingPoster = ''; // can't set files directly, so just clear out the value
+        }
+
         this.form.reset(event as never);
 
         for (const panel of event.panels) {
@@ -107,6 +115,7 @@ export class EditFeature implements OnInit {
         }
 
         for (const speaker of event.speakers) {
+          speaker.image = ''; // can't set files directly, so just clear out the value
           this.addSpeaker(Object.assign(new SpeakerDto(), speaker));
         }
       }
