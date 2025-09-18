@@ -123,7 +123,10 @@ export class EventService {
         console.error('Error parsing location filter:', filters.location);
       }
 
-      query.andWhere('event.location IN (:...locations)', { locations });
+      if (locations.length) {
+        query.andWhere('event.location IN (:...locations)', { locations });
+      }
+
     }
 
     if (filters.type) {
