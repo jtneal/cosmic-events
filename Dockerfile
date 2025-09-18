@@ -11,5 +11,7 @@ WORKDIR /app
 COPY --from=builder /app/dist/apps/api ./dist/api
 COPY --from=builder /app/dist/apps/web ./dist/web
 COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/docker-entrypoint.sh ./docker-entrypoint.sh
 EXPOSE 3000
+ENTRYPOINT [ "docker-entrypoint.sh" ]
 CMD ["node", "dist/api/main"]
