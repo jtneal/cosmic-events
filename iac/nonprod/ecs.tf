@@ -224,7 +224,7 @@ resource "aws_ecs_task_definition" "service" {
   container_definitions = jsonencode([
     {
       name        = "${local.name}-api"
-      image       = "186050465172.dkr.ecr.us-east-2.amazonaws.com/nonprod-cosmic-events-ecr:5a66a85"
+      image       = "186050465172.dkr.ecr.us-east-2.amazonaws.com/nonprod-cosmic-events-ecr:79f4999"
       cpu         = 256
       memory      = 512
       essential   = true
