@@ -1,5 +1,6 @@
 ```mermaid
 classDiagram
+    direction LR
     class Event {
         +string id
         +string title

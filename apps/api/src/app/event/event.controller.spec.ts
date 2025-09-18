@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { S3Client } from '@aws-sdk/client-s3';
 import { EventDto } from '@cosmic-events/util-dtos';
 import { BadRequestException } from '@nestjs/common';

@@ -1,5 +1,5 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
-import { CommonModule, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -16,9 +16,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '@cosmic-events/data-access';
-import { PanelDto, SpeakerDto } from '@cosmic-events/util-dtos';
+import { EventDto, PanelDto, SpeakerDto } from '@cosmic-events/util-dtos';
 import { firstValueFrom, map, of, switchMap } from 'rxjs';
-import { mockEvent } from './event.mock';
 
 @Component({
   imports: [
@@ -81,8 +80,7 @@ export class EditFeature implements OnInit {
         return this.service.getEvent(eventId);
       }
 
-      return of(mockEvent);
-      // return of(new EventDto());
+      return of(new EventDto());
     }),
     takeUntilDestroyed(),
   );
@@ -101,17 +99,17 @@ export class EditFeature implements OnInit {
 
   public ngOnInit(): void {
     this.event$.subscribe((event) => {
-      // if (event.id > 0) {
-      this.form.reset(event as never);
+      if (event.id) {
+        this.form.reset(event as never);
 
-      for (const panel of event.panels) {
-        this.addPanel(Object.assign(new PanelDto(), panel));
-      }
+        for (const panel of event.panels) {
+          this.addPanel(Object.assign(new PanelDto(), panel));
+        }
 
-      for (const speaker of event.speakers) {
-        this.addSpeaker(Object.assign(new SpeakerDto(), speaker));
+        for (const speaker of event.speakers) {
+          this.addSpeaker(Object.assign(new SpeakerDto(), speaker));
+        }
       }
-      // }
     });
   }
 

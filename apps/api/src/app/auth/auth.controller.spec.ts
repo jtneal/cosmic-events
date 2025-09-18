@@ -1,4 +1,4 @@
-
+import 'reflect-metadata';
 import { UserDto } from '@cosmic-events/util-dtos';
 import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';

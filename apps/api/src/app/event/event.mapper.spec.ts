@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { EventDto, EventTypeEnum, PanelDto, SpeakerDto } from '@cosmic-events/util-dtos';
 import { Event } from '../entities/event.entity';
 import { Panel } from '../entities/panel.entity';
