@@ -141,6 +141,9 @@ export class SpeakerDto {
   @IsOptional()
   public image = '';
 
+  @IsOptional()
+  public imageOriginal = '';
+
   @IsNotEmpty()
   public name = '';
 
@@ -183,6 +186,7 @@ export class EventFormDto {
   @IsOptional()
   public marketingPoster?: File;
 
-  @IsOptional()
-  public speakerPhotos?: File[];
+  @IsArray()
+  @Type(() => File)
+  public speakerPhotos = [] as File[];
 }

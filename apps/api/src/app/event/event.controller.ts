@@ -95,13 +95,19 @@ export class EventController {
       eventForm.data.marketingPoster = await this.uploadFileToS3(files.marketingPoster[0]);
     }
 
-    if (files.speakerPhotos && files.speakerPhotos.length) {
+    if (Array.isArray(files.speakerPhotos) && files.speakerPhotos.length) {
       for (const photo of files.speakerPhotos) {
         const speaker = eventForm.data.speakers.find((s) => s.image === photo.originalname);
 
         if (speaker) {
           speaker.image = await this.uploadFileToS3(photo);
         }
+      }
+    }
+
+    for (const speaker of eventForm.data.speakers) {
+      if (!speaker.image && speaker.imageOriginal) {
+        speaker.image = speaker.imageOriginal;
       }
     }
 

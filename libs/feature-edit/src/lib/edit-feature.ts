@@ -115,6 +115,7 @@ export class EditFeature implements OnInit {
         }
 
         for (const speaker of event.speakers) {
+          speaker.imageOriginal = speaker.image;
           speaker.image = ''; // can't set files directly, so just clear out the value
           this.addSpeaker(Object.assign(new SpeakerDto(), speaker));
         }
@@ -128,6 +129,7 @@ export class EditFeature implements OnInit {
         description: [speaker.description],
         id: [speaker.id],
         image: [speaker.image],
+        imageOriginal: [speaker.imageOriginal],
         name: [speaker.name, Validators.required],
         title: [speaker.title, Validators.required],
       }),
@@ -194,11 +196,11 @@ export class EditFeature implements OnInit {
       formData.append('marketingPoster', this.marketingPosterFile);
     }
 
-    this.speakerPhotoFiles.forEach((file, index) => {
+    for (const file of this.speakerPhotoFiles) {
       if (file) {
-        formData.append(`speakerPhotos[${index}]`, file);
+        formData.append(`speakerPhotos`, file);
       }
-    });
+    }
 
     await firstValueFrom(this.service.postEvent(formData));
     this.router.navigate(['/manage']);

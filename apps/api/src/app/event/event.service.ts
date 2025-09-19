@@ -228,11 +228,11 @@ export class EventService {
         .set({
           description: event.description,
           endDate: event.endDate,
-          image: event.image,
+          image: event.image ? event.image : undefined,
           isActive: event.isActive,
           isPublished: event.isPublished,
           location: event.location,
-          marketingPoster: event.marketingPoster,
+          marketingPoster: event.marketingPoster ? event.marketingPoster : undefined,
           organizerName: event.organizerName,
           organizerUrl: event.organizerUrl,
           price: event.price,
