@@ -152,7 +152,7 @@
         <mat-card-title>Speaker Information</mat-card-title>
       </mat-card-header>
       <mat-card-content cdkDropList (cdkDropListDropped)="onSpeakerDrop($event)" formArrayName="speakers">
-        @for (speaker of speakers.controls; track $index; let i = $index) {
+        @for (speaker of speakers.controls; track speaker; let i = $index) {
           <div cdkDrag class="drag-container">
             <div class="speaker-group-container">
               <div class="action-buttons">
@@ -223,7 +223,7 @@
         }
       </mat-card-header>
       <mat-card-content cdkDropList (cdkDropListDropped)="onPanelDrop($event)" formArrayName="panels">
-        @for (panel of panels.controls; track $index; let i = $index) {
+        @for (panel of panels.controls; track panel; let i = $index) {
           <div cdkDrag class="drag-container">
             <div class="panel-group-container">
               <div class="action-buttons">

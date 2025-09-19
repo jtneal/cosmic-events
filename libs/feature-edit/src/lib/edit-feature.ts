@@ -139,7 +139,7 @@ export class EditFeature implements OnInit {
 
   public deleteSpeaker(index: number): void {
     this.speakers.removeAt(index);
-    this.speakerPhotoFiles.splice(index);
+    this.speakerPhotoFiles.splice(index, 1);
   }
 
   public addPanel(panel = new PanelDto()): void {
