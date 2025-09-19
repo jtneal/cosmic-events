@@ -126,7 +126,6 @@ export class EventService {
       if (locations.length) {
         query.andWhere('event.location IN (:...locations)', { locations });
       }
-
     }
 
     if (filters.type) {
@@ -184,7 +183,7 @@ export class EventService {
     const locations = await this.event
       .createQueryBuilder('event')
       .select('DISTINCT event.location', 'location')
-      .where('event.isActive = true')
+      .andWhere('event.isActive = true')
       .andWhere('event.isPublished = true')
       .orderBy('event.location', 'ASC')
       .getRawMany();
@@ -201,8 +200,8 @@ export class EventService {
       .createQueryBuilder('event')
       .leftJoinAndSelect('event.panels', 'panels')
       .leftJoinAndSelect('event.speakers', 'speakers')
-      .where('event.id = :eventId::uuid', { eventId })
-      .where('event.userId = :userId', { userId })
+      .andWhere('event.id = :eventId::uuid', { eventId })
+      .andWhere('event.userId = :userId', { userId })
       .getOne();
 
     if (!event) {
@@ -244,8 +243,8 @@ export class EventService {
           userId: event.userId,
           website: event.website,
         })
-        .where('id = :id::uuid', { id: event.id })
-        .where('userId = :userId', { userId })
+        .andWhere('id = :id::uuid', { id: event.id })
+        .andWhere('userId = :userId', { userId })
         .execute();
 
       // Delete existing panels and speakers, then insert new ones
@@ -253,14 +252,14 @@ export class EventService {
         .createQueryBuilder()
         .delete()
         .from(Panel)
-        .where('event.id = :eventId::uuid', { eventId: event.id })
+        .andWhere('event.id = :eventId::uuid', { eventId: event.id })
         .execute();
 
       await manager
         .createQueryBuilder()
         .delete()
         .from(Speaker)
-        .where('event.id = :eventId::uuid', { eventId: event.id })
+        .andWhere('event.id = :eventId::uuid', { eventId: event.id })
         .execute();
 
       // Insert new panels
@@ -302,10 +301,11 @@ export class EventService {
   }
 
   public async deleteEvent(userId: string, eventId: string): Promise<void> {
-    await this.event.createQueryBuilder()
+    await this.event
+      .createQueryBuilder()
       .delete()
       .from(Event)
-      .where('id = :eventId::uuid', { eventId })
+      .andWhere('id = :eventId::uuid', { eventId })
       .andWhere('userId = :userId', { userId })
       .execute();
   }
