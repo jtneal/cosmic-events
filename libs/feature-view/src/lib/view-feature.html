@@ -132,7 +132,9 @@
       }
       @if (event.marketingPoster) {
         <div class="marketing-poster">
-          <img [alt]="event.title" [src]="event.marketingPoster || 'https://placehold.co/450x600'" />
+          <a [href]="event.marketingPoster" rel="noreferrer" target="_blank">
+            <img [alt]="event.title" [src]="event.marketingPoster" />
+          </a>
         </div>
       }
     </article>
