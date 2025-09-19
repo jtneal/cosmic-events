@@ -26,6 +26,7 @@ describe(EventMapper.name, () => {
         title: 'Speaker Title',
         description: 'Speaker Description',
         image: 'speaker.jpg',
+        imageOriginal: '',
       };
       const dto: EventDto = {
         id: 'event-123',
@@ -140,6 +141,7 @@ describe(EventMapper.name, () => {
         title: 'Speaker Title',
         description: 'Speaker Description',
         image: 'speaker.jpg',
+        imageOriginal: '',
       };
       const dto = new EventDto();
       dto.panels = [];
@@ -177,6 +179,7 @@ describe(EventMapper.name, () => {
         title: 'Speaker Title',
         description: 'Speaker Description',
         image: 'speaker.jpg',
+        imageOriginal: '',
       };
 
       const result = mapper.toSpeaker(dto);

@@ -126,7 +126,7 @@ describe(EventController.name, () => {
       eventDto.price = 100;
       eventDto.organizerName = 'Test Organizer';
       
-      const eventForm = { data: eventDto };
+      const eventForm = { data: eventDto, speakerPhotos: [] };
       const session = { userId: 'user1', email: '', name: '', picture: '' };
       const files = {};
       const mockEvent = {} as Event;
