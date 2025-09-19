@@ -15,6 +15,7 @@ Create a `.env` file in `apps/api/` with the following:
 ```env
 AWS_REGION=
 CDN_BUCKET=
+CDN_URL=
 DATABASE_NAME=
 DATABASE_RESOURCE_ARN=
 DATABASE_SECRET_ARN=

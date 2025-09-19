@@ -264,6 +264,10 @@ resource "aws_ecs_task_definition" "service" {
           valueFrom = "arn:aws:ssm:us-east-2:186050465172:parameter/nonprod/CDN_BUCKET"
         },
         {
+          name      = "CDN_URL"
+          valueFrom = "arn:aws:ssm:us-east-2:186050465172:parameter/nonprod/CDN_URL"
+        },
+        {
           name      = "DATABASE_NAME"
           valueFrom = "arn:aws:ssm:us-east-2:186050465172:parameter/nonprod/DATABASE_NAME"
         },
