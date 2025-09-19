@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { EventService } from '@cosmic-events/data-access';
