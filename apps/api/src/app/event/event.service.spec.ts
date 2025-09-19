@@ -284,8 +284,8 @@ describe(EventService.name, () => {
       const result = await service.getUserEvent(userId, eventId);
 
       expect(result).toEqual(mockEvent);
-      expect(mockQueryBuilder.where).toHaveBeenCalledWith('event.id = :eventId::uuid', { eventId });
-      expect(mockQueryBuilder.where).toHaveBeenCalledWith('event.userId = :userId', { userId });
+      expect(mockQueryBuilder.andWhere).toHaveBeenCalledWith('event.id = :eventId::uuid', { eventId });
+      expect(mockQueryBuilder.andWhere).toHaveBeenCalledWith('event.userId = :userId', { userId });
     });
 
     it('should throw NotFoundException when user event not found', async () => {
@@ -367,7 +367,7 @@ describe(EventService.name, () => {
       await service.deleteEvent(userId, eventId);
 
       expect(mockQueryBuilder.delete).toHaveBeenCalled();
-      expect(mockQueryBuilder.where).toHaveBeenCalledWith('id = :eventId::uuid', { eventId });
+      expect(mockQueryBuilder.andWhere).toHaveBeenCalledWith('id = :eventId::uuid', { eventId });
       expect(mockQueryBuilder.andWhere).toHaveBeenCalledWith('userId = :userId', { userId });
       expect(mockQueryBuilder.execute).toHaveBeenCalled();
     });
