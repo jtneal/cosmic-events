@@ -1,6 +1,6 @@
 <div class="flex-container">
   @if (!isHeroHidden) {
-    <lib-hero (heroClosed)="hideHero()" />
+    <lib-hero (heroClosed)="hideHero()" [user]="user$ | async" />
   }
   <div>
     <form class="search-form" [formGroup]="form" id="search-form">

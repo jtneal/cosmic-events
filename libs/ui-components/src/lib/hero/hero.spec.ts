@@ -19,6 +19,7 @@ describe(Hero.name, () => {
 
     fixture = TestBed.createComponent(Hero);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('user', null);
     fixture.detectChanges();
   });
 

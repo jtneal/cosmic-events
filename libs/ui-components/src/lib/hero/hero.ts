@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { UserDto } from '@cosmic-events/util-dtos';
 
 @Component({
   imports: [MatButtonModule, MatCardModule, MatIconModule, RouterModule],
@@ -12,6 +13,7 @@ import { RouterModule } from '@angular/router';
 })
 export class Hero {
   private readonly document = inject(DOCUMENT);
+  public user = input.required<UserDto | null>();
 
   public isClosable = input<boolean>(true)
   public heroClosed = output<void>();

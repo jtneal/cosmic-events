@@ -16,9 +16,11 @@
           <a class="cosmic-button" fragment="search-form" matButton="filled" routerLink="/">
             <mat-icon>search</mat-icon>Explore Events
           </a>
-          <a class="uncosmic-button" matButton="outlined" routerLink="/edit/new">
-            <mat-icon>add_circle</mat-icon>List Your Event
-          </a>
+          @if (user()?.userId?.length) {
+            <a class="uncosmic-button" matButton="outlined" routerLink="/edit/new">
+              <mat-icon>add_circle</mat-icon>List Your Event
+            </a>
+          }
         </div>
       </article>
       <img alt="Large slowly rotating Cosmic Events logo" src="/images/cosmic-events-logo-large.png" />

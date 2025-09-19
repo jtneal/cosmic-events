@@ -19,6 +19,7 @@ describe(Footer.name, () => {
 
     fixture = TestBed.createComponent(Footer);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('user', null);
     fixture.detectChanges();
   });
 

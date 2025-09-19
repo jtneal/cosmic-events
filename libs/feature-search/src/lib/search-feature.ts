@@ -1,3 +1,4 @@
+import { AsyncPipe } from '@angular/common';
 import { httpResource } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -9,12 +10,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { UserService } from '@cosmic-events/data-access';
 import { EventCard, EventCardSkeleton, Hero } from '@cosmic-events/ui-components';
 import { EventDto } from '@cosmic-events/util-dtos';
 import { debounceTime } from 'rxjs';
 
 @Component({
   imports: [
+    AsyncPipe,
     EventCard,
     EventCardSkeleton,
     Hero,
@@ -34,7 +37,9 @@ import { debounceTime } from 'rxjs';
 export class SearchFeature implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
   private readonly queryParams = signal('');
-
+  private readonly user = inject(UserService);
+  
+  public user$ = this.user.getUser();
   public readonly events = httpResource<EventDto[]>(() => `/api/events${this.queryParams()}`);
   public readonly locations = httpResource<string[]>(() => '/api/locations');
   public isHeroHidden = localStorage.getItem('isHeroHidden') === 'true';
