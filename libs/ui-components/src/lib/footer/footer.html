@@ -10,8 +10,10 @@
     <article>
       <h3>Explore</h3>
       <a routerLink="/">Find Events</a>
-      <a routerLink="/edit/new">List Event</a>
-      <a routerLink="/manage">Manage Events</a>
+      @if (user()?.userId?.length) {
+        <a routerLink="/edit/new">List Event</a>
+        <a routerLink="/manage">Manage Events</a>
+      }
     </article>
     <article>
       <h3>Support</h3>
