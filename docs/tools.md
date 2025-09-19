@@ -22,6 +22,8 @@ Here is a list of tools that were used to develop the Cosmic Events web applicat
 - Aurora PostgreSQL
 - ECR
 - ECS (Fargate)
+- Route53
+- ACM
 
 ## Other Tools
 
@@ -31,3 +33,4 @@ Here is a list of tools that were used to develop the Cosmic Events web applicat
 - ESLint
 - Visual Studio Code
 - GitHub Actions
+- Cloudflare
