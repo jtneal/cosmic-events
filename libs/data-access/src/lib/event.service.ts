@@ -21,6 +21,10 @@ export class EventService {
     return this.http.get<EventDto[]>('/api/user/events');
   }
 
+  public getUserEvent(eventId: string): Observable<EventDto> {
+    return this.http.get<EventDto>(`/api/user/events/${eventId}`);
+  }
+
   public postEvent(event: FormData): Observable<void> {
     return this.http.post<void>('/api/events', event);
   }

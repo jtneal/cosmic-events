@@ -77,7 +77,7 @@ export class EditFeature implements OnInit {
     map((params) => params.get('eventId')),
     switchMap((eventId) => {
       if (eventId && eventId !== 'new') {
-        return this.service.getEvent(eventId);
+        return this.service.getUserEvent(eventId);
       }
 
       return of(new EventDto());

@@ -67,6 +67,13 @@ export class EventController {
     return events.map((event) => this.mapper.toEventDto(event));
   }
 
+  @Get('user/events/:eventId')
+  public async getUserEvent(@Param('eventId') eventId: string, @Session() session: UserDto): Promise<EventDto> {
+    const event = await this.event.getUserEvent(session.userId, eventId);
+
+    return this.mapper.toEventDto(event);
+  }
+
   @Post('events')
   @UseInterceptors(
     FileFieldsInterceptor([
@@ -135,10 +142,7 @@ export class EventController {
   }
 
   @Post('events/:eventId/event/:eventType')
-  public handleEvent(
-    @Param('eventId') eventId: string,
-    @Param('eventType') eventType: string,
-  ): Promise<void> {
+  public handleEvent(@Param('eventId') eventId: string, @Param('eventType') eventType: string): Promise<void> {
     switch (eventType) {
       case 'organizerUrlClicked':
         return this.event.incrementOrganizerUrlClicks(eventId);
